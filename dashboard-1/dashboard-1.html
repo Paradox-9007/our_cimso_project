@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/dashboard-1/dashboard-1.css">
+    <script src="/dashboard-1/dashboard-1.js" type="module"></script>
+</head>
+
+<div id="top-title">
+    <h4>Number and percentage of booking arrivals within a current month and current year</h4>
+</div>
+<div id="visualization-container">
+
+    <div id="main-container">
+        <div class="filter">
+            <select id="choose_year"></select>
+            <select id="choose_month"></select> 
+        </div>
+        <canvas id="chart1" style="height: auto; width: auto;"></canvas>
+    </div>  
+
+    <div id="side-container">
+        <div id="kpi-container">
+            <div class="kpi-visual" id="total-arrival-this-month">KPI 1</div>
+            <div class="kpi-visual" id="booking-volume-difference">KPI 2</div>
+            <div class="kpi-visual" id="total-growth-rate">KPI 3</div>
+            <div class="kpi-visual" id="booking-percentage">KPI 4</div>
+        </div>
+        <div id="side-visual">
+            <canvas id="chart2" style="height: auto; width: auto;"></canvas>
+        </div>
+    </div>
+
+    <div id="bottom-container">
+        <div id="bottom-left-visual">
+
+            1. Trend Analysis and Forecasting<br>
+            
+            - What It Does: Uses historical data to predict future bookings.<br>
+            - How It Helps: Forecasts total bookings for the year, enabling informed decisions and resource planning.<br>
+            - Example Insight: "Bookings are expected to increase by [X%] over the next six months."<br>
+            
+            2. Growth Rate Comparison<br>
+            
+            - What It Does: Compares bookings month-over-month and year-over-year.<br>
+            - How It Helps: Reveals growth or decline trends, helping evaluate marketing effectiveness.<br>
+            - Example Insight: "Bookings in February 2025 are up [X%] from January 2025 and [X%] from February 2024."<br>
+
+            3. Anomaly Detection and Insights<br>
+            
+            - What It Does: Identifies unusual booking patterns and potential causes.<br>
+            - How It Helps: Pinpoints factors influencing bookings, such as promotions or external events.<br>
+            - Example Insight: "A booking spike in February 2025 was linked to a promotion campaign."</div>
+    </div>
+</div>

@@ -1,10 +1,6 @@
-// apiCaller.js
-
-async function fetchData() {
-    const apiResponseDiv = document.getElementById("apiResponse");
+async function fetchData(endpoint) {
     try {
-        // Simplified fetch call to the backend API
-        const response = await fetch("http://localhost:3001/api/get_client_request", {
+        const response = await fetch(`https://www.kyawswarheinm.com/api/${endpoint}`, {
             method: "POST",
             headers: {
                 "Authorization": '{"Client Login ID":"CiMSO.dev","Client Password":"CiMSO.dev","hg_pass":"nGXUF1i^57I^ao^o"}',
@@ -16,20 +12,26 @@ async function fetchData() {
             })
         });
 
-        // Check if the response is successful
-        if (response.ok) {
-            // Extract the JSON body
-            const data = await response.json();
-            
-            // Return the data to the calling function
-            return data;
-        } else {
+        if (!response.ok) {
             throw new Error(`API responded with status ${response.status}`);
         }
+
+        const data = await response.json();
+
+        return data.payload || [];
     } catch (error) {
-        apiResponseDiv.innerHTML = `<p>Failed to fetch data: ${error.message}</p>`;
-        throw error; // Re-throw error to handle it in the calling function
+        console.error(`Error fetching ${endpoint}:`, error);
+        throw error;
     }
 }
 
-export { fetchData };
+async function fetchClientRequest() {
+    return fetchData("get_client_request");
+}
+
+async function fetchBookingsRequest() {
+    return fetchData("get_bookings_request");
+}
+
+export { fetchClientRequest, fetchBookingsRequest };
+

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to CIMSO</title>
+    <style>
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 150px 80px 50px;
+            background: #f9f9f9;
+        }
+
+        .hero-content {
+            max-width: 500px;
+        }
+
+        .hero-content h3 {
+            color: #ff007f;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .hero-content h1 {
+            font-size: 40px;
+            margin: 10px 0;
+        }
+
+        .hero-content p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .hero-image img {
+            width: 500px;
+            max-width: 100%;
+        }
+
+        /* Popular Categories Section */
+        .category_section {
+            padding: 50px 0;
+        }
+
+        .category_title {
+            text-align: center;
+            font-size: 36px;
+            color: #333;
+        }
+
+        .carousel-inner .carousel-item {
+            padding: 30px 0;
+        }
+
+        .hover01 img {
+            width: 100%;
+            transition: transform 0.3s;
+        }
+
+        .hover01:hover img {
+            transform: scale(1.1);
+        }
+
+        .materials_text {
+            text-align: center;
+            font-size: 22px;
+            color: #333;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .category_text {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #FFB2D8;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .carousel-control-prev {
+            left: -60px;
+        }
+
+        .carousel-control-next {
+            right: -60px;
+        }
+
+        .carousel-control-prev span,
+        .carousel-control-next span {
+            font-size: 24px;
+            color: white;
+        }
+
+        .more_button {
+            color: black;
+            background-color: #FFB2D8;
+            border-radius: 10px;
+            border-width: 1px;
+            padding: 5px 15px;
+        }
+
+        .col-md-6 {
+            top: -70px;
+            left: -70px;
+        }
+
+        .analytics-section {
+            margin-top: 100px;
+            margin-bottom: 100px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px;
+                text-align: center;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 100px 20px;
+            }
+
+            .hero-image img {
+                margin-top: 20px;
+                width: 80%;
+            }
+
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#main_slider").carousel({
+                interval: 3000, // Auto-slide every 3 seconds
+                wrap: true // Loop back to first slide
+            });
+
+            $(".carousel-control-prev").click(function () {
+                $("#main_slider").carousel("prev");
+            });
+
+            $(".carousel-control-next").click(function () {
+                $("#main_slider").carousel("next");
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <div class="hero">
+
+        <div class="hero-content">
+            <h3>CIMSO</h3>
+            <h1>Welcome to <br> CIMSO ANALYTICS </h1>
+            <p>This Website is brought to you by CIMSO Team. 9 dashboards analytics presented for your convenience. </p>
+        </div>
+        <div class="hero-image">
+            <img src="home/assets/homepage.png" alt="Homepage Illustration">
+        </div>
+
+      </div>
+
+
+    <!-- Category Section -->
+    <div class="category_section">
+      <div class="container">
+          <h1 class="category_title font-weight-bold text-center">Overview</h1>
+          <div id="main_slider" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                  <!-- Slide 1 -->
+                  <div class="carousel-item active">
+                      <div class="row">
+                          <div class="col-md-4 text-center">
+                              <img src="home/assets/analytic_1.png" class="img-fluid rounded">
+                              <h3 class="materials_text font-weight-bold mt-3">Booking Arrivals This Month & Year</h3>
+                              <button class="more_button">More</button>
+                          </div>
+                          <div class="col-md-4 text-center">
+                              <img src="home/assets/analytic_2.png" class="img-fluid rounded">
+                              <h3 class="materials_text font-weight-bold mt-3">Member vs. Guest Booking Comparison</h3>
+                              <button class="more_button">More</button>
+                          </div>
+                          <div class="col-md-4 text-center">
+                              <img src="home/assets/analytic_3.png" class="img-fluid rounded">
+                              <h3 class="materials_text font-weight-bold mt-3">Today's Arrivals and Departures</h3>
+                              <button class="more_button">More</button>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- Slide 2 -->
+                  <div class="carousel-item">
+                      <div class="row">
+                          <div class="col-md-4 text-center">
+                              <img src="home/assets/analytic_4.png" class="img-fluid rounded">
+                              <h3 class="materials_text font-weight-bold mt-3">Occupancy Rate & ADR Calculation</h3>
+                              <button class="more_button">More</button>
+                          </div>
+                          <div class="col-md-4 text-center">
+                              <img src="home/assets/analytic_5.png" class="img-fluid rounded">
+                              <h3 class="materials_text font-weight-bold mt-3">Guest Birthdays This Month</h3>
+                              <button class="more_button">More</button>
+                          </div>
+                          <div class="col-md-4 text-center">
+                              <img src="home/assets/analytic_6.png" class="img-fluid rounded">
+                              <h3 class="materials_text font-weight-bold mt-3">Guest Age Group Segmentation</h3>
+                              <button class="more_button">More</button>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- Slide 3 -->
+                  <div class="carousel-item">
+                      <div class="row">
+                          <div class="col-md-4 text-center">
+                              <img src="home/assets/analytic_7.png" class="img-fluid rounded">
+                              <h3 class="materials_text font-weight-bold mt-3">Cancelled Bookings This Month</h3>
+                              <button class="more_button">More</button>
+                          </div>
+                          <div class="col-md-4 text-center">
+                              <img src="home/assets/analytic_8.png" class="img-fluid rounded">
+                              <h3 class="materials_text font-weight-bold mt-3">Most Booked Units This Month</h3>
+                              <button class="more_button">More</button>
+                          </div>
+                          <div class="col-md-4 text-center">
+                              <img src="home/assets/analytic_9.png" class="img-fluid rounded">
+                              <h3 class="materials_text font-weight-bold mt-3">Total Income (Month & Year)</h3>
+                              <button class="more_button">More</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Carousel Controls -->
+              <a class="carousel-control-prev" href="#main_slider" role="button" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              </a>
+              <a class="carousel-control-next" href="#main_slider" role="button" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              </a>
+          </div>
+      </div>
+  </div>
+
+
+
+    <!-- Analytics Section 1: Booking Arrivals Statistics -->
+    <div class="analytics-section" style="padding: 80px 0; background: url('home/assets/background_1.png') center/cover;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h3 style="color: #ff007f; font-size: 14px; font-weight: bold;">Analytics Dashboard 1</h3>
+                    <h2 style="font-size: 32px; margin: 20px 0;">Booking Arrivals Statistics</h2>
+                    <p style="color: #666; font-size: 16px; line-height: 1.6;">
+                        Track and analyze booking arrivals data with our comprehensive statistics dashboard. Get detailed insights into:
+                    </p>
+                    <ul style="color: #666; font-size: 16px; line-height: 1.5; padding-left: 10px;">
+                        <li>Current month's booking arrival numbers and percentages</li>
+                        <li>Year-to-date booking statistics</li>
+                        <li>Comparative analysis between monthly and yearly data</li>
+                        <li>Trend visualization for better decision making</li>
+                    </ul>
+                    <button class="more_button" style="margin-top: 20px;">View Full Report</button>
+                    <button class="back_to_overview more_button" style="margin-top: 20px; margin-left: 10px;">Back to Overview</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="analytics-image" style="box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;">
+                        <!-- <img src="test_1.png" alt="Booking Arrivals Statistics" style="width: 100%; height: auto;"> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Analytics Section 2: Member vs General Guest Comparison -->
+    <div class="analytics-section" style="padding: 80px 0; background: url('home/assets/background_2.png') center/cover;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h3 style="color: #ff007f; font-size: 14px; font-weight: bold;">Analytics Dashboard 2</h3>
+                    <h2 style="font-size: 32px; margin: 20px 0;">Member vs General Guest Analysis</h2>
+                    <p style="color: #666; font-size: 16px; line-height: 1.6;">
+                        Compare booking patterns between members and general guests with our detailed analysis dashboard:
+                    </p>
+                    <ul style="color: #666; font-size: 16px; line-height: 1.5; padding-left: 10px;">
+                        <li>Monthly comparison of member vs general guest bookings</li>
+                        <li>Booking preference analysis</li>
+                        <li>Member loyalty insights</li>
+                        <li>Booking behavior patterns</li>
+                    </ul>
+                    <button class="more_button" style="margin-top: 20px;">View Full Report</button>
+                    <button class="back_to_overview more_button" style="margin-top: 20px; margin-left: 10px;">Back to Overview</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="analytics-image" style="box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;">
+                        <!-- <img src="test_1.png" alt="Member vs General Guest Analysis" style="width: 100%; height: auto;"> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Section 3: Daily Arrivals and Departures -->
+    <div class="analytics-section" style="padding: 80px 0; background: url('home/assets/background_3.png') center/cover;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h3 style="color: #ff007f; font-size: 14px; font-weight: bold;">Analytics Dashboard 3</h3>
+                    <h2 style="font-size: 32px; margin: 20px 0;">Daily Traffic Monitor</h2>
+                    <p style="color: #666; font-size: 16px; line-height: 1.6;">
+                        Monitor daily guest movement with our real-time traffic dashboard. Get instant insights into:
+                    </p>
+                    <ul style="color: #666; font-size: 16px; line-height: 1.5; padding-left: 10px;">
+                        <li>Today's expected arrivals</li>
+                        <li>Scheduled departures</li>
+                        <li>Peak check-in/check-out times</li>
+                        <li>Staff allocation recommendations</li>
+                    </ul>
+                    <button class="more_button" style="margin-top: 20px;">View Full Report</button>
+                    <button class="back_to_overview more_button" style="margin-top: 20px; margin-left: 10px;">Back to Overview</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="analytics-image" style="box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;">
+                        <!-- <img src="test_1.png" alt="Daily Traffic Monitor" style="width: 100%; height: auto;"> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Section 4: Occupancy and ADR Analysis -->
+    <div class="analytics-section" style="padding: 80px 0; background: url('home/assets/background_4.png') center/cover;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h3 style="color: #ff007f; font-size: 14px; font-weight: bold;">Analytics Dashboard 4</h3>
+                    <h2 style="font-size: 32px; margin: 20px 0;">Occupancy & Revenue Metrics</h2>
+                    <p style="color: #666; font-size: 16px; line-height: 1.6;">
+                        Track key performance indicators with our comprehensive occupancy and revenue dashboard:
+                    </p>
+                    <ul style="color: #666; font-size: 16px; line-height: 1.5; padding-left: 10px;">
+                        <li>Monthly occupancy rates</li>
+                        <li>Average Daily Rate (ADR) calculations</li>
+                        <li>Revenue per Available Room (RevPAR)</li>
+                        <li>Historical performance comparison</li>
+                    </ul>
+                    <button class="more_button" style="margin-top: 20px;">View Full Report</button>
+                    <button class="back_to_overview more_button" style="margin-top: 20px; margin-left: 10px;">Back to Overview</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="analytics-image" style="box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;">
+                        <!-- <img src="test_1.png" alt="Occupancy & Revenue Metrics" style="width: 100%; height: auto;"> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Section 5: Guest Birthday Tracking -->
+    <div class="analytics-section" style="padding: 80px 0; background: url('home/assets/background_5.png') center/cover;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h3 style="color: #ff007f; font-size: 14px; font-weight: bold;">Analytics Dashboard 5</h3>
+                    <h2 style="font-size: 32px; margin: 20px 0;">Guest Birthday Monitor</h2>
+                    <p style="color: #666; font-size: 16px; line-height: 1.6;">
+                        Enhance guest experience with our birthday tracking system. Stay informed about:
+                    </p>
+                    <ul style="color: #666; font-size: 16px; line-height: 1.5; padding-left: 10px;">
+                        <li>Monthly birthday celebrations</li>
+                        <li>Special arrangement planning</li>
+                        <li>Personalized guest services</li>
+                        <li>Birthday promotion opportunities</li>
+                    </ul>
+                    <button class="more_button" style="margin-top: 20px;">View Full Report</button>
+                    <button class="back_to_overview more_button" style="margin-top: 20px; margin-left: 10px;">Back to Overview</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="analytics-image" style="box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;">
+                        <!-- <img src="test_1.png" alt="Guest Birthday Monitor" style="width: 100%; height: auto;"> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Section 6: Age Group Analysis -->
+    <div class="analytics-section" style="padding: 80px 0; background: url('home/assets/background_6.png') center/cover;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h3 style="color: #ff007f; font-size: 14px; font-weight: bold;">Analytics Dashboard 6</h3>
+                    <h2 style="font-size: 32px; margin: 20px 0;">Guest Demographics</h2>
+                    <p style="color: #666; font-size: 16px; line-height: 1.6;">
+                        Understand your guest demographics with our age group segmentation analysis:
+                    </p>
+                    <ul style="color: #666; font-size: 16px; line-height: 1.5; padding-left: 10px;">
+                        <li>Age distribution of current guests</li>
+                        <li>Demographic trends analysis</li>
+                        <li>Age-specific service requirements</li>
+                        <li>Targeted marketing insights</li>
+                    </ul>
+                    <button class="more_button" style="margin-top: 20px;">View Full Report</button>
+                    <button class="back_to_overview more_button" style="margin-top: 20px; margin-left: 10px;">Back to Overview</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="analytics-image" style="box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;">
+                        <!-- <img src="test_1.png" alt="Guest Demographics" style="width: 100%; height: auto;"> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Section 7: Cancellation Analysis -->
+    <div class="analytics-section" style="padding: 80px 0; background: url('home/assets/background_7.png') center/cover;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h3 style="color: #ff007f; font-size: 14px; font-weight: bold;">Analytics Dashboard 7</h3>
+                    <h2 style="font-size: 32px; margin: 20px 0;">Cancellation Insights</h2>
+                    <p style="color: #666; font-size: 16px; line-height: 1.6;">
+                        Monitor and analyze booking cancellations with our detailed dashboard:
+                    </p>
+                    <ul style="color: #666; font-size: 16px; line-height: 1.5; padding-left: 10px;">
+                        <li>Monthly cancellation rates</li>
+                        <li>Cancellation reason analysis</li>
+                        <li>Impact on revenue</li>
+                        <li>Prevention strategies</li>
+                    </ul>
+                    <button class="more_button" style="margin-top: 20px;">View Full Report</button>
+                    <button class="back_to_overview more_button" style="margin-top: 20px; margin-left: 10px;">Back to Overview</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="analytics-image" style="box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;">
+                        <!-- <img src="test_1.png" alt="Cancellation Insights" style="width: 100%; height: auto;"> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Section 8: Popular Units Analysis -->
+    <div class="analytics-section" style="padding: 80px 0; background: url('home/assets/background_8.png') center/cover;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h3 style="color: #ff007f; font-size: 14px; font-weight: bold;">Analytics Dashboard 8</h3>
+                    <h2 style="font-size: 32px; margin: 20px 0;">Unit Popularity Tracker</h2>
+                    <p style="color: #666; font-size: 16px; line-height: 1.6;">
+                        Identify and analyze the most sought-after units with our tracking system:
+                    </p>
+                    <ul style="color: #666; font-size: 16px; line-height: 1.5; padding-left: 10px;">
+                        <li>Most frequently booked units</li>
+                        <li>Occupancy patterns</li>
+                        <li>Revenue generation by unit</li>
+                        <li>Maintenance scheduling optimization</li>
+                    </ul>
+                    <button class="more_button" style="margin-top: 20px;">View Full Report</button>
+                    <button class="back_to_overview more_button" style="margin-top: 20px; margin-left: 10px;">Back to Overview</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="analytics-image" style="box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;">
+                        <!-- <img src="test_1.png" alt="Unit Popularity Tracker" style="width: 100%; height: auto;"> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Section 9: Income Analysis -->
+    <div class="analytics-section" style="padding: 80px 0; background: url('home/assets/background_9.png') center/cover;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h3 style="color: #ff007f; font-size: 14px; font-weight: bold;">Analytics Dashboard 9</h3>
+                    <h2 style="font-size: 32px; margin: 20px 0;">Revenue Dashboard</h2>
+                    <p style="color: #666; font-size: 16px; line-height: 1.6;">
+                        Track and analyze financial performance with our comprehensive revenue dashboard:
+                    </p>
+                    <ul style="color: #666; font-size: 16px; line-height: 1.5; padding-left: 10px;">
+                        <li>Monthly income tracking</li>
+                        <li>Year-to-date revenue analysis</li>
+                        <li>Revenue source breakdown</li>
+                        <li>Growth trend visualization</li>
+                    </ul>
+                    <button class="more_button" style="margin-top: 20px;">View Full Report</button>
+                    <button class="back_to_overview more_button" style="margin-top: 20px; margin-left: 10px;">Back to Overview</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="analytics-image" style="box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;">
+                        <!-- <img src="test_1.png" alt="Revenue Dashboard" style="width: 100%; height: auto;"> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

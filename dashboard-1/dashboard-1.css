@@ -1,0 +1,92 @@
+
+#top-title{
+    margin-bottom: 50px;
+}
+
+#visualization-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: fit-content;
+    gap: 15px;
+}
+
+#main-container {
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 70%;
+    height: 65%;
+}
+
+#chartDropdown{
+    align-self: flex-end;
+    top: 0;
+}
+
+#side-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 15px;
+    width: 28%;
+    height: 65%;
+}
+
+#kpi-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    height: 50%;
+}
+
+#bottom-container {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    height: fit-content;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+.kpi-visual {
+    background-color: rgb(128, 223, 240);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 30%;
+}
+
+
+#side-visual {
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+}
+
+
+#bottom-left-visual {
+    background-color: rgb(128, 240, 218);
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: fit-content;
+    text-align: flex-start;
+
+    
+}
+
+.filter{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}

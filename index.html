@@ -3,156 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Cimso Project</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: #f4f4f4;
-            padding-top: 70px;
-            position: relative;
-        }
+    <title>Home</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <script src="js/responsive.js"></script>
+    <script src="js/script.js" type="module"></script>
+    <script src="js/dashboard-1.js" type="module"></script>
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+        <!-- jQuery (Required for Bootstrap 4, not needed for Bootstrap 5) -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: linear-gradient(to right, #007bff, #0056b3);
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            padding: 15px 0;
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            overflow: hidden;
-        }
-        nav > div {
-            position: relative;
-        }
-        nav span {
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
-            display: inline-block;
-        }
-        nav span:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
-        nav span.active {
-            background: white;
-            color: #007bff;
-        }
 
-        section {
-            width: 80%;
-            max-width: 800px;
-            text-align: center;
-            padding: 40px 20px;
-            background: white;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            margin-top: 20px;
-            display: none;
-        }
-        #dashboardContainer {
-    display: flex;
-    flex-wrap: nowrap; /* Don't allow items to wrap to the next line */
-    justify-content: flex-start;
-    max-width: 65%; /* Fixed width of the container */
-    max-height: 300px; /* Fixed height of the container */
-    gap: 5px;
-    position: relative;
-    overflow: hidden; /* Hide overflow content */
-}
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <link href="css/nav-bar.css" rel="stylesheet" type="text/css">
 
-#dashboardContainer span {
-    font-size: 12px;
-    padding: 8px;
-    white-space: wrap;
-    cursor: pointer;
-    flex: 1 1 25%; /* Flex property to allow resizing */
-    max-width: 100%;
-    box-sizing: border-box;
-    transition: all 0.2s ease;
-    flex-shrink: 1; /* Allow shrinking when container overflows */
-    position: relative;
-}
-
-#dashboardContainer span::before {
-    content: attr(data-index); /* Uses data-index attribute for numbering */
-    position: absolute;
-    top: 0; /* Adjust this to place the number correctly */
-    right: 0; /* Adjust this to place the number correctly */
-    background-color: #ffffff; /* Highlight the number */
-    color: rgb(0, 0, 0);
-    font-size: 10px;
-    font-weight: bold;
-    width: 16px;
-    height: 16px;
-    text-align: center;
-    line-height: 16px;
-    border-radius: 50%;
-}
-
-#dashboardContainer span#dashboardBtn{
-    font-size: 18px;
-}
-#dashboardContainer span#dashboardBtn::before {
-    display: none;
-}
-
-#dashboardContainer span#dropdownSpan::before {
-    display: none;
-}
-        #dashboardContainer span.active {
-            background: white;
-            color: #007bff;
-            font-weight: bold;
-        }
-
-        .dropdown {
-            position: fixed;
-            top: 40px;
-            background: white;
-            color: #333;
-            width: 200px;
-            border-radius: 5px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            display: none;  /* Hidden by default */
-            flex-direction: column;
-            z-index: 1000;
-        }
-
-        .dropdown span {
-            padding: 10px;
-            cursor: pointer;
-            transition: background 0.3s;
-            text-align: left;
-        }
-
-        .dropdown span:hover {
-            background: #007bff;
-            color: white;
-        }
-
-    </style>
 </head>
 <body>
 
     <nav>
+        <h3 id="logo"> CiMSO </h3>
         <span id="homeBtn" class="active">Home</span>
         <div id="dashboardContainer">
             <span id="dashboardBtn">Dashboard ▼</span>
@@ -160,214 +34,74 @@
         </div>
     </nav>
 
+
+
+
     <section id="homepage" style="display: block;">
-        <h2>Welcome to the Homepage</h2>
-        <p>This is the homepage content.</p>
+        <div id="loaded-home" style="display: block;"></div>
     </section>
 
+    
+
     <section id="Monthly Arrival Stats">
-        <h2>Number and percentage of booking arrivals within a current month and current year</h2>
-        <p>This is the dashboard 1 content.</p>
+        <div id="dash-1" style="display: block;"></div>
     </section>
+
+
 
     <section id="Member & General Arrivals">
         <h2>Comparison of Member vs. General Guest arrival bookings within a current month</h2>
         <p>This is the dashboard 2 content.</p>
     </section>
 
+
+
     <section id="Today's Arrivals/Departures">
         <h2>Number of arrivals and departures for today</h2>
         <p>This is the dashboard 3 content.</p>
     </section>
+
+
 
     <section id="Monthly Occupancy & ADR">
         <h2>Occupancy rate (%) and Average Daily Rate (ADR) calculation of the current month</h2>
         <p>This is the dashboard 4 content.</p>
     </section>
 
+
+
     <section id="Guest Birthdays">
         <h2>List of guest birthdays within a current month</h2>
         <p>This is the dashboard 5 content.</p>
     </section>
+
+
 
     <section id="Arrival Age Groups">
         <h2>Age Group Segmentation of Arrival Guests in the current month</h2>
         <p>This is the dashboard 6 content.</p>
     </section>
 
+
+
     <section id="Monthly Cancellation Stats">
         <h2>Number and percentage of canceled bookings within a current month</h2>
         <p>This is the dashboard 7 content.</p>
     </section>
+
+
 
     <section id="Most Booked Units">
         <h2>Most frequently booked units within a current month</h2>
         <p>This is the dashboard 8 content.</p>
     </section>
 
+
+    
     <section id="Total Income">
         <h2>Total income by current month and by current year</h2>
         <p>This is the dashboard 9 content.</p>
     </section>
-
-    <script>
- document.addEventListener("DOMContentLoaded", () => {
-    const dashboards = [
-        "Monthly Arrival Stats", "Member & General Arrivals", "Today's Arrivals/Departures",
-        "Monthly Occupancy & ADR", "Guest Birthdays", "Arrival Age Groups",
-        "Monthly Cancellation Stats", "Most Booked Units", "Total Income"
-    ];
-
-    const homeBtn = document.getElementById("homeBtn");
-    const dashboardBtn = document.getElementById("dashboardBtn");
-    const dashboardContainer = document.getElementById("dashboardContainer");
-    const dashboardDropdown = document.getElementById("dashboardDropdown"); // Get the dropdown here
-
-    let list_of_selectedDashboard = [];
-    let currentDashboardIndex = -1; // Initialize to -1 to prevent errors
-
-    function showSection(sectionId) {
-        console.log("sectionId:", sectionId);  // Log the sectionId
-        const section = document.getElementById(sectionId);
-
-        if (section) {
-            document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
-            section.style.display = "block";
-        } else {
-            console.error(`Section with ID ${sectionId} not found`);
-        }
-
-        document.querySelectorAll("#dashboardContainer span").forEach(navItem => {
-            navItem.classList.remove("active");
-        });
-
-        if (sectionId === "homepage") {
-            homeBtn.classList.add("active");
-        } else {
-            homeBtn.classList.remove("active");
-            const navItem = Array.from(dashboardContainer.children).find(
-                item => item.dataset.section === sectionId
-            );
-            if (navItem) {
-                navItem.classList.add("active");
-            }
-        }
-    }
-
-    function populateDashboardDropdown() {
-        dashboardDropdown.innerHTML = "";
-        dashboards.forEach(dashboard => {
-            const span = document.createElement("span");
-            span.textContent = dashboard;
-            span.dataset.section = dashboard;
-            span.id = 'dropdownSpan';
-            span.addEventListener("click", () => selectDashboard(dashboard));
-            dashboardDropdown.appendChild(span);
-        });
-    }
-
-    function selectDashboard(selectedDashboard) {
-        showSection(selectedDashboard);
-
-        if (!list_of_selectedDashboard.includes(selectedDashboard)) {
-            list_of_selectedDashboard.push(selectedDashboard);
-
-            // Create and append the new dashboard item only if it doesn't exist
-            let newNavItem = document.createElement("span");
-            newNavItem.textContent = selectedDashboard;
-            newNavItem.dataset.section = selectedDashboard;
-            newNavItem.addEventListener("click", (event) => {
-                event.stopPropagation();
-                selectDashboard(selectedDashboard); // Corrected: Pass selectedDashboard
-            });
-            dashboardContainer.appendChild(newNavItem);
-        }
-
-        // Update the current index to the newly selected dashboard 1
-        currentDashboardIndex = list_of_selectedDashboard.indexOf(selectedDashboard);
-
-        // **Reorder indexes based on their order in list_of_selectedDashboard**
-        Array.from(dashboardContainer.children).forEach((navItem, index) => {
-            if (navItem.id !== "dashboardBtn") {
-                navItem.dataset.index = index - 1;
-            }
-        });
-
-        // Highlight the active dashboard
-        document.querySelectorAll("#dashboardContainer span").forEach(navItem => {
-            navItem.classList.remove("active");
-        });
-
-        // Find the navItem by data-section and add the active class
-        const activeNavItem = Array.from(dashboardContainer.children).find(
-            item => item.dataset.section === selectedDashboard
-        );
-        if (activeNavItem) {
-            activeNavItem.classList.add("active");
-        }
-
-        // Remove the selected dashboard from the dropdown
-        const selectedSpan = dashboardDropdown.querySelector(`[data-section="${selectedDashboard}"]`);
-        if (selectedSpan) selectedSpan.remove();
-
-        // Hide the dropdown
-        dashboardDropdown.style.display = "none";
-    }
-
-    function handleKeyPress(event) {
-        const key = event.key;
-
-        if (key >= "1" && key <= "9") {
-            const index = parseInt(key) - 1;
-            if (index < list_of_selectedDashboard.length) {
-                currentDashboardIndex = index;
-                updateDashboardView();
-            }
-        } else if (key === "a" || key === "A") {
-            if (currentDashboardIndex > 0) {
-                currentDashboardIndex--;
-                updateDashboardView();
-            }
-        } else if (key === "d" || key === "D") {
-            if (currentDashboardIndex < list_of_selectedDashboard.length - 1) {
-                currentDashboardIndex++;
-                updateDashboardView();
-            }
-        }
-    }
-
-    function updateDashboardView() {
-        if (currentDashboardIndex >= 0 && currentDashboardIndex < list_of_selectedDashboard.length) {
-            const selectedDashboard = list_of_selectedDashboard[currentDashboardIndex];
-            showSection(selectedDashboard);
-        }
-    }
-
-    dashboardBtn.addEventListener("click", (event) => {
-        event.stopPropagation();
-        dashboardDropdown.style.display = dashboardDropdown.style.display === "flex" ? "none" : "flex";
-    });
-
-    document.addEventListener("click", (event) => {
-        if (!dashboardDropdown.contains(event.target) && event.target !== dashboardBtn) {
-            dashboardDropdown.style.display = "none";
-        }
-    });
-
-    document.addEventListener("keydown", handleKeyPress);
-
-    homeBtn.addEventListener("click", () => {
-        showSection("homepage");
-        currentDashboardIndex = -1; // Reset index
-    });
-
-    populateDashboardDropdown();
-    showSection("homepage");
-});
-
-
-        </script>
         
-
 </body>
 </html>
