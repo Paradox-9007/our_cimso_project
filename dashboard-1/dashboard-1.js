@@ -1,4 +1,4 @@
-import { Dashboard_1_Barchart_inMonth, Dashboard_1_Barchart_inYear, Dashboard_1_Barchart_inYears,get_totalbookings} from '../js/processData.js';
+import { generate_Barchart_dashboard_1_inMonth, generate_Barchart_dashboard_1_inYear, generate_Barchart_dashboard_1_inYears,count_total_bookings} from '../js/processData.js';
 import { drawBarChart, drawPieChart } from '../js/drawChart.js';
 
 let globalSelectedYear = ''; 
@@ -7,16 +7,16 @@ let globalSelectedMonth = '';
 let currentYear = new Date().getFullYear(); 
 let currentMonth = new Date().getMonth() + 1;
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const availableYears = Dashboard_1_Barchart_inYears()[0];
+const availableYears = generate_Barchart_dashboard_1_inYears()[0];
 let bar = true;
 
 function updateChartForYears() {
-    const [labels, data] = Dashboard_1_Barchart_inYears();
+    const [labels, data] = generate_Barchart_dashboard_1_inYears();
     drawBarChart(labels, data, "chart1");
 }
 
 function updateChartForYear(year) {
-    const [labels, data] = Dashboard_1_Barchart_inYear(parseInt(year));
+    const [labels, data] = generate_Barchart_dashboard_1_inYear(parseInt(year));
     drawBarChart(labels, data, "chart1");
 }
 
@@ -25,7 +25,7 @@ function updateChartForMonth(year, month) {
     console.log(`Updating chart for ${year}-${month}, Total Days: ${daysInMonth}`);
 
     // Ensure correct 0-based month index
-    const [labels, data] = Dashboard_1_Barchart_inMonth(parseInt(month), parseInt(year));
+    const [labels, data] = generate_Barchart_dashboard_1_inMonth(parseInt(month), parseInt(year));
 
     drawBarChart(labels, data, "chart1");
 }
@@ -124,13 +124,13 @@ function update_kpi_total_number_of_bookings(year, month = '') {
     const kpi_totalArrivalElement = document.getElementById("total-arrival-this-month");
     let kpi_context = 'There seem to be no data to process :(';
     if (year && month) {
-        kpi_context = `Total Arrivals of ${months[month-1]}, ${year} : ${  get_totalbookings(parseInt(year), parseInt(month)) }`; // Get total bookings for the selected month in a year
+        kpi_context = `Total Arrivals of ${months[month-1]}, ${year} : ${  count_total_bookings(parseInt(year), parseInt(month)) }`; // Get total bookings for the selected month in a year
     } else if (year) {
-        kpi_context = `Total Arrivals of ${year} : ${  get_totalbookings(parseInt(year)) }`; // Get total bookings for the selected year
+        kpi_context = `Total Arrivals of ${year} : ${  count_total_bookings(parseInt(year)) }`; // Get total bookings for the selected year
     } else {
         // If no year is selected, calculate the total bookings across all available years
         const totalBookingsForAllYears = availableYears.reduce((total, year) => {
-            return total + get_totalbookings(parseInt(year)); // Sum the bookings for each year in availableYears
+            return total + count_total_bookings(parseInt(year)); // Sum the bookings for each year in availableYears
         }, 0);
         kpi_context = `Total Arrivals of All time: ${  totalBookingsForAllYears }`;
     }
@@ -147,7 +147,7 @@ function update_kpi_total_number_of_bookings_compared_to_last_period(year, month
     
     if (year && month) {
         // Monthly comparison
-        currentTotal = get_totalbookings(parseInt(year), parseInt(month));
+        currentTotal = count_total_bookings(parseInt(year), parseInt(month));
         
         // Calculate previous month (handle January case by going to previous year December)
         let prevYear = parseInt(year);
@@ -158,7 +158,7 @@ function update_kpi_total_number_of_bookings_compared_to_last_period(year, month
             prevYear -= 1;
         }
         
-        previousTotal = get_totalbookings(prevYear, prevMonth);
+        previousTotal = count_total_bookings(prevYear, prevMonth);
         
         if (previousTotal > 0) {
             growthRate = ((currentTotal - previousTotal) / previousTotal) * 100;
@@ -169,8 +169,8 @@ function update_kpi_total_number_of_bookings_compared_to_last_period(year, month
         
     } else if (year) {
         // Yearly comparison
-        currentTotal = get_totalbookings(parseInt(year));
-        previousTotal = get_totalbookings(parseInt(year) - 1);
+        currentTotal = count_total_bookings(parseInt(year));
+        previousTotal = count_total_bookings(parseInt(year) - 1);
         
         if (previousTotal > 0) {
             growthRate = ((currentTotal - previousTotal) / previousTotal) * 100;
@@ -194,7 +194,7 @@ function update_kpi_booking_volume_difference(year, month = '') {
     
     if (year && month) {
         // Monthly comparison
-        currentTotal = get_totalbookings(parseInt(year), parseInt(month));
+        currentTotal = count_total_bookings(parseInt(year), parseInt(month));
         
         // Calculate previous month (handle January case by going to previous year December)
         let prevYear = parseInt(year);
@@ -205,7 +205,7 @@ function update_kpi_booking_volume_difference(year, month = '') {
             prevYear -= 1;
         }
         
-        previousTotal = get_totalbookings(prevYear, prevMonth);
+        previousTotal = count_total_bookings(prevYear, prevMonth);
         
         if (previousTotal !== undefined) {
             difference = currentTotal - previousTotal;
@@ -217,8 +217,8 @@ function update_kpi_booking_volume_difference(year, month = '') {
         
     } else if (year) {
         // Yearly comparison
-        currentTotal = get_totalbookings(parseInt(year));
-        previousTotal = get_totalbookings(parseInt(year) - 1);
+        currentTotal = count_total_bookings(parseInt(year));
+        previousTotal = count_total_bookings(parseInt(year) - 1);
         
         if (previousTotal !== undefined) {
             difference = currentTotal - previousTotal;
@@ -243,8 +243,8 @@ function update_kpi_booking_percentage_of_total(year, month = '') {
     
     if (year && month) {
         // Monthly percentage of yearly total
-        periodTotal = get_totalbookings(parseInt(year), parseInt(month));
-        overallTotal = get_totalbookings(parseInt(year)); // Total for the year
+        periodTotal = count_total_bookings(parseInt(year), parseInt(month));
+        overallTotal = count_total_bookings(parseInt(year)); // Total for the year
         
         if (overallTotal > 0) {
             percentage = (periodTotal / overallTotal) * 100;
@@ -255,11 +255,11 @@ function update_kpi_booking_percentage_of_total(year, month = '') {
         
     } else if (year) {
         // Yearly percentage of all-time total
-        periodTotal = get_totalbookings(parseInt(year));
+        periodTotal = count_total_bookings(parseInt(year));
         
         // Calculate total bookings across all available years
         overallTotal = availableYears.reduce((total, yr) => {
-            return total + get_totalbookings(parseInt(yr));
+            return total + count_total_bookings(parseInt(yr));
         }, 0);
         
         if (overallTotal > 0) {
@@ -288,7 +288,7 @@ function update_monthly_distribution_pie_chart(year) {
     if (!year) {
         // No year selected, compare all available years
         availableYears.forEach(yr => {
-            const yearTotal = get_totalbookings(parseInt(yr));
+            const yearTotal = count_total_bookings(parseInt(yr));
             if (yearTotal > 0) {
                 labels.push(yr.toString());
                 data.push(yearTotal);
@@ -305,7 +305,7 @@ function update_monthly_distribution_pie_chart(year) {
     
     // Populate data for all months in the selected year
     for (let month = 1; month <= 12; month++) {
-        const monthlyTotal = get_totalbookings(parseInt(year), month);
+        const monthlyTotal = count_total_bookings(parseInt(year), month);
         
         // Only add months that have data
         if (monthlyTotal > 0) {

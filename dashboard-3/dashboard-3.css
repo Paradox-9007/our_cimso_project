@@ -1,0 +1,115 @@
+
+
+/* Title section remains the same */
+.D3 #top-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.D3 #top-title h4 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+
+
+/* Main column styles */
+.D3 #main-col {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    min-width: 300px;
+}
+
+.D3 #main-col-top, #main-col-bottom {
+    flex: 1;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+}
+
+/* Side column styles */
+.D3 #side-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 200px;
+}
+
+.D3 #side-col-top {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.D3 #total_arrival_today, #total_departure_today {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.D3 #side-col-bottom {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Bottom row styles - converted from grid to flex */
+.D3 #bottom-row {
+    flex-basis: 100%;
+    display: flex;
+    gap: 20px;
+}
+
+.D3 #bottom-row-first {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.D3 #arrival_percent, #departure_percent {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    flex: 1;
+    min-height: 150px;
+}
+
+.D3 #bottom-row-second {
+    flex: 2;
+    display: flex;
+    gap: 20px;
+}
+
+.D3 #arrival_percent_chart, #departure_percent_chart {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

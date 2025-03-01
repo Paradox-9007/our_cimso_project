@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/dashboard-2/dashboard-2.js" type="module"></script>
+</head>
+
+<link rel="stylesheet" href="/dashboard-2/dashboard-2.css">
+<div id="top-title">
+    <h4>Comparison of Member vs. General Guest arrival bookings within a current month</h4>
+</div>
+<div id="visualization-container" class="D2">
+    <div id="first-row">
+        <div id="first-row-left">
+            <div class="filter">
+                <select id="D2-choose_year"></select>
+                <select id="D2-choose_month"></select> 
+            </div>
+            <canvas id="chart21" style="height: auto; width: auto; align-self: center;"></canvas>
+        </div>
+        <div id="first-row-right">
+            <div id="kpi-one">kpi one</div>
+            <div id="kpi-two">kpi two</div>
+            <div id="kpi-three">kpi three</div>
+        </div>
+    </div>
+    <div id="second-row">
+        <div id="second-row-left">
+            ai analysis
+        </div>
+        <div id="second-row-right">
+            <canvas id="chart22" style="height: auto; width: auto; align-self: center;"></canvas>
+            <div id="extra-kpi">
+                <div id="two-extra-kpi">
+                    <div id="kpi-four">kpi one</div>
+                    <div id="kpi-five">kpi two</div>
+                </div>
+                <div id="kpi-six">
+                    This is a line
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
