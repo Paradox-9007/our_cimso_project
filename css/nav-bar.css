@@ -15,7 +15,7 @@ nav {
     overflow: hidden;
     z-index: 1000;
     max-height: 108px;
-    font-size: 18px
+    font-size: 18px;
 }
 
 .dash_board {
@@ -35,6 +35,7 @@ nav > div {
     height: 56px;
     margin: 10px 0;
 }
+
 nav span {
     padding: 10px 20px;
     border-radius: 5px;
@@ -42,101 +43,91 @@ nav span {
     transition: background 0.3s, transform 0.2s;
     display: inline-block;
 }
+
 nav span:hover {
     background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
+    transform: scale(1.07);
 }
+
 nav span.active {
     background: white;
     color: #007bff;
 }
+
 #dashboardContainer {
-display: flex;
-flex-wrap: nowrap; /* Don't allow items to wrap to the next line */
-justify-content: flex-start;
-align-items: center;
-max-width: 78%; /* Fixed width of the container */
-max-height: 300px; /* Fixed height of the container */
-gap: 5px;
-position: relative;
-overflow: hidden; /* Hide overflow content */
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: 80%;
+    max-height: 300px;
+    gap: 5px;
+    position: relative;
+    overflow: hidden;
 }
 
 #dashboardContainer span {
-position: relative;
-display: flex;
-align-items: center;
-justify-content: center;
-align-items: center;
-font-size: 12px;
-padding: 8px;
-white-space: wrap;
-cursor: pointer;
-flex: 1 1 25%; /* Flex property to allow resizing */
-max-width: 100%;
-box-sizing: border-box;
-transition: all 0.2s ease;
-flex-shrink: 1; /* Allow shrinking when container overflows */
-position: relative;
-text-align: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    padding: 8px;
+    white-space: wrap;
+    cursor: pointer;
+    flex: 1 1 25%;
+    max-width: 100%;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+    flex-shrink: 1;
+    text-align: center;
 }
 
 #dashboardContainer span::before {
-position: absolute;
-top: 0; /* Adjust this to place the number correctly */
-right: 0; /* Adjust this to place the number correctly */
-background-color: #ffffff; /* Highlight the number */
-color: rgb(0, 0, 0);
-font-size: 10px;
-font-weight: bold;
-width: 16px;
-height: 16px;
-text-align: center;
-line-height: 16px;
-border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(155, 155, 255, 0.4);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    color: rgb(0, 0, 0);
+    font-size: 9px;
+    font-weight: bold;
+    width: 14px;
+    height: 14px;
+    text-align: center;
+    line-height: 14px;
+    border-radius: 50%;
+    content: attr(data-index);
 }
 
-#dashboardContainer span#dashboardBtn::before {
-display: none;
+#dashboardContainer span.active::after {
+    content: '×';
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    background-color: rgba(155, 155, 255, 0.4);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    color: rgb(255, 129, 156);
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    cursor: pointer;
 }
-#dashboardContainer span#dashboardBtn{
-font-size: 16px;
-min-width: fit-content;
-}
+
+#dashboardContainer span#dashboardBtn::before,
 #dashboardContainer span#dropdownSpan::before {
-display: none;
+    display: none;
 }
 
-#dashboardContainer span .delete-btn {
-position: absolute;
-top: 0;
-right: 0;
-width: 20px;
-height: 20px;
-display: flex;
-align-items: center;
-justify-content: center;
-background-color: rgba(255, 255, 255, 0.3);
-color: white;
-border-radius: 50%;
-font-size: 16px;
-cursor: pointer;
-transition: background-color 0.2s;
-}
-
-#dashboardContainer span .delete-btn:hover {
-background-color: rgba(255, 0, 0, 0.7);
-}
-#dashboardContainer span:hover .delete-btn {
-opacity: 1;
-}
-
-#dashboardContainer span .delete-btn:hover {
-background-color: #cc0000;
-}
-
-#dashboardContainer span#dashboardBtn .delete-btn {
-display: none;
+#dashboardContainer span#dashboardBtn {
+    font-size: 16px;
+    min-width: fit-content;
 }
 
 #dashboardContainer span.active {
@@ -147,24 +138,27 @@ display: none;
 
 .dropdown {
     position: fixed;
-    top: 80px;
+    top: 65px;
     background: white;
     color: #333;
     width: 200px;
     border-radius: 5px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    display: none;  /* Hidden by default */
+    display: none;
     flex-direction: column;
 }
 
 .dropdown span {
     padding: 10px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.2s;
     text-align: left;
 }
 
 .dropdown span:hover {
     background: #007bff;
     color: white;
+}
+#dashboardContainer span.active:hover {
+    transform: none;
 }

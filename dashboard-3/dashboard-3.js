@@ -1,66 +1,80 @@
 // Import required modules
-import { } from '../js/processData.js';
+import { generateHourlyBookingData, getMonthlyBookingCounts } from '../js/processData.js';
 import { drawGroupedBarChart, drawDonutChart, drawPieChart } from '../js/drawChart.js';
 
-// Sample data for 24-hour arrivals and departures
-const hours = [...Array.from({length: 24}, (_, i) => `${String(i).padStart(2, '0')}:00`), '23:59'];
-const arrivalData = [5, 3, 2, 1, 2, 8, 15, 25, 45, 60, 50, 40, 35, 30, 25, 20, 15, 10, 8, 12, 18, 15, 10, 7, 7];
-const departureData = [8, 4, 2, 1, 1, 3, 10, 35, 55, 45, 35, 30, 40, 45, 35, 25, 20, 15, 10, 8, 12, 15, 12, 10, 10];
+function getCurrentDate() {
+    const today = new Date();
+    return {
+        day: today.getDate(),
+        month: today.getMonth(),
+        year: today.getFullYear()
+    };
+}
 
-// Create datasets for the grouped bar chart
-const datasets = [
-    {
-        label: 'Arrivals',
-        data: arrivalData,
-        backgroundColor: 'rgb(0, 255, 255)', // Cyan for arrivals
-    },
-    {
-        label: 'Departures',
-        data: departureData,
-        backgroundColor: 'rgb(255, 99, 132)', // Pink for departures
-    }
-];
+const datata = generateHourlyBookingData(getCurrentDate());
+// const data = generateHourlyBookingData({
+//     day: 1,
+//     month: 2,
+//     year: 2025,
+// });
 
-// Draw the grouped bar chart when the page loads
+drawGroupedBarChart(datata.labels, datata.datasets, 'chart31');
 
-    drawGroupedBarChart(hours, datasets, 'chart31');
-
-// Calculate total arrivals and departures
-const totalArrivals = arrivalData.reduce((sum, value) => sum + value, 0);
-const totalDepartures = departureData.reduce((sum, value) => sum + value, 0);
-
-// Create dataset for the donut chart
+const totalArrival =  generateHourlyBookingData(getCurrentDate()).datasets[0].data.reduce((sum, value) => sum + value, 0);
+const totalDeparture =  generateHourlyBookingData(getCurrentDate()).datasets[1].data.reduce((sum, value) => sum + value, 0);
 const donutData = {
     labels: ['Total Arrivals', 'Total Departures'],
-    data: [totalArrivals, totalDepartures],
+    data: [totalArrival, totalDeparture],
     backgroundColor: ['rgb(0, 255, 255)', 'rgb(255, 99, 132)'] // Matching colors with bar chart
 };
 
-// Draw the donut chart
+total_arrival_today.innerHTML = `Total arrival today: ${totalArrival}`;
+total_departure_today.innerHTML = `Total departure today: ${totalDeparture}`;
+
 drawDonutChart(donutData.labels, donutData.data, 'chart32');
 
-// Sample data for monthly totals
-const monthlyArrivals = 1500;
-const monthlyDepartures = 1800;
 
-// Calculate today's totals (from the existing hourly data)
-const todayTotalArrivals = arrivalData.reduce((sum, value) => sum + value, 0);
-const todayTotalDepartures = departureData.reduce((sum, value) => sum + value, 0);
 
-// Create dataset for today vs monthly arrivals pie chart
-const arrivalsPieData = {
-    labels: ['Today\'s Arrivals', 'Rest of Month Arrivals'],
-    data: [todayTotalArrivals, monthlyArrivals - todayTotalArrivals],
-    backgroundColor: ['rgb(0, 255, 255)', 'rgb(200, 255, 255)'] // Cyan theme
+const totalArrivalCurrentMonth = getMonthlyBookingCounts(getCurrentDate().month + 1, getCurrentDate().year).arrivals;
+const pieChartData_Arrival = {
+    labels: ['Today\'s Arrivals', 'Other Days\' Arrivals of current month'],
+    data: [totalArrival, totalArrivalCurrentMonth - totalArrival],
+    backgroundColor: ['rgb(0, 255, 255)', 'rgb(200, 200, 200)'] // Cyan for today, gray for other days
 };
 
-// Create dataset for today vs monthly departures pie chart
-const departuresPieData = {
-    labels: ['Today\'s Departures', 'Rest of Month Departures'],
-    data: [todayTotalDepartures, monthlyDepartures - todayTotalDepartures],
-    backgroundColor: ['rgb(255, 99, 132)', 'rgb(255, 200, 200)'] // Pink theme
+drawPieChart(pieChartData_Arrival.labels, pieChartData_Arrival.data, 'chart33');
+
+const totalDepartureCurrentMonth = getMonthlyBookingCounts(getCurrentDate().month + 1, getCurrentDate().year).arrivals;
+const pieChartData_Departure = {
+    labels: ['Today\'s Arrivals', 'Other Days\' Departure of current month'],
+    data: [totalDeparture, totalDepartureCurrentMonth - totalDeparture],
+    backgroundColor: ['rgb(0, 255, 255)', 'rgb(200, 200, 200)'] // Cyan for today, gray for other days
 };
 
-// Draw the pie charts
-drawPieChart(arrivalsPieData.labels, arrivalsPieData.data, 'chart33');
-drawPieChart(departuresPieData.labels, departuresPieData.data, 'chart34');
+drawPieChart(pieChartData_Departure.labels, pieChartData_Departure.data, 'chart34');
+
+const arrivalPercentage = Math.round((totalArrival / totalArrivalCurrentMonth) * 100);
+const departurePercentage = Math.round((totalDeparture / totalDepartureCurrentMonth) * 100);
+
+arrival_percent.innerHTML = `Today's arrivals are ${arrivalPercentage}% of this month's total arrivals`;
+departure_percent.innerHTML = `Today's departures are ${departurePercentage}% of this month's total departures`;
+// Calculate total arrivals and departures
+// const totalArrivals = arrivalData.reduce((sum, value) => sum + value, 0);
+// const totalDepartures = departureData.reduce((sum, value) => sum + value, 0);
+
+// // Create dataset for the donut chart
+// const donutData = {
+//     labels: ['Total Arrivals', 'Total Departures'],
+//     data: [totalArrivals, totalDepartures],
+//     backgroundColor: ['rgb(0, 255, 255)', 'rgb(255, 99, 132)'] // Matching colors with bar chart
+// };
+
+// // Draw the donut chart
+// drawDonutChart(donutData.labels, donutData.data, 'chart32');
+
+
+
+
+// // Draw the pie charts
+// drawPieChart(arrivalsPieData.labels, arrivalsPieData.data, 'chart33');
+// drawPieChart(departuresPieData.labels, departuresPieData.data, 'chart34');

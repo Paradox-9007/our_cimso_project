@@ -63,3 +63,47 @@ fetch("/dashboard-2/dashboard-2.html")
       .catch((error) => console.error("Error importing the module:", error));
   })
   .catch((error) => console.error("Error loading the page:", error));
+
+  fetch("/dashboard-6/dashboard-6.html")
+  .then((response) => response.text())
+  .then((data) => {
+      document.getElementById("dash-6").innerHTML = data;
+
+      // Import the JS module dynamically
+      import("/dashboard-6/dashboard-6.js")
+      .catch((error) => console.error("Error importing the module:", error));
+  })
+  .catch((error) => console.error("Error loading the page:", error));
+
+  fetch("/dashboard-7/dashboard-7.html")
+  .then((response) => response.text())
+  .then((data) => {
+      document.getElementById("dash-7").innerHTML = data;
+
+      // Import the JS module dynamically
+      import("/dashboard-7/dashboard-7.js")
+      .catch((error) => console.error("Error importing the module:", error));
+  })
+  .catch((error) => console.error("Error loading the page:", error));
+
+  fetch("/dashboard-8/dashboard-8.html")
+  .then((response) => response.text())
+  .then((data) => {
+      document.getElementById("dash-8").innerHTML = data;
+
+      // Import the JS module dynamically
+      import("/dashboard-8/dashboard-8.js")
+      .catch((error) => console.error("Error importing the module:", error));
+  })
+  .catch((error) => console.error("Error loading the page:", error));
+
+  fetch("/dashboard-9/dashboard-9.html")
+  .then((response) => response.text())
+  .then((data) => {
+      document.getElementById("dash-9").innerHTML = data;
+
+      // Import the JS module dynamically
+      import("/dashboard-9/dashboard-9.js")
+      .catch((error) => console.error("Error importing the module:", error));
+  })
+  .catch((error) => console.error("Error loading the page:", error));

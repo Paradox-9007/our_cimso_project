@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/dashboard-9/dashboard-9.css">
+    <script src="/dashboard-9/dashboard-9.js" type="module"></script>
+</head>
+
+<div id="top-title">
+    <h4>Total Income by current month and current year</h4>
+</div>
+<div id="visualization-container" class="D9">
+
+    <div id="main-container">
+        <div class="filter">
+            <select id="D9-choose_year"></select>
+            <select id="D9-choose_month"></select> 
+        </div>
+        <canvas id="chart91" style="height: auto; width: auto;"></canvas>
+    </div>  
+
+    <div id="side-container">
+        <div id="kpi-container">
+            <div class="kpi-visual" id="total-income-this-month">
+                <h3>Monthly Revenue</h3>
+                <div class="kpi-value"><span id="total-income-value">0</span></div>
+                <div id="kpi-trend-1">Total Income for Current Period</div>
+            </div>
+            <div class="kpi-visual" id="month-over-month-change">
+                <h3>Revenue Growth</h3>
+                <div class="kpi-value"><span id="mom-change-value">0</span></div>
+                <div id="kpi-trend-2">Month-over-Month Performance</div>
+            </div>
+            <div class="kpi-visual" id="income-contribution">
+                <h3>Year-to-Date Share</h3>
+                <div class="kpi-value"><span id="contribution-value">0</span></div>
+                <div id="kpi-trend-3">Contribution to Annual Revenue</div>
+            </div>
+        </div>
+        <div id="side-visual">
+            <canvas id="chart92" style="height: auto; width: auto;"></canvas>
+        </div>
+    </div>
+
+    <div id="bottom-container">
+        <div id="bottom-left-visual">
+
+            1. Trend Analysis and Forecasting<br>
+            
+            - What It Does: Uses historical data to predict future bookings.<br>
+            - How It Helps: Forecasts total bookings for the year, enabling informed decisions and resource planning.<br>
+            - Example Insight: "Bookings are expected to increase by [X%] over the next six months."<br>
+            
+            2. Growth Rate Comparison<br>
+            
+            - What It Does: Compares bookings month-over-month and year-over-year.<br>
+            - How It Helps: Reveals growth or decline trends, helping evaluate marketing effectiveness.<br>
+            - Example Insight: "Bookings in February 2025 are up [X%] from January 2025 and [X%] from February 2024."<br>
+
+            3. Anomaly Detection and Insights<br>
+            
+            - What It Does: Identifies unusual booking patterns and potential causes.<br>
+            - How It Helps: Pinpoints factors influencing bookings, such as promotions or external events.<br>
+            - Example Insight: "A booking spike in February 2025 was linked to a promotion campaign."</div>
+    </div>
+</div>

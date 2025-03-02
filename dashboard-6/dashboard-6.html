@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/dashboard-6/dashboard-6.css">
+    <script src="/dashboard-6/dashboard-6.js" type="module"></script>
+</head>
+
+<div id="top-title">
+    <h4>Age Group Segmentation of Arrival Guests in the current month</h4>
+</div>
+<div id="visualization-container" class="D6">
+    <!-- First Row -->
+    <div id="main-row">
+        <div id="main-row-1">
+            <div class="D6-filter">
+                <select id="D6-choose_year"></select>
+                <select id="D6-choose_month"></select>
+            </div>
+            <canvas id="chart61"></canvas>
+        </div>
+        <div id="main-row-2">
+            <div id="kid_total">Number of children</div>
+            <div id="middleage_total">Number of adults</div>
+            <div id="adult_total">Number of middle-age</div>
+            <div id="elderly_total">Number of elderly</div>
+        </div>
+    </div>
+
+    <!-- Second Row -->
+    <div id="second-main-row">
+        <div id="first-col">
+            <h3>AI Report of the analysis</h3>
+        </div>
+        <div id="second-col">
+            <div id="second-col-one">
+                <h3>Age group trends over the current month</h3>
+                <canvas id="chart62"></canvas>
+                <div id="second-col-two">
+                    <div id="second-col-pie">
+                        <h3>Revenue Contribution by each age group</h3>
+                        <canvas id="chart63"></canvas>
+                    </div>
+                    <div id="second-col-kpi">
+                        <div id="middleage_rev">Number of adults</div>
+                        <div id="adult_rev">Number of adults</div>
+                        <div id="elderly_rev">Number of adults</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</html>

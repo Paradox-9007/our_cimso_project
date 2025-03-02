@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/dashboard-7/dashboard-7.css" />
+    <script src="/dashboard-7/dashboard-7.js" type="module"></script>
+  </head>
+
+  <div id="top-title">
+    <h4>Number and percentage of canceled bookings within a current month</h4>
+  </div>
+  <div id="visualization-container" class="D7">
+    <div id="first-row" class="kpi-container">
+      <div id="Canceled" class="kpi-item">kpi1</div>
+      <div id="Pending" class="kpi-item">kpi2</div>
+      <div id="Accpeted" class="kpi-item">kpi3</div>
+    </div>
+    <div id="second-row" class="chart-container">
+      <div id="second-row_left_pie" class="chart-item"> 
+        <canvas id="chart71" style="width: auto; height: auto;"></canvas>
+        <div class="filter-container">
+          <select id="D7-choose_year" class="filter-dropdown"></select>
+          <select id="D7-choose_month" class="filter-dropdown"></select>
+        </div>
+      </div>
+      <div id="second-row_right_bar" class="chart-item">
+        <canvas id="chart72"></canvas>
+      </div>
+    </div>
+    <div id="third-row" class="ai-container">
+      <div id="Ai_report" class="ai-item">AI Report</div>
+    </div>
+  </div>
+</html>

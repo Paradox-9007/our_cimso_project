@@ -25,6 +25,7 @@
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     min-width: 300px;
+    min-height: min-content;
 }
 
 .D3 #main-col-top, #main-col-bottom {
@@ -35,7 +36,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 50vh;
+    min-height: 400px;
+}
+
+.D3 #main-col-bottom {
+    max-height: 300px;
+    width: auto;
 }
 
 /* Side column styles */

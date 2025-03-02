@@ -15,17 +15,23 @@
 <div id="visualization-container" class="D5">
     <div id="first-row">
         <div id="first-row-first-col">
-            bar chart
+            <div id="D5-filter">
+                <select id="D5-choose_month"></select>
+            </div>
+            <canvas id="chart51"></canvas>
         </div>
         <div id="first-row-second-col">
             <div id="first-row-second-col-kpi-one">
-                kpi one
+                <div class="kpi-label">Total birthdays in a month</div>
+                <div id="total-birthdays" class="kpi-value">0</div>
             </div>
             <div id="first-row-second-col-kpi-two">
-                kpi two
+                <div class="kpi-label">Percentage of total birthdays</div>
+                <div id="birthday-percentage" class="kpi-value">0%</div>
             </div>
             <div id="first-row-second-col-kpi-three">
-                kpi three
+                <div class="kpi-label">Upcoming birthdays (next 7 days)</div>
+                <div id="upcoming-birthdays" class="kpi-value">0</div>
             </div>
         </div>
     </div>
@@ -35,10 +41,21 @@
         </div>
         <div id="second-row-second-col">
             <div id="second-row-second-col-top">
-                table
-            </div>
-            <div id="second-row-second-col-bottom">
-                pie chart
+                <div class="birthday-table-container">
+                    <table id="upcoming-birthday-table">
+                        <thead>
+                            <tr>
+                                <th>Client ID</th>
+                                <th>Name</th>
+                                <th>Birthday</th>
+                                <th>Days Until</th>
+                            </tr>
+                        </thead>
+                        <tbody id="upcoming-birthday-list">
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
