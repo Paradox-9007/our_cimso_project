@@ -1,5 +1,4 @@
 
-document.addEventListener("DOMContentLoaded", () => {
     const dashboards = [
         "Monthly Arrival Stats", "Member & General Arrivals", "Today's Arrivals/Departures",
         "Monthly Occupancy & ADR", "Guest Birthdays", "Arrival Age Groups",
@@ -13,10 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let list_of_selectedDashboard = [];
     let currentDashboardIndex = -1; // Initialize to -1 to prevent errors
+    let currentSection = "homepage"; // Track current section
 
     function showSection(sectionId) {
-        console.log("sectionId:", sectionId);  // Log the sectionId
+        console.log("sectionId:", sectionId);
         const section = document.getElementById(sectionId);
+        currentSection = sectionId; // Update current section
 
         if (section) {
             document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
@@ -54,44 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function removeDashboard(dashboard) {
-        const index = list_of_selectedDashboard.indexOf(dashboard);
-        if (index > -1) {
-            list_of_selectedDashboard.splice(index, 1);
-            
-            // Remove the dashboard item from navigation
-            const navItem = Array.from(dashboardContainer.children).find(
-                item => item.dataset.section === dashboard
-            );
-            if (navItem) {
-                navItem.remove();
-            }
-
-            // Add the dashboard back to dropdown
-            const span = document.createElement("span");
-            span.textContent = dashboard;
-            span.dataset.section = dashboard;
-            span.id = 'dropdownSpan';
-            span.addEventListener("click", () => selectDashboard(dashboard));
-            dashboardDropdown.appendChild(span);
-
-            // Update indexes for remaining dashboards
-            Array.from(dashboardContainer.children).forEach((navItem, idx) => {
-                if (navItem.id !== "dashboardBtn") {
-                    navItem.dataset.index = idx - 1;
-                }
-            });
-            // Update view
-            if (list_of_selectedDashboard.length > 0) {
-                currentDashboardIndex = Math.min(index, list_of_selectedDashboard.length - 1);
-                showSection(list_of_selectedDashboard[currentDashboardIndex]);
-            } else {
-                currentDashboardIndex = -1;
-                showSection("homepage");
-            }
-        }
-    }
-
     function selectDashboard(selectedDashboard) {
         showSection(selectedDashboard);
 
@@ -102,22 +65,9 @@ document.addEventListener("DOMContentLoaded", () => {
             let newNavItem = document.createElement("span");
             newNavItem.textContent = selectedDashboard;
             newNavItem.dataset.section = selectedDashboard;
-            
-            // Add click handler for the dashboard item
             newNavItem.addEventListener("click", (event) => {
-                // Check if the click was on the close button (::after pseudo-element)
-                const rect = event.target.getBoundingClientRect();
-                const x = event.clientX - rect.left;
-                const y = event.clientY - rect.top;
-                
-                // If click is in the top-right corner (where ::after is)
-                if (x >= rect.width - 20 && y <= 20) {
-                    event.stopPropagation();
-                    removeDashboard(selectedDashboard);
-                } else {
-                    event.stopPropagation();
-                    selectDashboard(selectedDashboard);
-                }
+                event.stopPropagation();
+                selectDashboard(selectedDashboard); // Corrected: Pass selectedDashboard
             });
             dashboardContainer.appendChild(newNavItem);
         }
@@ -131,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 navItem.dataset.index = index - 1;
             }
         });
+
         // Highlight the active dashboard
         document.querySelectorAll("#dashboardContainer span").forEach(navItem => {
             navItem.classList.remove("active");
@@ -200,5 +151,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     populateDashboardDropdown();
     showSection("homepage");
-});
 
+    function getCurrentSection() {
+        return currentSection;
+    }
+
+export { getCurrentSection };

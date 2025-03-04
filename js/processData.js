@@ -114,34 +114,6 @@ function convertNormalminuteToEminutes(dateObj) {
   return diffInMinutes;
 }
 
-// console.log(dateToMinutes({
-//   day: 26,
-//   month: 2,
-//   year: 2025,
-//   time: {
-//       hours: 12,
-//       minutes: 0,
-//       period: 'PM'
-//   }
-// }));
-
-
-console.log("ExcelDate_to_NormalDate : " + convertEminutesToNormalminute(62065440).year);
-console.log("ExcelDate_to_NormalDate : " + convertEminutesToNormalminute(62065440).month);
-console.log("ExcelDate_to_NormalDate : " + convertEminutesToNormalminute(62065440).day);
-console.log("ExcelDate_to_NormalDate : " + convertEminutesToNormalminute(62065440).time.hours);
-console.log("ExcelDate_to_NormalDate : " + convertEminutesToNormalminute(62065440).time.minutes);
-
-console.log("ExcelDate_to_NormalDate : " + convertNormalminuteToEminutes({
-  day: 1,
-  month: 1,
-  year: 2018,
-  time: {
-      hours: 0,
-      minutes: 0,
-  }}));
-// console.log("ExcelDate_to_NormalDate : " + convertNormalminuteToEminutes();
-
 function generate_Barchart_dashboard_1_inMonth(month, year) {
     const totalDaysInMonth = new Date(year, month, 0).getDate();
     
@@ -771,9 +743,12 @@ function getBookingsByAgeGroup(year = null, month = null) {
     // Get relevant bookings based on period
     let relevantBookings;
     if (year && month) {
-      // Monthly view
+      // Monthly view - Create dates in local timezone
       const startDate = new Date(year, month - 1, 1);
       const endDate = new Date(year, month, 0);
+      // Set time to start of day for consistent comparison
+      startDate.setHours(0, 0, 0, 0);
+      endDate.setHours(23, 59, 59, 999);
       const startDate_inEdate = NormalDate_to_ExcelDate(startDate);
       const endDate_inEdate = NormalDate_to_ExcelDate(endDate);
       relevantBookings = filter_bookingsData_byArrival(
@@ -782,20 +757,23 @@ function getBookingsByAgeGroup(year = null, month = null) {
         endDate_inEdate
       );
     } else if (year) {
-      // Yearly view
-      const startDate = new Date(year, 0, 1);
-      const endDate = new Date(year, 11, 31);
-      const startDate_inEdate = NormalDate_to_ExcelDate(startDate);
-      const endDate_inEdate = NormalDate_to_ExcelDate(endDate);
-      relevantBookings = filter_bookingsData_byArrival(
-        bookingsData,
-        startDate_inEdate,
-        endDate_inEdate
-      );
-    } else {
-      // All time view
-      relevantBookings = bookingsData;
-    }
+        // Yearly view - Create dates in local timezone
+        const startDate = new Date(year, 0, 1);
+        const endDate = new Date(year, 11, 31);
+        // Set time to start/end of day for consistent comparison
+        startDate.setHours(0, 0, 0, 0);
+        endDate.setHours(23, 59, 59, 999);
+        const startDate_inEdate = NormalDate_to_ExcelDate(startDate);
+        const endDate_inEdate = NormalDate_to_ExcelDate(endDate);
+        relevantBookings = filter_bookingsData_byArrival(
+          bookingsData,
+          startDate_inEdate,
+          endDate_inEdate
+        );
+      } else {
+        // All time view
+        relevantBookings = bookingsData;
+      }
 
     // Process each booking
     relevantBookings.forEach((booking) => {
@@ -1101,19 +1079,20 @@ function generateBookingStatusChartData(year = null, month = null, statusLabels 
       // Calculate total charge for filtered bookings
       return calculateTotalActualCharge(filteredBookings);
   }
-  
-  
 
-console.log(currentDate);
-console.log(currentDate_inEdate);
-console.log("ExcelDate_to_NormalDate for ksh: " + convertNormalminuteToEminutes({
-  day: 1,
-  month: 3,
-  year: 2025,
-  time: {
-      hours: 14,
-      minutes: 0,
-  }}));
+// console.log("ExcelDate_to_NormalDate : " + convertEminutesToNormalminute(62065440).year);
+// console.log("ExcelDate_to_NormalDate : " + convertEminutesToNormalminute(62065440).month);
+// console.log("ExcelDate_to_NormalDate : " + convertEminutesToNormalminute(62065440).day);
+// console.log("ExcelDate_to_NormalDate : " + convertEminutesToNormalminute(62065440).time.hours);
+// console.log("ExcelDate_to_NormalDate : " + convertEminutesToNormalminute(62065440).time.minutes);
+// console.log("ExcelDate_to_NormalDate : " + convertNormalminuteToEminutes({
+//   day: 1,
+//   month: 1,
+//   year: 2018,
+//   time: {
+//       hours: 0,
+//       minutes: 0,
+//   }}));
 
 // Add to exports
 export { 

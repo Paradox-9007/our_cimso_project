@@ -54,7 +54,7 @@
   }
   
   /* Second row styles */
-  .D6 #second-main-row {
+  .D6 #second-main-row, .D6 #last-row  {
     display: flex;
     gap: 20px;
     min-height: min-content;
@@ -89,7 +89,7 @@
   
   /* Charts and KPIs section */
   .D6 #second-col {
-    flex: 8;
+    flex: 4;
     display: flex;
     gap: 20px;
     width: 60%;

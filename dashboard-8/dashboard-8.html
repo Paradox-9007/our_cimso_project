@@ -9,38 +9,39 @@
     <script src="/dashboard-8/dashboard-8.js" type="module"></script>
 </head>
 
-<div id="top-title">
-    <h4>Most Frequently booked units within a current month</h4>
-</div>
-<div id="visualization-container" class="D8">
-    <div id="main-row">
-        <div id="main-row-chart">
-            <div class="filter">
-                <select id="D8-choose_year"></select>
-                <select id="D8-choose_month"></select> 
+<div class="D8">
+    <div id="top-title">
+        <h4>Most Frequently Booked Units Analysis</h4>
+    </div>
+    <div id="visualization-container">
+        <div id="main-row">
+            <div id="main-row-chart">
+                <div class="filter">
+                    <select id="D8-choose_year"></select>
+                    <select id="D8-choose_month"></select> 
+                </div>
+                <div id="chart-main">
+                    <canvas id="chart81"></canvas>
+                </div>
             </div>
-            <div id="chart-main">
-                <canvas id="chart81" style="height: 640px; width: 1280px;"></canvas>
+            <div id="main-row-2">
+                <div id="top1" class="kpi-box"></div>
+                <div id="top2" class="kpi-box"></div>
+                <div id="top3" class="kpi-box"></div>
             </div>
         </div>
-        <div id="main-row-2">
-            <div id="top1"> KPI 1 </div>
-            <div id="top2"> KPI 2 </div>
-            <div id="top3"> KPI 3 </div>
+        <div id="second-row">
+            <div id="top4" class="kpi-box"></div>
+            <div id="top5" class="kpi-box"></div>
+            <div id="top6" class="kpi-box"></div>
+            <div id="top7" class="kpi-box"></div>
+            <div id="top8" class="kpi-box"></div>
+            <div id="top9" class="kpi-box"></div>
+            <div id="top10" class="kpi-box"></div>
+        </div>
+        <div id="third-row">
+            <div id="D8-ai-analysis"></div>
         </div>
     </div>
-    <div id="second-row">
-        <div id="top4"> KPI 4 </div>
-        <div id="top5"> KPI 5 </div>
-        <div id="top6"> KPI 6 </div>
-        <div id="top7"> KPI 7 </div>
-        <div id="top8"> KPI 8 </div>
-        <div id="top9"> KPI 9 </div>
-        <div id="top10"> KPI 10 </div>
-    </div>
-    <div id="third-row">
-        AI Analysis Report
-    </div>
 </div>
-
 </html>

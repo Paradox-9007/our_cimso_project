@@ -1,6 +1,7 @@
 import { getBookingsByAgeGroup, generate_Barchart_dashboard_1_inYears } from "../js/processData.js";
 import { drawMultiLineChart, drawDonutChart, drawPieChart } from "../js/drawChart.js";
-
+import { generateAiContent } from '../js/apiCaller.js';
+import { getCurrentSection } from '../js/responsive.js';
 // Initialize variables
 const currentDate = new Date();
 const currentMonth = currentDate.getMonth() + 1;
@@ -14,7 +15,110 @@ let bar = true;
 // Age group labels
 const ageGroupLabels = ["Children (1-17)", "Adult (18-35)", "Middle Age (36-64)", "Elderly (65+)"];
 
-// Function to calculate revenue and profit by age group
+
+
+// Ai part xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx
+let kpi_for_ai = {};
+let aiAnalysisTimeout;
+let Is_ai_on;
+
+async function updateAIAnalysis() {
+    const aiAnalysisElement = document.getElementById('D6-ai-analysis');
+    const aiAnalysisElement2 = document.getElementById('D6-ai-analysis-2');
+    if (!aiAnalysisElement || !aiAnalysisElement2) return;
+
+    for (let retryCount = 0; retryCount < 3; retryCount++) {
+        try {
+            aiAnalysisElement.innerHTML = 'Generating analysis...';
+            aiAnalysisElement2.innerHTML = 'Generating analysis...';
+
+            // Format data
+            const chartDataString = Object.values(kpi_for_ai).filter(Boolean).join('\n');
+            const combinedPrompt = `Based on the following booking data:\n${chartDataString}\n
+            Please provide analysis in three sections:
+            1. Age Group Distribution Analysis
+            2. Profit Contribution and Trends
+            3. Correlation Between Arrival & Revenue
+            write %n% at the end of number two and at the start of number three.
+            Each analysis should have at least words count of 400`;
+
+            // API call with timeout
+            const analysis = await Promise.race([
+                generateAiContent(combinedPrompt),
+                new Promise((_, reject) => setTimeout(() => reject(new Error('Request timeout')), 30000))
+            ]);
+
+            // Format the entire analysis first
+            const formattedAnalysis = analysis
+            .replace(/##\s*(.*?)(?:\n|$)/g, (_, p1) => `<h5 style="text-align: center">${p1.replace(/\s*\([^)]*\)/g, '')}</h5>`)
+            .replace(/\*\*(.*?)\*\*/g, '<br><b>$1</b>')
+            .replace(/\s\*(?!\*)/g, ' ')
+            .replace(/\*(?!\*)/g, ' ')
+            .replace(/\n/g, '<br>')
+            .replace(/<br><br>/g, '<br>')
+            .replace(/([-]?\d+\.?\d*%)/g, '<b>$1</b>')
+            .replace(/\$[\d,]+(\.\d{2})?/g, '<b>$&</b>')
+            .replace(/\b\d+\b/g, '<b>$&</b>')
+            .replace(/\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/g, '<b>$&</b>')
+            .replace(/(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.?\s+\d{1,2}(?:st|nd|rd|th)?\s*,?\s*\d{4}/gi, '<b>$&</b>')
+            .replace(/\b(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.?\s+\d{1,2}(?:st|nd|rd|th)?\b/gi, '<b>$&</b>');
+            
+            // Split the formatted analysis into two parts
+            const [firstPart, secondPart] = formattedAnalysis.split('%n%');
+            
+            aiAnalysisElement.innerHTML = `<div id="ai-text"> ${firstPart} </div>`;
+            aiAnalysisElement2.innerHTML = `<div id="ai-text"> ${secondPart} </div>`;
+            return;
+        } catch (error) {
+            console.error(`Attempt ${retryCount + 1} failed:`, error);
+            
+            if (retryCount === 2) {
+                aiAnalysisElement.innerHTML = 'Unable to generate AI analysis. Please try again later.';
+                aiAnalysisElement2.innerHTML = 'Unable to generate AI analysis. Please try again later.';
+            } else {
+                await new Promise(resolve => setTimeout(resolve, 2000 * (retryCount + 1)));
+            }
+        }
+    }
+}
+
+function updateKpiForAi(key, value) {
+    kpi_for_ai[key] = value;
+    
+    if (Is_ai_on) {
+        clearTimeout(aiAnalysisTimeout);
+        aiAnalysisTimeout = setTimeout(updateAIAnalysis, 2000);
+    }
+}
+
+async function monitorSection() {
+    const observer = new MutationObserver(async () => {
+        const isMonthlyStats = getCurrentSection() === 'Arrival Age Groups';
+        
+        if (!Is_ai_on && isMonthlyStats) {
+            Is_ai_on = true;
+            await updateAIAnalysis();
+        }
+    });
+
+    observer.observe(document.body, {
+        childList: true, subtree: true, 
+        attributes: true, characterData: true
+    });
+
+    // Initial check
+    if (!Is_ai_on && getCurrentSection() === 'Arrival Age Groups') {
+        Is_ai_on = true;
+        await updateAIAnalysis();
+    }
+}
+
+monitorSection();
+// Ai part xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx
+
+
+
+
 function calculateRevenueAndProfit(bookings) {
     const result = {
         adult: { revenue: 0, profit: 0 },
@@ -71,7 +175,9 @@ function updateChartsAndKPIs() {
         ageGroupData.summary.elderlyCount
     ];
     drawDonutChart(ageGroupLabels, bookingCounts, "chart61");
-
+    updateKpiForAi("1" , `The following are the Arrival Age Group data for ${globalSelectedYear ? globalSelectedYear : 'all time'}${globalSelectedMonth ? `, ${months[globalSelectedMonth - 1]}` : ''} `)
+    updateKpiForAi("2" , `This is the Arrival Age Group data from donut chart: ${ageGroupLabels[0]}= ${ageGroupData.summary.childrenCount}, ${ageGroupLabels[1]}= ${ageGroupData.summary.adultCount}, ${ageGroupLabels[2]}= ${ageGroupData.summary.middleAgeCount}, ${ageGroupLabels[3]}= ${ageGroupData.summary.elderlyCount} `);
+    
     // Calculate revenue and profit
     const financials = calculateRevenueAndProfit(ageGroupData.bookings);
     
@@ -96,6 +202,7 @@ function updateChartsAndKPIs() {
     document.getElementById("elderly_rev").textContent = 
         `Elderly (65+): $${financials.elderly.profit.toLocaleString()} (${contribution.elderly}%)`;
 
+    updateKpiForAi("4" , `  The following are the Revenue Contribution by each age group during the provide period: Adult (18-35): $${financials.adult.profit.toLocaleString()} (${contribution.adult}%) , Middle Age (36-64): $${financials.middleAge.profit.toLocaleString()} (${contribution.middleAge}%) , Elderly (65+): $${financials.elderly.profit.toLocaleString()} (${contribution.elderly}%)`)
     // Create profit pie chart data
     const profitData = {
         labels: ["Adult (18-35)", "Middle Age (36-64)", "Elderly (65+)"],
@@ -130,7 +237,10 @@ function updateChartsAndKPIs() {
             // Only process dates within selected year/month if specified
             if ((!globalSelectedYear || arrivalDate.getFullYear() === globalSelectedYear) &&
                 (!globalSelectedMonth || arrivalDate.getMonth() + 1 === globalSelectedMonth)) {
+                // Add one day to the date key to fix alignment
+                arrivalDate.setDate(arrivalDate.getDate() + 1);
                 const dateKey = arrivalDate.toISOString().split('T')[0];
+                
                 if (!profitsByDate.has(dateKey)) {
                     profitsByDate.set(dateKey, {
                         adult: 0,
@@ -158,19 +268,59 @@ function updateChartsAndKPIs() {
     });
 
     // Convert the map to sorted arrays
-    const sortedDates = Array.from(profitsByDate.keys()).sort();
-    dailyLabels = sortedDates.map(date => {
-        const d = new Date(date);
-        return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-    });
+    const sortedDates = Array.from(profitsByDate.keys())
+        .filter(date => {
+            if (globalSelectedMonth) {
+                const d = new Date(date);
+                return d.getMonth() + 1 === globalSelectedMonth;
+            }
+            return true;
+        })
+        .sort();
 
-    // Populate the datasets
-    sortedDates.forEach(date => {
-        const profits = profitsByDate.get(date);
-        adultProfitDataset.data.push(profits.adult);
-        middleAgeProfitDataset.data.push(profits.middleAge);
-        elderlyProfitDataset.data.push(profits.elderly);
-    });
+    // Get the number of days in the selected month
+    const getDaysInMonth = (year, month) => {
+        return new Date(year, month, 0).getDate();
+    };
+
+    // Create array with all days in month
+    let allDatesMap = new Map();
+    
+    if (globalSelectedMonth && globalSelectedYear) {
+        const totalDays = getDaysInMonth(globalSelectedYear, globalSelectedMonth);
+        for (let day = 1; day <= totalDays; day++) {
+            const dateStr = `${globalSelectedYear}-${String(globalSelectedMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            dailyLabels.push(day.toString());
+            allDatesMap.set(dateStr, {
+                adult: 0,
+                middleAge: 0,
+                elderly: 0
+            });
+        }
+        
+        // Merge existing profit data into the complete dates map
+        sortedDates.forEach(date => {
+            allDatesMap.set(date, profitsByDate.get(date));
+        });
+
+        // Populate datasets with all days
+        adultProfitDataset.data = Array.from(allDatesMap.values()).map(profit => profit.adult);
+        middleAgeProfitDataset.data = Array.from(allDatesMap.values()).map(profit => profit.middleAge);
+        elderlyProfitDataset.data = Array.from(allDatesMap.values()).map(profit => profit.elderly);
+    } else {
+        dailyLabels = sortedDates.map(date => {
+            const d = new Date(date);
+            return d.toLocaleDateString("en-US", {day: "numeric" });
+        });
+        
+        // Use existing data for non-monthly view
+        sortedDates.forEach(date => {
+            const profits = profitsByDate.get(date);
+            adultProfitDataset.data.push(profits.adult);
+            middleAgeProfitDataset.data.push(profits.middleAge);
+            elderlyProfitDataset.data.push(profits.elderly);
+        });
+    }
 
     // Draw multi-line chart with aggregated data
     drawMultiLineChart(
@@ -181,6 +331,7 @@ function updateChartsAndKPIs() {
         elderlyProfitDataset,
         "Daily Profit Trends by Age Group"
     );
+    updateKpiForAi("3" , `This is the Profit generated by different Arrival Age Group from MultiLine Chart: days-${dailyLabels}, Profit by adult- ${adultProfitDataset.data}, Profit by Middle-Ages- ${middleAgeProfitDataset.data}, Profit by Elderly- ${elderlyProfitDataset.data} `);
     // Create monthly profit trends
     const monthlyLabels = months;
     const monthlyAdultProfitDataset = { label: "Adult (18-35)", data: Array(12).fill(0) };
@@ -245,6 +396,7 @@ function updateChartsAndKPIs() {
             yearlyElderlyProfitDataset,
             "Yearly Profit Trends by Age Group"
         );
+        updateKpiForAi("3" , `This is the Profit generated by different Arrival Age Group from MultiLine Chart: years-${yearlyLabels}, Profit by adult- ${yearlyAdultProfitDataset.data}, Profit by Middle-Ages- ${yearlyMiddleAgeProfitDataset.data}, Profit by Elderly- ${yearlyElderlyProfitDataset.data} `);
     } else if (globalSelectedMonth) {
         // If a month is selected, show daily data
         drawMultiLineChart(
@@ -255,6 +407,7 @@ function updateChartsAndKPIs() {
             elderlyProfitDataset,
             "Daily Profit Trends by Age Group"
         );
+        updateKpiForAi("3" , `This is the Profit generated by different Arrival Age Group from MultiLine Chart: days-${dailyLabels}, Profit by adult- ${adultProfitDataset.data}, Profit by Middle-Ages- ${middleAgeProfitDataset.data}, Profit by Elderly- ${elderlyProfitDataset.data} `);
     } else {
         // If only year is selected, show monthly data
         drawMultiLineChart(
@@ -265,6 +418,7 @@ function updateChartsAndKPIs() {
             monthlyElderlyProfitDataset,
             "Monthly Profit Trends by Age Group"
         );
+        updateKpiForAi("3" , `This is the Profit generated by different Arrival Age Group from MultiLine Chart: months-${monthlyLabels}, Profit by adult- ${monthlyAdultProfitDataset.data}, Profit by Middle-Ages- ${monthlyMiddleAgeProfitDataset.data}, Profit by Elderly- ${monthlyElderlyProfitDataset.data} `);
     }
 }
 
@@ -287,9 +441,10 @@ function handleDropdown() {
 
     chooseYear.addEventListener("change", function() {
         globalSelectedYear = this.value ? parseInt(this.value) : null;
+        globalSelectedMonth = null; // Reset month selection whenever year changes
+        chooseMonth.value = '';
+        
         if (!this.value) {
-            globalSelectedMonth = null;
-            chooseMonth.value = '';
             chooseMonth.style.display = "none";
         } else {
             chooseMonth.style.display = "inline";

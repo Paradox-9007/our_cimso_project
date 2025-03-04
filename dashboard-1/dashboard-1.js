@@ -1,5 +1,8 @@
 import { generate_Barchart_dashboard_1_inMonth, generate_Barchart_dashboard_1_inYear, generate_Barchart_dashboard_1_inYears,count_total_bookings} from '../js/processData.js';
 import { drawBarChart, drawPieChart } from '../js/drawChart.js';
+import { generateAiContent } from '../js/apiCaller.js';
+import { getCurrentSection } from '../js/responsive.js';
+
 
 let globalSelectedYear = ''; 
 let globalSelectedMonth = ''; 
@@ -10,14 +13,112 @@ const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 const availableYears = generate_Barchart_dashboard_1_inYears()[0];
 let bar = true;
 
+// Ai part xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx
+let kpi_for_ai = {};
+let aiAnalysisTimeout;
+let Is_ai_on;
+
+async function updateAIAnalysis() {
+    const aiAnalysisElement = document.getElementById('D1-ai-analysis');
+    if (!aiAnalysisElement) return;
+
+    for (let retryCount = 0; retryCount < 3; retryCount++) {
+        try {
+            aiAnalysisElement.innerHTML = 'Generating analysis...';
+            
+            const currentData = {
+                year: globalSelectedYear || currentYear,
+                month: globalSelectedMonth || currentMonth
+            };
+
+            // Format data
+            const chartDataString = Object.values(kpi_for_ai).filter(Boolean).join('\n');
+            const combinedPrompt = `Based on the following booking data:\n${chartDataString}\n
+            Please provide analysis in three sections:
+            1. Analyze booking trends
+            2. Compare booking growth rates between periods
+            3. Identify any unusual booking patterns in the data`;
+
+            // API call with timeout
+            const analysis = await Promise.race([
+                generateAiContent(combinedPrompt),
+                new Promise((_, reject) => setTimeout(() => reject(new Error('Request timeout')), 30000))
+            ]);
+            
+            // Format and display analysis
+            const formattedAnalysis = analysis
+            .replace(/##\s*(.*?)(?:\n|$)/g, (_, p1) => `<h5 style="text-align: center">${p1.replace(/\s*\([^)]*\)/g, '')}</h5>`)
+            .replace(/\*\*(.*?)\*\*/g, '<br><b>$1</b>')
+            .replace(/\s\*(?!\*)/g, ' ')
+            .replace(/\*(?!\*)/g, ' ')
+            .replace(/\n/g, '<br>')
+            .replace(/<br><br>/g, '<br>')
+            .replace(/([-]?\d+\.?\d*%)/g, '<b>$1</b>')
+            .replace(/\$[\d,]+(\.\d{2})?/g, '<b>$&</b>')
+            .replace(/\b\d+\b/g, '<b>$&</b>')
+            .replace(/\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/g, '<b>$&</b>')
+            .replace(/(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.?\s+\d{1,2}(?:st|nd|rd|th)?\s*,?\s*\d{4}/gi, '<b>$&</b>')
+            .replace(/\b(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.?\s+\d{1,2}(?:st|nd|rd|th)?\b/gi, '<b>$&</b>'); 
+                
+            aiAnalysisElement.innerHTML = `<div id="ai-text"> ${formattedAnalysis} </div>`;
+            return;
+        } catch (error) {
+            console.error(`Attempt ${retryCount + 1} failed:`, error);
+            
+            if (retryCount === 2) {
+                aiAnalysisElement.innerHTML = 'Unable to generate AI analysis. Please try again later.';
+            } else {
+                await new Promise(resolve => setTimeout(resolve, 2000 * (retryCount + 1)));
+            }
+        }
+    }
+}
+
+function updateKpiForAi(key, value) {
+    kpi_for_ai[key] = value;
+    
+    if (Is_ai_on) {
+        clearTimeout(aiAnalysisTimeout);
+        aiAnalysisTimeout = setTimeout(updateAIAnalysis, 2000);
+    }
+}
+
+async function monitorSection() {
+    const observer = new MutationObserver(async () => {
+        const isMonthlyStats = getCurrentSection() === 'Monthly Arrival Stats';
+        
+        if (!Is_ai_on && isMonthlyStats) {
+            Is_ai_on = true;
+            await updateAIAnalysis();
+        }
+    });
+
+    observer.observe(document.body, {
+        childList: true, subtree: true, 
+        attributes: true, characterData: true
+    });
+
+    // Initial check
+    if (!Is_ai_on && getCurrentSection() === 'Monthly Arrival Stats') {
+        Is_ai_on = true;
+        await updateAIAnalysis();
+    }
+}
+
+monitorSection();
+// Ai part xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx
+
+
 function updateChartForYears() {
     const [labels, data] = generate_Barchart_dashboard_1_inYears();
     drawBarChart(labels, data, "chart1");
+    updateKpiForAi('1', ` Here are the lables and datasets for barchart for all time: labels- ${labels}, dataset- ${String(data)}`);
 }
 
 function updateChartForYear(year) {
     const [labels, data] = generate_Barchart_dashboard_1_inYear(parseInt(year));
     drawBarChart(labels, data, "chart1");
+    updateKpiForAi('1', ` Here are the lables and datasets for barchart for ${year} labels- ${labels}, dataset- ${String(data)}`);
 }
 
 function updateChartForMonth(year, month) {
@@ -28,6 +129,7 @@ function updateChartForMonth(year, month) {
     const [labels, data] = generate_Barchart_dashboard_1_inMonth(parseInt(month), parseInt(year));
 
     drawBarChart(labels, data, "chart1");
+    updateKpiForAi('1', ` Here are the lables and datasets for barchart for ${year}, ${months[month-1]}: labels- ${labels}, dataset- ${String(data)}`);
 }
 
 function getDaysInMonth(year, month) {
@@ -138,6 +240,7 @@ function update_kpi_total_number_of_bookings(year, month = '') {
     update_kpi_total_number_of_bookings_compared_to_last_period(year,month);
     update_kpi_booking_volume_difference(year,month);
     update_kpi_booking_percentage_of_total(year,month);
+    updateKpiForAi('2', ` ${kpi_context}`);
 }
 
 function update_kpi_total_number_of_bookings_compared_to_last_period(year, month = '') {
@@ -163,6 +266,7 @@ function update_kpi_total_number_of_bookings_compared_to_last_period(year, month
         if (previousTotal > 0) {
             growthRate = ((currentTotal - previousTotal) / previousTotal) * 100;
             kpi_context = `Growth compared to ${months[prevMonth-1]}, ${prevYear}: ${growthRate.toFixed(2)}%`;
+            updateKpiForAi('3', `${months[month-1]}'s ${kpi_context}`);
         } else {
             kpi_context = `No comparable data for ${months[prevMonth-1]}, ${prevYear}`;
         }
@@ -175,6 +279,7 @@ function update_kpi_total_number_of_bookings_compared_to_last_period(year, month
         if (previousTotal > 0) {
             growthRate = ((currentTotal - previousTotal) / previousTotal) * 100;
             kpi_context = `Growth compared to ${parseInt(year) - 1}: ${growthRate.toFixed(2)}%`;
+            updateKpiForAi('3', `${parseInt(year)}'s ${kpi_context}`);
         } else {
             kpi_context = `No comparable data for ${parseInt(year) - 1}`;
         }
@@ -234,6 +339,7 @@ function update_kpi_booking_volume_difference(year, month = '') {
     }
     
     kpi_volumeDifferenceElement.textContent = kpi_context;
+    updateKpiForAi('4', `In ${year}${month ? `, ${months[month-1]}` : ''}, ${kpi_context}`);
 }
 
 function update_kpi_booking_percentage_of_total(year, month = '') {
@@ -276,6 +382,7 @@ function update_kpi_booking_percentage_of_total(year, month = '') {
     
     kpi_percentageElement.textContent = kpi_context;
     update_monthly_distribution_pie_chart(year);
+    updateKpiForAi('5', `${kpi_context}`);
 }
 
 
@@ -300,6 +407,7 @@ function update_monthly_distribution_pie_chart(year) {
         } else {
             drawPieChart(["No Data Available"], [1], chartId);
         }
+        updateKpiForAi('6', `Here are lable and data for pie chart for ${year} : labels- ${labels} , dataset- ${data}`);
         return;
     }
     
@@ -320,6 +428,7 @@ function update_monthly_distribution_pie_chart(year) {
         // No data for any month in this year
         drawPieChart([`No Data for ${year}`], [1], chartId);
     }
+    updateKpiForAi('6', `Here are lable and data for pie chart for ${year} : labels- ${labels} , dataset- ${data} `);
 }
 
 

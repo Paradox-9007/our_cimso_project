@@ -1,111 +1,126 @@
 /* Main container */
 .D8 {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-    font-family: 'Arial', sans-serif;
-    background-color: #f5f7fa;
-    min-height: 100vh;
-  }
-  
-  /* Main row with chart and KPIs */
-  .D8 #main-row {
-    display: flex;
-    gap: 20px;
-    width: 100%;
-    height: 60vh;
-  }
-  
-  .D8 #main-row-chart {
-    flex: 3;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .D8 .filter {
-    display: flex;
-    gap: 15px;
-    justify-content: flex-end;
-  }
-  
-  .D8 .filter select {
-    padding: 8px 12px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    background-color: white;
-    font-size: 14px;
-  }
-  
-  .D8 #chart-main {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .D8 #main-row-2 {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  /* KPI boxes in main row */
-  .D8 #main-row-2 > div {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: #333;
-  }
-  
-  /* Second row with multiple KPIs */
-  .D8 #second-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    width: 100%;
-  }
-  
-  .D8 #second-row > div {
-    flex: 1;
-    min-width: calc(25% - 15px);
-    height: 120px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    font-weight: bold;
-    font-size: 1rem;
-    color: #333;
-  }
-  
-  /* Third row for AI analysis */
-  .D8 #third-row {
-    width: 100%;
-    min-height: 180px;
-    background-color: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #333;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f7fa;
+}
+
+/* Title styling */
+.D8 #top-title {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.D8 #top-title h4 {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 8px 0;
+}
+
+/* Main row with chart and KPIs */
+.D8 #main-row {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  height: fit-content;
+}
+
+.D8 #main-row-chart {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+}
+
+.D8 .filter {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.D8 .filter select {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  background-color: white;
+  font-size: 14px;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.D8 .filter select:hover {
+  border-color: #3498db;
+}
+
+.D8 #chart-main {
+  flex: 1;
+  position: relative;
+  height: 350px;
+}
+
+.D8 #chart-main canvas {
+  max-height: 450px !important;
+}
+
+/* KPI boxes styling */
+.D8 .kpi-box {
+  background-color: white;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.D8 .kpi-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Second row with multiple KPIs */
+.D8 #second-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  width: 100%;
+}
+
+.D8 #second-row .kpi-box {
+  flex: 1;
+  min-width: calc(25% - 15px);
+  height: min-content;
+}
+
+/* Third row for AI analysis */
+.D8 #third-row {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  min-height: 150px;
+}
+
+.D8 #D8-ai-analysis {
+  color: #2c3e50;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+/* Unit KPI styling */
+.D8 .unit-kpi {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 0.9rem;
+}

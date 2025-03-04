@@ -1,6 +1,7 @@
 import { drawPieChart, drawStackedBarChart } from "../js/drawChart.js";
 import { generateBookingStatusChartData, generate_Barchart_dashboard_1_inYears } from "../js/processData.js";
-
+import { generateAiContent } from '../js/apiCaller.js';
+import { getCurrentSection } from '../js/responsive.js';
 // Global variables for state management
 let globalSelectedYear = '';
 let globalSelectedMonth = '';
@@ -29,6 +30,99 @@ const statusLabels = {
   'O': 'Closed',
   'R': 'Restricted'
 };
+
+// Ai part xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx
+
+let kpi_for_ai = {};
+let aiAnalysisTimeout;
+let Is_ai_on;
+
+async function updateAIAnalysis() {
+    const aiAnalysisElement = document.getElementById('D7-ai-analysis');
+    if (!aiAnalysisElement) return;
+
+    for (let retryCount = 0; retryCount < 3; retryCount++) {
+        try {
+            aiAnalysisElement.innerHTML = 'Generating analysis...';
+
+            // Format data
+            const chartDataString = Object.values(kpi_for_ai).filter(Boolean).join('\n');
+            const combinedPrompt = `Based on the following booking data:\n${chartDataString}\n
+            Please provide analysis in three sections:
+            1. Status Distribution & Trend Analysis
+            2. Booking Behavior Insights & Peak Periods
+            3. Cancellation Rate & Forecasting`;
+
+            // API call with timeout
+            const analysis = await Promise.race([
+                generateAiContent(combinedPrompt),
+                new Promise((_, reject) => setTimeout(() => reject(new Error('Request timeout')), 30000))
+            ]);
+            
+            // Format and display analysis
+            const formattedAnalysis = analysis
+            .replace(/##\s*(.*?)(?:\n|$)/g, (_, p1) => `<h5 style="text-align: center">${p1.replace(/\s*\([^)]*\)/g, '')}</h5>`)
+            .replace(/\*\*(.*?)\*\*/g, '<br><b>$1</b>')
+            .replace(/\s\*(?!\*)/g, ' ')
+            .replace(/\*(?!\*)/g, ' ')
+            .replace(/\n/g, '<br>')
+            .replace(/<br><br>/g, '<br>')
+            .replace(/([-]?\d+\.?\d*%)/g, '<b>$1</b>')
+            .replace(/\$[\d,]+(\.\d{2})?/g, '<b>$&</b>')
+            .replace(/\b\d+\b/g, '<b>$&</b>')
+            .replace(/\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/g, '<b>$&</b>')
+            .replace(/(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.?\s+\d{1,2}(?:st|nd|rd|th)?\s*,?\s*\d{4}/gi, '<b>$&</b>')
+            .replace(/\b(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.?\s+\d{1,2}(?:st|nd|rd|th)?\b/gi, '<b>$&</b>'); 
+                
+            aiAnalysisElement.innerHTML = `<div id="ai-text"> ${formattedAnalysis} </div>`;
+            return;
+        } catch (error) {
+            console.error(`Attempt ${retryCount + 1} failed:`, error);
+            
+            if (retryCount === 2) {
+                aiAnalysisElement.innerHTML = 'Unable to generate AI analysis. Please try again later.';
+            } else {
+                await new Promise(resolve => setTimeout(resolve, 2000 * (retryCount + 1)));
+            }
+        }
+    }
+}
+
+function updateKpiForAi(key, value) {
+    kpi_for_ai[key] = value;
+    
+    if (Is_ai_on) {
+        clearTimeout(aiAnalysisTimeout);
+        aiAnalysisTimeout = setTimeout(updateAIAnalysis, 2000);
+    }
+}
+
+async function monitorSection() {
+    const observer = new MutationObserver(async () => {
+        const isMonthlyStats = getCurrentSection() === 'Monthly Cancellation Stats';
+        
+        if (!Is_ai_on && isMonthlyStats) {
+            Is_ai_on = true;
+            await updateAIAnalysis();
+        }
+    });
+
+    observer.observe(document.body, {
+        childList: true, subtree: true, 
+        attributes: true, characterData: true
+    });
+
+    // Initial check
+    if (!Is_ai_on && getCurrentSection() === 'Monthly Cancellation Stats') {
+        Is_ai_on = true;
+        await updateAIAnalysis();
+    }
+}
+
+monitorSection();
+// Ai part xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx
+
+
 
 function handleDropdown() {
     const chooseYear = document.getElementById("D7-choose_year");
@@ -167,12 +261,17 @@ function updateCharts(year = currentYear, month = currentMonth) {
 
     // Draw the charts
     drawPieChart(pieLabels, pieChartData.data, 'chart71');
-    
+
+    updateKpiForAi("2" , `Total number of each status: ${pieLabels.map((label, index) => `${label}:${pieChartData.data[index]}`).join(', ')}`);
+
     drawStackedBarChart(
         barChartLabels,
         barChartData.datasets,
         'chart72'
     );
+
+    updateKpiForAi("1" , `Stacked Bar Chart Data for ${periodLabel}: Time periods- ${barChartLabels.join(', ')}, ${barChartData.datasets.map(dataset => `${dataset.label}: ${dataset.data.join(', ')}`).join('; ')}`);
+    console.log(Object.values(kpi_for_ai).filter(Boolean).join('\n'));
 }
 
 // Initialize the dashboard
