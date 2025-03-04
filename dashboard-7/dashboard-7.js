@@ -271,7 +271,6 @@ function updateCharts(year = currentYear, month = currentMonth) {
     );
 
     updateKpiForAi("1" , `Stacked Bar Chart Data for ${periodLabel}: Time periods- ${barChartLabels.join(', ')}, ${barChartData.datasets.map(dataset => `${dataset.label}: ${dataset.data.join(', ')}`).join('; ')}`);
-    console.log(Object.values(kpi_for_ai).filter(Boolean).join('\n'));
 }
 
 // Initialize the dashboard

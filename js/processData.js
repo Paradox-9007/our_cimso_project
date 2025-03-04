@@ -1016,69 +1016,76 @@ function generateBookingStatusChartData(year = null, month = null, statusLabels 
     }
 }
 
-  function generateRevenueChartData(year = null, month = null) {
-      if (year === null) {
-          // Show yearly totals when no year specified
-          const currentYear = new Date().getFullYear();
-          const startYear = currentYear - 5; // Show last 5 years calculateTotalActualCharge
-          const labels = [];
-          const data = [];
-  
-          for (let y = startYear; y <= currentYear; y++) {
-              const startDate = new Date(y, 0, 1);
-              const endDate = new Date(y, 11, 31);
-              labels.push(y.toString());
-              data.push(getTotalActualChargeByDateRange(startDate, endDate));
-          }
-  
-          return { labels, datasets: [{
-              label: 'Yearly Revenue',
-              data: data
-          }]};
-      } else if (month === null) {
-          // Show monthly totals for specified year
-          const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-          const data = [];
-  
-          for (let m = 0; m < 12; m++) {
-              const startDate = new Date(year, m, 1);
-              const endDate = new Date(year, m + 1, 0); // Last day of month
-              data.push(getTotalActualChargeByDateRange(startDate, endDate));
-          }
-  
-          return { labels, datasets: [{
-              label: `Monthly Revenue for ${year}`,
-              data: data
-          }]};
-      } else {
-          // Show daily totals for specified month and year
-          const daysInMonth = new Date(year, month, 0).getDate();
-          const labels = Array.from({length: daysInMonth}, (_, i) => i + 1);
-          const data = [];
-  
-          for (let d = 1; d <= daysInMonth; d++) {
-              const date = new Date(year, month - 1, d);
-              data.push(getTotalActualChargeByDateRange(date, date));
-          }
-  
-          return { labels, datasets: [{
-              label: `Daily Revenue for ${new Date(year, month - 1).toLocaleString('default', { month: 'long' })} ${year}`,
-              data: data
-          }]};
-      }
-  }
-  
-  function getTotalActualChargeByDateRange(startDate, endDate) {
-      // Convert input dates to Excel date format
-      const startDate_inEdate = NormalDate_to_ExcelDate(startDate);
-      const endDate_inEdate = NormalDate_to_ExcelDate(endDate);
-      
-      // Filter bookings within the date range
-      const filteredBookings = filter_bookingsData_byArrival(bookingsData, startDate_inEdate, endDate_inEdate);
-      
-      // Calculate total charge for filtered bookings
-      return calculateTotalActualCharge(filteredBookings);
-  }
+function generateRevenueChartData(year = null, month = null) {
+    if (!year) {
+        // Get all available years and their total revenue
+        const years = [...new Set(bookingsData.map(booking => 
+            new Date(ExcelDate_to_NormalDate(booking["Arrival Day"])).getFullYear()
+        ))].sort((a, b) => a - b);
+
+        const data = years.map(year => {
+            const yearlyBookings = bookingsData.filter(booking => {
+                const bookingYear = new Date(ExcelDate_to_NormalDate(booking["Arrival Day"])).getFullYear();
+                return bookingYear === year;
+            });
+            
+            const yearlyRevenue = yearlyBookings.reduce((total, booking) => {
+                return total + (parseInt(booking["Total Actual Charge"]) / 100);
+            }, 0);
+
+            return yearlyRevenue;
+        });
+
+        return {
+            labels: years.map(year => year.toString()),
+            datasets: [{
+                label: 'Yearly Revenue',
+                data: data
+            }]
+        };
+
+    } else if (!month) {
+        // Get monthly revenue for specified year
+        const monthlyData = Array(12).fill(0);
+        
+        bookingsData.forEach(booking => {
+            const bookingDate = new Date(ExcelDate_to_NormalDate(booking["Arrival Day"]));
+            if (bookingDate.getFullYear() === year) {
+                const month = bookingDate.getMonth();
+                monthlyData[month] += parseInt(booking["Total Actual Charge"]) / 100;
+            }
+        });
+
+        return {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: `Monthly Revenue for ${year}`,
+                data: monthlyData
+            }]
+        };
+
+    } else {
+        // Get daily revenue for specified month and year
+        const daysInMonth = new Date(year, month, 0).getDate();
+        const dailyData = Array(daysInMonth).fill(0);
+
+        bookingsData.forEach(booking => {
+            const bookingDate = new Date(ExcelDate_to_NormalDate(booking["Arrival Day"]));
+            if (bookingDate.getFullYear() === year && bookingDate.getMonth() === month - 1) {
+                const day = bookingDate.getDate() - 1; // Array is 0-based
+                dailyData[day] += parseInt(booking["Total Actual Charge"]) / 100;
+            }
+        });
+
+        return {
+            labels: Array.from({length: daysInMonth}, (_, i) => (i + 1).toString()),
+            datasets: [{
+                label: `Daily Revenue for ${new Date(year, month - 1).toLocaleString('default', { month: 'long' })} ${year}`,
+                data: dailyData
+            }]
+        };
+    }
+}
 
 // console.log("ExcelDate_to_NormalDate : " + convertEminutesToNormalminute(62065440).year);
 // console.log("ExcelDate_to_NormalDate : " + convertEminutesToNormalminute(62065440).month);

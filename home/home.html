@@ -148,7 +148,7 @@
                         <li>Trend visualization for better decision making</li>
                     </ul>
                     <div style="display: flex; gap: 10px; margin-top: 20px;">
-                        <button class="more_button" style="align-items: left;">View Full Report</button>
+                        <button id="view-report-1" class="more_button" style="align-items: left;">View Full Report</button>
                         <button class="back_to_overview more_button" onclick="location.href='#over_view'">Back to Overview</button>
                         </div>
                 </div>
@@ -177,7 +177,7 @@
                         <li>Booking behavior patterns</li>
                     </ul>
                     <div style="display: flex; gap: 10px; margin-top: 20px;">
-                        <button class="more_button" style="align-items: left;">View Full Report</button>
+                        <button id="view-report-2" class="more_button" style="align-items: left;">View Full Report</button>
                         <button class="back_to_overview more_button" onclick="location.href='#over_view'">Back to Overview</button>
                         </div>
                 </div>
@@ -207,7 +207,7 @@
                         <li>Staff allocation recommendations</li>
                     </ul>
                     <div style="display: flex; gap: 10px; margin-top: 20px;">
-                        <button class="more_button" style="align-items: left;">View Full Report</button>
+                        <button id="view-report-3" class="more_button" style="align-items: left;">View Full Report</button>
                         <button class="back_to_overview more_button" onclick="location.href='#over_view'">Back to Overview</button>
                         </div>
                 </div>
@@ -237,7 +237,7 @@
                         <li>Historical performance comparison</li>
                     </ul>
                     <div style="display: flex; gap: 10px; margin-top: 20px;">
-                        <button class="more_button" style="align-items: left;">View Full Report</button>
+                        <button id="view-report-4" class="more_button" style="align-items: left;">View Full Report</button>
                         <button class="back_to_overview more_button" onclick="location.href='#over_view'">Back to Overview</button>
                         </div>
                 </div>
@@ -267,7 +267,7 @@
                         <li>Birthday promotion opportunities</li>
                     </ul>
                     <div style="display: flex; gap: 10px; margin-top: 20px;">
-                    <button class="more_button" style="align-items: left;">View Full Report</button>
+                        <button id="view-report-5" class="more_button" style="align-items: left;">View Full Report</button>
                     <button class="back_to_overview more_button" onclick="location.href='#over_view'">Back to Overview</button>
                     </div>
                 </div>
@@ -297,7 +297,7 @@
                         <li>Targeted marketing insights</li>
                     </ul>
                     <div style="display: flex; gap: 10px; margin-top: 20px;">
-                        <button class="more_button" style="align-items: left;">View Full Report</button>
+                        <button id="view-report-6" class="more_button" style="align-items: left;">View Full Report</button>
                         <button class="back_to_overview more_button" onclick="location.href='#over_view'">Back to Overview</button>
                         </div>
                 </div>
@@ -327,7 +327,7 @@
                         <li>Prevention strategies</li>
                     </ul>
                     <div style="display: flex; gap: 10px; margin-top: 20px;">
-                        <button class="more_button" style="align-items: left;">View Full Report</button>
+                        <button id="view-report-7" class="more_button" style="align-items: left;">View Full Report</button>
                         <button class="back_to_overview more_button" onclick="location.href='#over_view'">Back to Overview</button>
                         </div>
                 </div>
@@ -357,7 +357,7 @@
                         <li>Maintenance scheduling optimization</li>
                     </ul>
                     <div style="display: flex; gap: 10px; margin-top: 20px;">
-                        <button class="more_button" style="align-items: left;">View Full Report</button>
+                        <button id="view-report-8" class="more_button" style="align-items: left;">View Full Report</button>
                         <button class="back_to_overview more_button" onclick="location.href='#over_view'">Back to Overview</button>
                         </div>
                 </div>
@@ -387,7 +387,7 @@
                         <li>Growth trend visualization</li>
                     </ul>
                     <div style="display: flex; gap: 10px; margin-top: 20px;">
-                        <button class="more_button" style="align-items: left;">View Full Report</button>
+                        <button id="view-report-9" class="more_button" style="align-items: left;">View Full Report</button>
                         <button class="back_to_overview more_button" onclick="location.href='#over_view'">Back to Overview</button>
                         </div>
                 </div>
@@ -402,4 +402,10 @@
 
 </body>
 </html>
-
+<!-- Add this before the closing </body> tag -->
+<script type="module">
+    import { initializeViewReportButtons } from 'js/responsive.js';
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeViewReportButtons();
+    });
+</script>
