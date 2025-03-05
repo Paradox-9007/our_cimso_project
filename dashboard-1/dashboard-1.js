@@ -13,6 +13,7 @@ const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 const availableYears = generate_Barchart_dashboard_1_inYears()[0];
 let bar = true;
 
+
 // Ai part xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx
 let kpi_for_ai = {};
 let aiAnalysisTimeout;
@@ -117,10 +118,11 @@ function updateChartForYear(year) {
 }
 
 function updateChartForMonth(year, month) {
+    const daysInMonth = getDaysInMonth(year, month);
+    console.log(`Updating chart for ${year}-${month}, Total Days: ${daysInMonth}`);
 
     // Ensure correct 0-based month index
     const [labels, data] = generate_Barchart_dashboard_1_inMonth(parseInt(month), parseInt(year));
-
     drawBarChart(labels, data, "chart1");
     updateKpiForAi('1', ` Here are the lables and datasets for barchart for ${year}, ${months[month-1]}: labels- ${labels}, dataset- ${String(data)}`);
 }
@@ -163,6 +165,7 @@ function handleDropdown() {
 
         updateChartBasedOnSelection();  // Update chart based on new selections
         const totalBookings = update_kpi_total_number_of_bookings(globalSelectedYear, globalSelectedMonth);
+        console.log("Total Bookings in" + totalBookings + "hhh" + globalSelectedYear);
     });
 
     // Handle month selection change
@@ -173,6 +176,8 @@ function handleDropdown() {
         }
 
         updateChartBasedOnSelection();  // Update chart based on new selections
+        const totalBookings = update_kpi_total_number_of_bookings(globalSelectedYear, globalSelectedMonth);
+        console.log("Total Bookings in" + totalBookings + "sgfsd" + globalSelectedYear);
     });
 }
 
@@ -193,6 +198,9 @@ function populateMonthDropdown() {
         chooseMonth.value = currentMonth;
         globalSelectedMonth = currentMonth;
         bar = false;
+        
+        const totalBookings = update_kpi_total_number_of_bookings(globalSelectedYear, globalSelectedMonth);
+        console.log("Total Bookings in" + totalBookings + "sdfsdfd" + globalSelectedYear);
     }
 
 }
@@ -394,7 +402,6 @@ function update_monthly_distribution_pie_chart(year) {
         } else {
             drawPieChart(["No Data Available"], [1], chartId);
         }
-        updateKpiForAi('6', `Here are lable and data for pie chart for ${year} : labels- ${labels} , dataset- ${data}`);
         return;
     }
     
@@ -415,7 +422,6 @@ function update_monthly_distribution_pie_chart(year) {
         // No data for any month in this year
         drawPieChart([`No Data for ${year}`], [1], chartId);
     }
-    updateKpiForAi('6', `Here are lable and data for pie chart for ${year} : labels- ${labels} , dataset- ${data} `);
 }
 
 
