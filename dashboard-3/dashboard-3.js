@@ -28,7 +28,7 @@ async function updateAIAnalysis() {
 
     for (let retryCount = 0; retryCount < 3; retryCount++) {
         try {
-            aiAnalysisElement.innerHTML = 'Generating analysis...';
+            aiAnalysisElement.innerHTML = '<div class= "ai-loading"> </div>';
 
             // Format data
             const chartDataString = Object.values(kpi_for_ai).filter(Boolean).join('\n');

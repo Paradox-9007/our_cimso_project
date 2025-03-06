@@ -222,7 +222,44 @@ function initializeViewReportButtons() {
     });
 }
 
+function downloadChartAsPDF() {
+    const { jsPDF } = window.jspdf; // Initialize jsPDF
+    
+    // Get the current section ID
+    const currentSectionId = currentSection;
+    const section = document.getElementById(currentSectionId);
+    
+    if (!section) {
+        console.error('No section found to download');
+        return;
+    }
 
+    // Get the dashboard content div inside the section
+    const dashContent = section.querySelector('div[id^="dash-"]') || section.querySelector('#loaded-home');
+    
+    if (!dashContent) {
+        console.error('No dashboard content found to download');
+        return;
+    }
+
+    html2canvas(dashContent, { scale: 2 }).then(canvas => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4");
+
+        const imgWidth = 190; // Adjust width for A4
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+        // Save PDF with the dashboard name
+        const filename = `${currentSectionId === 'homepage' ? 'Home' : currentSectionId}.pdf`;
+        pdf.save(filename);
+    }).catch(error => {
+        console.error('Error generating PDF:', error);
+    });
+}
+
+
+window.downloadChartAsPDF = downloadChartAsPDF;
 initializeViewReportButtons();
 populateDashboardDropdown();
 showSection("homepage");

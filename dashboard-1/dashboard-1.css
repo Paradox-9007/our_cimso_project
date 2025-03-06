@@ -68,8 +68,8 @@
 .D1 #bottom-left-visual {
     background-color: transparent;
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: fit-content;
     text-align: flex-start;

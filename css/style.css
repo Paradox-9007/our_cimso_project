@@ -50,3 +50,81 @@ section {
     color: #2c3e50;
 }
 
+/* Download button styling */
+.download-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+    float: right;  /* Add this to position button to the right */
+    margin-top: 5px;  /* Adjust vertical position */
+    margin-right: 20px;  /* Add some right margin */
+}
+
+.download-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.download-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.download-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+}
+
+
+#D1-ai-analysis , #D2-ai-analysis, #D3-ai-analysis, #D4-ai-analysis, #D5-ai-analysis, #D6-ai-analysis,
+#D7-ai-analysis, #D8-ai-analysis, #D9-ai-analysis{
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    padding: 40px 30px;
+    align-items: center;
+    min-height: 200px;
+    width: 100%;
+    text-align: flex-start;
+    border-radius: 12px;
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.05),
+        0 4px 8px rgba(0, 0, 0, 0.05),
+        0 8px 16px rgba(0, 0, 0, 0.05);
+}
+
+.ai-loading {
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ai-loading::after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-image: url('/home/assets/loading-spinner.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
