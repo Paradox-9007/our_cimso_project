@@ -14,6 +14,8 @@ function getCurrentDate() {
 }
 const currentDate = getCurrentDate();
 const datata = generateHourlyBookingData(getCurrentDate());
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const Arrival_Depature_Color = ['#009105', '#EA6A47', '#CCCCCC', '#CCCCCC']
 
 // Ai part xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx
 let kpi_for_ai = {};
@@ -110,20 +112,23 @@ updateKpiForAi('1', ` Here are the labels and datasets for hourly bookings on to
     hours- ${datata.labels}, 
     dataset for ${datata.datasets[0].label}- ${datata.datasets[0].data}, 
     dataset for ${datata.datasets[1].label}- ${datata.datasets[1].data}`);
-drawGroupedBarChart(datata.labels, datata.datasets, 'chart31');
+
+datata.datasets[0].backgroundColor = Arrival_Depature_Color[0];  // Arrival color - green
+datata.datasets[1].backgroundColor = Arrival_Depature_Color[1];  // Departure color - orange
+drawGroupedBarChart(datata.labels, datata.datasets, 'chart31', 'Number of Arrivals and Departures');
 
 const totalArrival =  generateHourlyBookingData(getCurrentDate()).datasets[0].data.reduce((sum, value) => sum + value, 0);
 const totalDeparture =  generateHourlyBookingData(getCurrentDate()).datasets[1].data.reduce((sum, value) => sum + value, 0);
 const donutData = {
     labels: ['Total Arrivals', 'Total Departures'],
     data: [totalArrival, totalDeparture],
-    backgroundColor: ['rgb(0, 255, 255)', 'rgb(255, 99, 132)'] // Matching colors with bar chart
+    backgroundColor: [Arrival_Depature_Color[0], Arrival_Depature_Color[1]] // Matching colors with bar chart
 };
 
 total_arrival_today.innerHTML = `Total arrival today: ${totalArrival}`;
 total_departure_today.innerHTML = `Total departure today: ${totalDeparture}`;
 
-drawDonutChart(donutData.labels, donutData.data, 'chart32');
+drawDonutChart(donutData.labels, donutData, 'chart32');
 
 
 
@@ -131,19 +136,19 @@ const totalArrivalCurrentMonth = getMonthlyBookingCounts(getCurrentDate().month 
 const pieChartData_Arrival = {
     labels: ['Today\'s Arrivals', 'Other Days\' Arrivals of current month'],
     data: [totalArrival, totalArrivalCurrentMonth - totalArrival],
-    backgroundColor: ['rgb(0, 255, 255)', 'rgb(200, 200, 200)'] // Cyan for today, gray for other days
+    backgroundColor: [Arrival_Depature_Color[0], Arrival_Depature_Color[2]]  // Green for today, Gray for other days
 };
 
-drawPieChart(pieChartData_Arrival.labels, pieChartData_Arrival.data, 'chart33');
+drawPieChart(pieChartData_Arrival.labels, pieChartData_Arrival, 'chart33' , `Number and Percentage of Arrivals within ${currentDate.year}, ${months[currentDate.month + 1]}` , 'top');
 
 const totalDepartureCurrentMonth = getMonthlyBookingCounts(getCurrentDate().month + 1, getCurrentDate().year).arrivals;
 const pieChartData_Departure = {
-    labels: ['Today\'s Arrivals', 'Other Days\' Departure of current month'],
+    labels: ['Today\'s Departures', 'Other Days\' Departure of current month'],
     data: [totalDeparture, totalDepartureCurrentMonth - totalDeparture],
-    backgroundColor: ['rgb(0, 255, 255)', 'rgb(200, 200, 200)'] // Cyan for today, gray for other days
+    backgroundColor: [Arrival_Depature_Color[1], Arrival_Depature_Color[3]] 
 };
 
-drawPieChart(pieChartData_Departure.labels, pieChartData_Departure.data, 'chart34');
+drawPieChart(pieChartData_Departure.labels, pieChartData_Departure, 'chart34' , `Number and Percentage of Departures within ${currentDate.year}, ${months[currentDate.month + 1]}` , 'top');
 
 const arrivalPercentage = Math.round((totalArrival / totalArrivalCurrentMonth) * 100);
 const departurePercentage = Math.round((totalDeparture / totalDepartureCurrentMonth) * 100);

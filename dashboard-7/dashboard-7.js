@@ -9,8 +9,26 @@ let globalSelectedMonth = '';
 let currentYear = new Date().getFullYear();
 let currentMonth = new Date().getMonth() + 1;
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const full_months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const availableYears = generate_Barchart_dashboard_1_inYears()[0];
 let bar = true;
+const status_color = {
+    'Q': 'rgba(255, 206, 86, 0.7)',  // Yellow for Quote
+    'E': 'rgba(255, 99, 132, 0.7)',   // Red for Quote Rejected
+    'W': 'rgba(153, 102, 255, 0.7)',  // Purple for Waiting List
+    'I': 'rgba(75, 192, 192, 0.7)',   // Teal for Internet
+    'P': 'rgba(54, 162, 235, 0.7)',   // Blue for Provisional
+    'C': 'rgba(255, 159, 64, 0.7)',   // Orange for Confirmed
+    'D': 'rgba(201, 203, 207, 0.7)',  // Grey for Deposit Paid
+    'U': 'rgba(0, 255, 0, 0.7)',      // Green for Fully Paid
+    'A': 'rgba(0, 128, 0, 0.7)',      // Dark Green for Active
+    'L': 'rgba(128, 128, 128, 0.7)',  // Grey for Left
+    'N': 'rgba(139, 69, 19, 0.7)',    // Brown for No Show
+    'F': 'rgba(255, 0, 0, 0.7)',      // Red for Faulty
+    'X': 'rgba(220, 20, 60, 0.7)',    // Crimson for Cancelled
+    'O': 'rgba(0, 0, 139, 0.7)',      // Dark Blue for Closed
+    'R': 'rgba(128, 0, 0, 0.7)'       // Maroon for Restricted
+};
 
 // Define status code mappings
 const statusLabels = {
@@ -260,7 +278,17 @@ function updateCharts(year = currentYear, month = currentMonth) {
         }, 0).toLocaleString()}`;
 
     // Draw the charts
-    drawPieChart(pieLabels, pieChartData.data, 'chart71');
+    const pieChartDataWithColors = {
+        labels: pieLabels,
+        data: pieChartData.data,
+        backgroundColor: pieChartData.labels.map(label => status_color[label])
+    };
+
+    drawPieChart(pieChartDataWithColors.labels, pieChartDataWithColors, 'chart71',
+        !globalSelectedYear ? 'Booking Status Percentages for All Time' :
+        !globalSelectedMonth ? `Booking Status Percentages for ${globalSelectedYear}` :
+        `Booking Status Percentages for ${full_months[globalSelectedMonth-1]}, ${globalSelectedYear}`, 
+        'top');
 
     updateKpiForAi("2" , `Total number of each status: ${pieLabels.map((label, index) => `${label}:${pieChartData.data[index]}`).join(', ')}`);
 

@@ -179,12 +179,10 @@ function generateHourlyBookingData(dateObj) {
           {
               label: 'Arrivals',
               data: arrivalCounts,
-              backgroundColor: 'rgb(0, 255, 255)', // Cyan for arrivals
           },
           {
               label: 'Departures',
               data: departureCounts,
-              backgroundColor: 'rgb(255, 99, 132)', // Pink for departures
           }
       ]
   };

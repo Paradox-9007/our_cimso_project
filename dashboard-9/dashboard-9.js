@@ -249,7 +249,7 @@ function updateCharts(year = currentYear, month = currentMonth) {
         pieChartData = nonZeroData.map(item => item.value);
     }
 
-    drawPieChart(pieChartLabels, pieChartData, "chart92");
+    drawPieChart(pieChartLabels, pieChartData, "chart92", `Profit distribution of ${globalSelectedYear || 'All time'}`, 'top');
     updateKPIs();
 }
 

@@ -42,13 +42,23 @@
 }
 
 .D5 #D5-filter select {
-  padding: 8px 16px;
+  /* padding: 8px 16px;
   border-radius: 6px;
   border: 1px solid #e0e4e8;
   background-color: white;
   font-size: 14px;
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease; */
+  background-color: #0563af;
+  color: white;
+  padding: 10px;
+  width: 150px;
+  border: none;
+  font-size: 20px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
 }
 
 .D5 #D5-filter select:hover {
@@ -60,6 +70,49 @@
   border-color: #007bff;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
+/* .D5 #D5-filter .filter{
+  position: relative;  
+  left: 70%;
+  gap: 10px;
+  transform: translate(-50%, -50%);
+}
+
+.D5 #D5-filter .filter select {
+  background-color: #0563af;
+  color: white;
+  padding: 10px;
+  width: 150px;
+  border: none;
+  font-size: 20px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
+
+.D5 #D5-filter .filter::before {
+  content: "\f13a";
+  font-family: FontAwesome;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  text-align: center;
+  font-size: 28px;
+  line-height: 45px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.D5 #D5-filter .filter:hover::before {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
+} */
+
+
+
 
 /* KPI column */
 .D5 #first-row-second-col {

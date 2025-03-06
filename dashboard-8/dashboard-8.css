@@ -30,7 +30,17 @@
 }
 
 .D8 #main-row-chart {
-  flex: 3;
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+}
+
+.D8 #main-row-2 {
+  flex: 1;
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -47,14 +57,16 @@
 }
 
 .D8 .filter select {
-  padding: 8px 16px;
-  border-radius: 6px;
-  border: 1px solid #e0e0e0;
-  background-color: white;
-  font-size: 14px;
-  color: #2c3e50;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  background-color: #0563af;
+  color: white;
+  padding: 10px;
+  width: 200px;
+  border: none;
+  font-size: 20px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
 }
 
 .D8 .filter select:hover {

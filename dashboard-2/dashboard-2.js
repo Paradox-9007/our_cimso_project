@@ -11,6 +11,7 @@ let currentMonth = new Date().getMonth() + 1;
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const availableYears = generate_Barchart_dashboard_1_inYears()[0];
 let bar = true;
+const Member_Guest_Color = ['#B3C100', '#CED2CC'];
 
 // Ai part xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx
 let kpi_for_ai = {};
@@ -113,7 +114,9 @@ monitorSection();
 
 function updateChartForMonth(year, month) {
     const { labels, datasets } = generateMemberVsGeneralData(parseInt(year), parseInt(month));
-    drawGroupedBarChart(labels, datasets, 'chart21');
+    datasets[0].backgroundColor = Member_Guest_Color[0];  // Member color
+    datasets[1].backgroundColor = Member_Guest_Color[1];  // Guest color
+    drawGroupedBarChart(labels, datasets, 'chart21', `Number of Bookings for ${months[month-1]}, ${year}`);
     updateKPIs(datasets);
     updateProfitChart(parseInt(year), parseInt(month));
     updateKpiForAi('1', ` Here are the lables and datasets for group bar chart ${year},${months[month-1]}: days- ${labels}, dataset for ${datasets[0].label}- ${datasets[0].data}, dataset for ${datasets[1].label}- ${datasets[1].data} `);
@@ -127,7 +130,9 @@ function updateChartForMonth(year, month) {
 
 function updateChartForYear(year) {
     const { labels, datasets } = generateMemberVsGeneralData(parseInt(year));
-    drawGroupedBarChart(labels, datasets, 'chart21');
+    datasets[0].backgroundColor = Member_Guest_Color[0];  // Member color
+    datasets[1].backgroundColor = Member_Guest_Color[1];  // Guest color
+    drawGroupedBarChart(labels, datasets, 'chart21', `Number of Bookings for ${year}`);
     updateKPIs(datasets);
     updateProfitChart(parseInt(year));
     updateKpiForAi('1', ` Here are the lables and datasets for group bar chart ${year}: months- ${labels}, dataset for ${datasets[0].label}- ${datasets[0].data}, dataset for ${datasets[1].label}- ${datasets[1].data} `);
@@ -141,7 +146,9 @@ function updateChartForYear(year) {
 
 function updateChartForYears() {
     const { labels, datasets } = generateMemberVsGeneralData();  // No parameters means get all years
-    drawGroupedBarChart(labels, datasets, 'chart21');
+    datasets[0].backgroundColor = Member_Guest_Color[0];  // Member color
+    datasets[1].backgroundColor = Member_Guest_Color[1];  // Guest color
+    drawGroupedBarChart(labels, datasets, 'chart21' , `Number of Bookings for All years`);
     updateKPIs(datasets);
     updateProfitChart();
     updateKpiForAi('1', ` Here are the lables and datasets for group bar chart for all years: years- ${labels}, dataset for ${datasets[0].label}- ${datasets[0].data}, dataset for ${datasets[1].label}- ${datasets[1].data} `);
@@ -184,6 +191,8 @@ function updateKPIs(datasets) {
 
 function updateProfitChart(year, month = null) {
     const { labels, datasets, title } = generateProfitComparisonData(year, month);
+    datasets[0].borderColor = Member_Guest_Color[0];  // Member color
+    datasets[1].borderColor = Member_Guest_Color[1];  // Guest color
     drawMultiLineChart('chart22', labels, datasets[0], datasets[1], title);
     updateKpiForAi('1', ` Here are the lables and datasets for Multiline chart which compare the profits; time labels- ${String(labels)}, dataset for ${String(datasets[0].label)}- ${String(datasets[0].data)}, dataset for ${String(datasets[1].label)}- ${String(datasets[1].data)} `);
     const totalMemberProfit = datasets[0].data.reduce((sum, current) => sum + current, 0);

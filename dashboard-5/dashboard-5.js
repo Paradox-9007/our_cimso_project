@@ -6,8 +6,6 @@ import { getCurrentSection } from '../js/responsive.js';
 let currentMonth = new Date().getMonth() + 1;
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-
-
 // Ai part xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx
 let kpi_for_ai = {};
 let aiAnalysisTimeout;
@@ -53,9 +51,9 @@ async function updateAIAnalysis() {
             .replace(/\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/g, '<b>$&</b>')
             .replace(/(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.?\s+\d{1,2}(?:st|nd|rd|th)?\s*,?\s*\d{4}/gi, '<b>$&</b>')
             .replace(/\b(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.?\s+\d{1,2}(?:st|nd|rd|th)?\b/gi, '<b>$&</b>')
-            const sections = formattedAnalysis.split('%n');
+            const sections = formattedAnalysis.split('%n%');
             const firstSection = sections[0];
-            const secondSection = sections.slice(1).join('%n');
+            const secondSection = sections.slice(1).join('%n%');
             
             aiAnalysisElement.innerHTML = `<div id="ai-text"> ${firstSection} </div>`;
             if (aiAnalysisElement2) {

@@ -10,10 +10,12 @@ const availableYears = generate_Barchart_dashboard_1_inYears()[0];
 let globalSelectedYear = currentYear;
 let globalSelectedMonth = currentMonth;
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const full_months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 let bar = true;
 
 // Age group labels
 const ageGroupLabels = ["Children (1-17)", "Adult (18-35)", "Middle Age (36-64)", "Elderly (65+)"];
+const ageGroupColors = ['#4CB5F5','#6AB187','#DBAE58','#AC3E31']
 
 
 
@@ -168,13 +170,17 @@ function updateChartsAndKPIs() {
     );
 
     // Update donut chart with booking counts
-    const bookingCounts = [
-        ageGroupData.summary.childrenCount,
-        ageGroupData.summary.adultCount,
-        ageGroupData.summary.middleAgeCount,
-        ageGroupData.summary.elderlyCount
-    ];
-    drawDonutChart(ageGroupLabels, bookingCounts, "chart61");
+    const bookingCounts = {
+        labels: ageGroupLabels,
+        data: [
+            ageGroupData.summary.childrenCount,
+            ageGroupData.summary.adultCount,
+            ageGroupData.summary.middleAgeCount,
+            ageGroupData.summary.elderlyCount
+        ],
+        backgroundColor: ageGroupColors
+    };
+    drawDonutChart(bookingCounts.labels, bookingCounts, "chart61");
     updateKpiForAi("1" , `The following are the Arrival Age Group data for ${globalSelectedYear ? globalSelectedYear : 'all time'}${globalSelectedMonth ? `, ${months[globalSelectedMonth - 1]}` : ''} `)
     updateKpiForAi("2" , `This is the Arrival Age Group data from donut chart: ${ageGroupLabels[0]}= ${ageGroupData.summary.childrenCount}, ${ageGroupLabels[1]}= ${ageGroupData.summary.adultCount}, ${ageGroupLabels[2]}= ${ageGroupData.summary.middleAgeCount}, ${ageGroupLabels[3]}= ${ageGroupData.summary.elderlyCount} `);
     
@@ -194,13 +200,20 @@ function updateChartsAndKPIs() {
     document.getElementById("elderly_total").textContent = 
         `Elderly (65+): ${ageGroupData.summary.elderlyCount.toLocaleString()}`;
 
-    // Update profit KPIs with contribution percentages
+    
     document.getElementById("adult_rev").textContent = 
-        `Adult (18-35): $${financials.adult.profit.toLocaleString()} (${contribution.adult}%)`;
+        `Adult (18-35): $${financials.adult.profit.toLocaleString()}`;
     document.getElementById("middleage_rev").textContent = 
-        `Middle Age (36-64): $${financials.middleAge.profit.toLocaleString()} (${contribution.middleAge}%)`;
+        `Middle Age (36-64): $${financials.middleAge.profit.toLocaleString()}`;
     document.getElementById("elderly_rev").textContent = 
-        `Elderly (65+): $${financials.elderly.profit.toLocaleString()} (${contribution.elderly}%)`;
+        `Elderly (65+): $${financials.elderly.profit.toLocaleString()}`;
+    // Update profit KPIs with contribution percentages
+    // document.getElementById("adult_rev").textContent = 
+    //     `Adult (18-35): $${financials.adult.profit.toLocaleString()} (${contribution.adult}%)`;
+    // document.getElementById("middleage_rev").textContent = 
+    //     `Middle Age (36-64): $${financials.middleAge.profit.toLocaleString()} (${contribution.middleAge}%)`;
+    // document.getElementById("elderly_rev").textContent = 
+    //     `Elderly (65+): $${financials.elderly.profit.toLocaleString()} (${contribution.elderly}%)`;
 
     updateKpiForAi("4" , `  The following are the Revenue Contribution by each age group during the provide period: Adult (18-35): $${financials.adult.profit.toLocaleString()} (${contribution.adult}%) , Middle Age (36-64): $${financials.middleAge.profit.toLocaleString()} (${contribution.middleAge}%) , Elderly (65+): $${financials.elderly.profit.toLocaleString()} (${contribution.elderly}%)`)
     // Create profit pie chart data
@@ -211,15 +224,15 @@ function updateChartsAndKPIs() {
             financials.middleAge.profit,
             financials.elderly.profit
         ],
-        backgroundColor: [
-            "rgb(58, 176, 255)", // Blue for Adult
-            "rgb(150, 0, 176)", // Purple for Middle Age
-            "rgb(255, 159, 64)"  // Orange for Elderly
-        ]
+        backgroundColor: [ageGroupColors[1], ageGroupColors[2], ageGroupColors[3]]  // Fixed color indices
     };
 
     // Draw profit pie chart
-    drawPieChart(profitData.labels, profitData.data, "chart63");
+    drawPieChart(profitData.labels, profitData, "chart63",
+        !globalSelectedYear ? 'Revenue Contribution by Age Group - All Time' :
+        !globalSelectedMonth ? `Revenue Contribution by Age Group - ${globalSelectedYear}` :
+        `Revenue Contribution by Age Group - ${full_months[globalSelectedMonth-1]} ${globalSelectedYear}`, 
+        'top');
 
     // Create daily profit trends
     let dailyLabels = [];
@@ -388,6 +401,15 @@ function updateChartsAndKPIs() {
             });
         });
 
+        yearlyAdultProfitDataset.borderColor = ageGroupColors[1];     // Adults
+        yearlyAdultProfitDataset.backgroundColor = "rgba(28, 78, 128, 0.2)";
+        
+        yearlyMiddleAgeProfitDataset.borderColor = ageGroupColors[2];  // Middle age
+        yearlyMiddleAgeProfitDataset.backgroundColor = "rgba(219, 174, 88, 0.2)";
+        
+        yearlyElderlyProfitDataset.borderColor = ageGroupColors[3];    // Elderly
+        yearlyElderlyProfitDataset.backgroundColor = "rgba(106, 177, 135, 0.2)";
+
         drawMultiLineChart(
             "chart62",
             yearlyLabels,
@@ -398,7 +420,14 @@ function updateChartsAndKPIs() {
         );
         updateKpiForAi("3" , `This is the Profit generated by different Arrival Age Group from MultiLine Chart: years-${yearlyLabels}, Profit by adult- ${yearlyAdultProfitDataset.data}, Profit by Middle-Ages- ${yearlyMiddleAgeProfitDataset.data}, Profit by Elderly- ${yearlyElderlyProfitDataset.data} `);
     } else if (globalSelectedMonth) {
-        // If a month is selected, show daily data
+        adultProfitDataset.borderColor = ageGroupColors[1];     // Adults
+        adultProfitDataset.backgroundColor = "rgba(28, 78, 128, 0.2)";
+        
+        middleAgeProfitDataset.borderColor = ageGroupColors[2];  // Middle age
+        middleAgeProfitDataset.backgroundColor = "rgba(219, 174, 88, 0.2)";
+        
+        elderlyProfitDataset.borderColor = ageGroupColors[3];    // Elderly
+        elderlyProfitDataset.backgroundColor = "rgba(106, 177, 135, 0.2)";
         drawMultiLineChart(
             "chart62",
             dailyLabels,
@@ -409,7 +438,14 @@ function updateChartsAndKPIs() {
         );
         updateKpiForAi("3" , `This is the Profit generated by different Arrival Age Group from MultiLine Chart: days-${dailyLabels}, Profit by adult- ${adultProfitDataset.data}, Profit by Middle-Ages- ${middleAgeProfitDataset.data}, Profit by Elderly- ${elderlyProfitDataset.data} `);
     } else {
-        // If only year is selected, show monthly data
+        monthlyAdultProfitDataset.borderColor = ageGroupColors[1];     // Adults
+        monthlyAdultProfitDataset.backgroundColor = "rgba(28, 78, 128, 0.2)";
+        
+        monthlyMiddleAgeProfitDataset.borderColor = ageGroupColors[2];  // Middle age
+        monthlyMiddleAgeProfitDataset.backgroundColor = "rgba(219, 174, 88, 0.2)";
+        
+        monthlyElderlyProfitDataset.borderColor = ageGroupColors[3];    // Elderly
+        monthlyElderlyProfitDataset.backgroundColor = "rgba(106, 177, 135, 0.2)";
         drawMultiLineChart(
             "chart62",
             monthlyLabels,

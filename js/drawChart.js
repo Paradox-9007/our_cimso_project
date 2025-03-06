@@ -1,4 +1,4 @@
-function drawBarChart(labels, data, chartId) {
+function drawBarChart(labels, data, chartId, label = 'Number of Booking Arrivals', legendPosition = 'top') {
     const ctx = document.getElementById(chartId).getContext('2d');
     const maxDataValue = Math.max(...data);
     // Destroy existing chart if it exists
@@ -12,16 +12,22 @@ function drawBarChart(labels, data, chartId) {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Number of Booking Arrivals',
+                label: label,
                 data: data,
-                backgroundColor: 'rgb(0, 255, 255)',
+                backgroundColor: '#488A99',
             }]
         },
         options: {
+            responsive: true,
             scales: {
                 y: {
-                    suggestedMax: maxDataValue * 1.2, // 10% extra spacc above
+                    suggestedMax: maxDataValue * 1.2,
                     beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: legendPosition,
                 }
             }
         }
@@ -34,8 +40,7 @@ function drawBarChart(labels, data, chartId) {
     window.chartInstances[chartId] = newChart;
 }
 
-
-function drawPieChart(labels, data, chartId) {
+function drawPieChart(labels, data, chartId, chartLabel = 'Number of Booking Arrivals', legendPosition = 'top') {
     const ctx = document.getElementById(chartId).getContext('2d');
 
     // Destroy existing chart if it exists
@@ -43,29 +48,59 @@ function drawPieChart(labels, data, chartId) {
         window.chartInstances[chartId].destroy();
     }
 
+    // Check if data is an object with backgroundColor and data properties
+    const isDataObject = typeof data === 'object' && !Array.isArray(data);
+    const chartData = isDataObject ? data.data : data;
+    
+    // Calculate total for percentages using the actual data
+    const total = chartData.reduce((sum, value) => sum + value, 0);
+
+    // Use backgroundColor from data object if available, otherwise use defaults
+    const backgroundColor = isDataObject && data.backgroundColor ? data.backgroundColor : [
+        '#1C4E80',  // Deep Blue
+        '#4CB5F5',  // Sky Blue
+        '#A5D8DD',  // Light Cyan
+        '#488A99',  // Steel Blue
+        '#6AB187',  // Muted Teal
+        '#009105',  // Vibrant Green
+        '#B3C100',  // Olive Green
+        '#DBAE58',  // Warm Gold
+        '#EA6A47',  // Bright Orange
+        '#AC3E31',  // Brick Red
+        '#D32D41',  // Crimson Red
+        '#DADADA',  // Very Light Beige
+    ];
+
     // Create a new pie chart
     const newChart = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: labels,
             datasets: [{
-                data: data,
-                backgroundColor: [
-                    'rgb(0, 102, 20)',    // Green
-                    'rgb(0, 51, 102)',    // Dark blue
-                    'rgb(204, 0, 0)',     // Red
-                    'rgb(255, 153, 0)',   // Orange
-                    'rgb(255, 255, 0)',   // Yellow
-                    'rgb(153, 51, 255)',  // Purple
-                ],
+                label: chartLabel,
+                data: chartData,
+                backgroundColor: backgroundColor,
             }]
         },
         options: {
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'top',
+                    position: legendPosition,
                 },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const value = context.raw;
+                            const percentage = ((value / total) * 100).toFixed(2);
+                            return `${context.label}: ${percentage}% (${value.toLocaleString()})`;
+                        }
+                    }
+                },
+                title: {
+                    display: true,
+                    text: chartLabel
+                }
             }
         }
     });
@@ -77,14 +112,14 @@ function drawPieChart(labels, data, chartId) {
     window.chartInstances[chartId] = newChart;
 }
 
-function drawGroupedBarChart(labels, datasets, chartId) {
+function drawGroupedBarChart(labels, datasets, chartId, labelName = 'Number of Bookings', legendPosition = 'top') {
     const ctx = document.getElementById(chartId).getContext('2d');
-    
+
     // Destroy existing chart if it exists
     if (window.chartInstances && window.chartInstances[chartId]) {
         window.chartInstances[chartId].destroy();
     }
-    
+
     // Find the maximum value across all datasets for scaling
     let maxValue = 0;
     datasets.forEach(dataset => {
@@ -94,15 +129,10 @@ function drawGroupedBarChart(labels, datasets, chartId) {
     
     // Create color palette for datasets if not provided
     const defaultColors = [
-        'rgb(0, 255, 255)',  // Cyan
-        'rgb(255, 99, 132)',  // Pink/Red
-        'rgb(54, 162, 235)',  // Blue
-        'rgb(255, 206, 86)',  // Yellow
-        'rgb(75, 192, 192)',  // Teal
-        'rgb(153, 102, 255)', // Purple
+        '#1C4E80',
+        '#EA6A47',
     ];
     
-    // Apply default colors if not specified in datasets
     datasets.forEach((dataset, index) => {
         if (!dataset.backgroundColor) {
             dataset.backgroundColor = defaultColors[index % defaultColors.length];
@@ -120,8 +150,12 @@ function drawGroupedBarChart(labels, datasets, chartId) {
             responsive: true,
             scales: {
                 y: {
-                    suggestedMax: maxValue * 1.2, // 20% extra space above
-                    beginAtZero: true
+                    suggestedMax: maxValue * 1.2,
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: labelName
+                    }
                 },
                 x: {
                     ticks: {
@@ -133,7 +167,7 @@ function drawGroupedBarChart(labels, datasets, chartId) {
             },
             plugins: {
                 legend: {
-                    position: 'top',
+                    position: legendPosition,
                 },
                 tooltip: {
                     mode: 'index',
@@ -149,7 +183,7 @@ function drawGroupedBarChart(labels, datasets, chartId) {
     }
     window.chartInstances[chartId] = newChart;
 }
-   
+
   function drawComboChart(chartId, labels, barData, lineData) {
     const ctx = document.getElementById(chartId).getContext("2d");
    
@@ -232,8 +266,9 @@ function drawGroupedBarChart(labels, datasets, chartId) {
         window.chartInstances = {};
     }
     window.chartInstances[chartId] = newChart;
-  }
-  function drawDonutChart(labels, data, chartId) {
+}
+
+function drawDonutChart(labels, data, chartId) {
     const ctx = document.getElementById(chartId).getContext('2d');
  
     // Destroy existing chart if it exists
@@ -241,21 +276,25 @@ function drawGroupedBarChart(labels, datasets, chartId) {
         window.chartInstances[chartId].destroy();
     }
  
+    // Check if data is an object with backgroundColor
+    const chartData = data.data || data;
+    const backgroundColor = data.backgroundColor || [
+        'rgb(0, 102, 20)',    // Green
+        'rgb(0, 51, 102)',    // Dark blue
+        'rgb(204, 0, 0)',     // Red
+        'rgb(255, 153, 0)',   // Orange
+        'rgb(255, 255, 0)',   // Yellow
+        'rgb(153, 51, 255)',  // Purple
+    ];
+
     // Create a new donut chart
     const newChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: labels,
             datasets: [{
-                data: data,
-                backgroundColor: [
-                    'rgb(0, 102, 20)',    // Green
-                    'rgb(0, 51, 102)',    // Dark blue
-                    'rgb(204, 0, 0)',     // Red
-                    'rgb(255, 153, 0)',   // Orange
-                    'rgb(255, 255, 0)',   // Yellow
-                    'rgb(153, 51, 255)',  // Purple
-                ],
+                data: chartData,
+                backgroundColor: backgroundColor,
             }]
         },
         options: {
@@ -265,7 +304,7 @@ function drawGroupedBarChart(labels, datasets, chartId) {
                     position: 'top',
                 }
             },
-            cutout: '50%' // This makes it a donut chart by creating a hole in the middle
+            cutout: '50%'
         }
     });
  
@@ -290,8 +329,9 @@ function drawMultiLineChart(chartId, labels, dataset1, dataset2, dataset3, title
         datasets.push({
             label: dataset1.label,
             data: dataset1.data,
-            borderColor: "rgb(54, 162, 235)", // Blue
-            backgroundColor: "rgba(54, 162, 235, 0.2)",
+            borderColor: dataset1.borderColor || "#1C4E80",
+            backgroundColor: 'transparent',
+            fill: false,
             yAxisID: "y",
         });
     }
@@ -299,8 +339,9 @@ function drawMultiLineChart(chartId, labels, dataset1, dataset2, dataset3, title
         datasets.push({
             label: dataset2.label,
             data: dataset2.data,
-            borderColor: "rgb(255, 99, 132)", // Pink
-            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor: dataset2.borderColor || "#EA6A47",
+            backgroundColor: 'transparent',
+            fill: false,
             yAxisID: "y",
         });
     }
@@ -308,8 +349,9 @@ function drawMultiLineChart(chartId, labels, dataset1, dataset2, dataset3, title
         datasets.push({
             label: dataset3.label,
             data: dataset3.data,
-            borderColor: "rgb(75, 192, 192)", // Teal
-            backgroundColor: "rgba(75, 192, 192, 0.2)",
+            borderColor: dataset3.borderColor || "#009105",
+            backgroundColor: 'transparent',
+            fill: false,
             yAxisID: "y",
         });
     }

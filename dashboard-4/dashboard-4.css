@@ -26,7 +26,7 @@
   justify-content: center;
 }
 
-.D4 .filter {
+/* .D4 .filter {
   display: flex;
   gap: 10px;
   justify-content: flex-end;
@@ -37,7 +37,7 @@
   border-radius: 4px;
   border: 1px solid #ddd;
   min-width: 120px;
-}
+} */
 
 .D4 #second-row {
   display: flex;
@@ -83,4 +83,47 @@
   border-radius: 8px;
   padding: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.D4 .filter{
+  position: relative;  
+  top: 55px;
+  left: 16%;
+  gap: 2px;
+  transform: translate(-50%, -50%);
+}
+
+.D4 .filter select {
+  background-color: #0563af;
+  color: white;
+  padding: 10px;
+  width: 450px;
+
+  border: none;
+  font-size: 20px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
+
+.D4 .filter::before {
+  content: "\f13a";
+  font-family: FontAwesome;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 20%;
+  height: 38%;
+  text-align: center;
+  font-size: 28px;
+  line-height: 45px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.D4 .filter:hover::before {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
 }

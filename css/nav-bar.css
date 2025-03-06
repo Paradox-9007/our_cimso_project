@@ -3,7 +3,9 @@ nav {
     position: fixed;
     top: 0;
     width: 100%;
-    background: linear-gradient(to right, #68d3b3,#40bd89, #4097bd, #3e53bc, #2b43bc);
+    background: rgb(0,84,180);
+    background: linear-gradient(159deg, rgba(0,84,180,1) 0%, rgba(64,224,208,1) 100%);
+    /* background: linear-gradient(to right, #68d3b3,#40bd89, #4097bd, #3e53bc, #2b43bc); */
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -38,7 +40,7 @@ nav > div {
 
 nav span {
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 30px;
     cursor: pointer;
     transition: background 0.3s, transform 0.2s;
     display: inline-block;
@@ -51,7 +53,7 @@ nav span:hover {
 
 nav span.active {
     background: white;
-    color: #007bff;
+    color: #034673;
 }
 
 #dashboardContainer {
@@ -104,8 +106,8 @@ nav span.active {
 #dashboardContainer span.active::after {
     content: '×';
     position: absolute;
-    top: 1px;
-    right: 1px;
+    top: 0px;
+    right: 0px;
     background-color: rgba(155, 155, 255, 0.4);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
@@ -132,7 +134,7 @@ nav span.active {
 
 #dashboardContainer span.active {
     background: white;
-    color: #007bff;
+    color: #034673;
     font-weight: bold;
 }
 
@@ -156,9 +158,45 @@ nav span.active {
 }
 
 .dropdown span:hover {
-    background: #007bff;
+    background: #034673;
     color: white;
 }
 #dashboardContainer span.active:hover {
     transform: none;
 }
+
+/* <!-- HTML !-->
+<button class="button-1" role="button">Button 1</button> */
+
+/* CSS
+.button-1 {
+  background-color: #EA4C89;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-1:hover,
+.button-1:focus {
+  background-color: #F082AC;
+} */

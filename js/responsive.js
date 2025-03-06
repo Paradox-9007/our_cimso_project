@@ -160,12 +160,12 @@ function handleKeyPress(event) {
             currentDashboardIndex = index;
             updateDashboardView();
         }
-    } else if (key === "a" || key === "A") {
+    } else if (key === "a" || key === "A" || key === "ArrowLeft") {
         if (currentDashboardIndex > 0) {
             currentDashboardIndex--;
             updateDashboardView();
         }
-    } else if (key === "d" || key === "D") {
+    } else if (key === "d" || key === "D" || key === "ArrowRight") {
         if (currentDashboardIndex < list_of_selectedDashboard.length - 1) {
             currentDashboardIndex++;
             updateDashboardView();

@@ -107,13 +107,13 @@ monitorSection();
 
 function updateChartForYears() {
     const [labels, data] = generate_Barchart_dashboard_1_inYears();
-    drawBarChart(labels, data, "chart1");
+    drawBarChart(labels, data, "chart1", `Number of Arrivals across All years`);
     updateKpiForAi('1', ` Here are the lables and datasets for barchart for all time: labels- ${labels}, dataset- ${String(data)}`);
 }
 
 function updateChartForYear(year) {
     const [labels, data] = generate_Barchart_dashboard_1_inYear(parseInt(year));
-    drawBarChart(labels, data, "chart1");
+    drawBarChart(labels, data, "chart1", `Number of Arrivals in ${year}`);
     updateKpiForAi('1', ` Here are the lables and datasets for barchart for ${year} labels- ${labels}, dataset- ${String(data)}`);
 }
 
@@ -123,7 +123,7 @@ function updateChartForMonth(year, month) {
 
     // Ensure correct 0-based month index
     const [labels, data] = generate_Barchart_dashboard_1_inMonth(parseInt(month), parseInt(year));
-    drawBarChart(labels, data, "chart1");
+    drawBarChart(labels, data, "chart1", `Number of Arrivals in ${months[month-1]}, ${year}`);
     updateKpiForAi('1', ` Here are the lables and datasets for barchart for ${year}, ${months[month-1]}: labels- ${labels}, dataset- ${String(data)}`);
 }
 
@@ -398,7 +398,7 @@ function update_monthly_distribution_pie_chart(year) {
         });
         
         if (labels.length > 0) {
-            drawPieChart(labels, data, chartId);
+            drawPieChart(labels, data, chartId, `Percentage of Booking Arrivals across All years `, 'top');
         } else {
             drawPieChart(["No Data Available"], [1], chartId);
         }
@@ -417,7 +417,7 @@ function update_monthly_distribution_pie_chart(year) {
     }
     
     if (data.length > 0) {
-        drawPieChart(labels, data, chartId);
+        drawPieChart(labels, data, chartId,  `Percentage of Booking Arrivals with in ${year} `, 'top');
     } else {
         // No data for any month in this year
         drawPieChart([`No Data for ${year}`], [1], chartId);
