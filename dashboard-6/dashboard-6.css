@@ -33,7 +33,6 @@
 .D6 #main-row {
   display: flex;
   gap: 20px;
-  height: 40vh;
 }
 
 .D6 #main-row-1 {
@@ -69,7 +68,6 @@
   background-color: white;
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 30%;
   min-height: min-content;
   display: flex;
@@ -135,13 +133,14 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  justify-content: space-evenly;
 }
 
 .D6 #chart62 {
   width: 800px;
 }
 
-/* KPI styles */
+/* Common KPI styles */
 .D6 #kid_total,
 .D6 #middleage_total,
 .D6 #adult_total,
@@ -149,16 +148,75 @@
 .D6 #middleage_rev,
 .D6 #adult_rev,
 .D6 #elderly_rev {
-  background-color: #f8f9fa;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  color: #333;
-  flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    padding: 20px 15px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    min-height: 100px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* First row KPI accent colors */
+.D6 #kid_total {
+    border-left: 4px solid #4CB5F5;
+}
+
+.D6 #middleage_total {
+    border-left: 4px solid #DBAE58;
+}
+
+.D6 #adult_total {
+    border-left: 4px solid #6AB187;
+}
+
+.D6 #elderly_total {
+    border-left: 4px solid #AC3E31;
+}
+
+/* Second row KPI accent colors */
+.D6 #middleage_rev {
+    border-left: 4px solid #DBAE58;
+}
+
+.D6 #adult_rev {
+    border-left: 4px solid #6AB187;
+}
+
+.D6 #elderly_rev {
+    border-left: 4px solid #AC3E31;
+}
+
+/* KPI text styling */
+.D6 #kid_total > span:first-child,
+.D6 #middleage_total > span:first-child,
+.D6 #adult_total > span:first-child,
+.D6 #elderly_total > span:first-child,
+.D6 #middleage_rev > span:first-child,
+.D6 #adult_rev > span:first-child,
+.D6 #elderly_rev > span:first-child {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.D6 #kid_total > span:last-child,
+.D6 #middleage_total > span:last-child,
+.D6 #adult_total > span:last-child,
+.D6 #elderly_total > span:last-child,
+.D6 #middleage_rev > span:last-child,
+.D6 #adult_rev > span:last-child,
+.D6 #elderly_rev > span:last-child {
+    font-size: 0.9em;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* Override for specific KPIs */
@@ -171,10 +229,7 @@
 .D6 .D6-filter {
   position: relative;   
   gap: 30px;
-  left:100px;
-  bottom:0px;
   justify-content: flex-end;
-  padding: 10px 10px ;
   border-bottom: 1px solid #eef0f2;
 }
 
@@ -206,4 +261,9 @@
   outline: none;
   border-color: #007bff;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.D6 #last-row{
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0px 20px 30px 20px;
 }

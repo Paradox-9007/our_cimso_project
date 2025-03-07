@@ -111,18 +111,62 @@
   background-color: rgba(255, 255, 255, 0.2);
 } */
 
-
-
-
-/* KPI column */
-.D5 #first-row-second-col {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+/* KPI Container styles */
+.D5 #first-row-second-col-kpi-one,
+.D5 #first-row-second-col-kpi-two,
+.D5 #first-row-second-col-kpi-three {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    padding: 20px 15px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    min-height: 100px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 15px;
 }
 
-/* KPI boxes */
+/* KPI accent colors */
+.D5 #first-row-second-col-kpi-one {
+    border-left: 4px solid #4CAF50;
+}
+
+.D5 #first-row-second-col-kpi-two {
+    border-left: 4px solid #2196F3;
+}
+
+.D5 #first-row-second-col-kpi-three {
+    border-left: 4px solid #FF9800;
+}
+
+/* KPI value styling */
+.D5 .kpi-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+/* KPI label styling */
+.D5 .kpi-label {
+    font-size: 0.9em;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+/* Container for all KPIs */
+.D5 #first-row-second-col {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px;
+}
 .D5 #first-row-second-col > div {
   flex: 1;
   display: flex;
@@ -152,9 +196,9 @@
 /* AI Report section */
 .D5 #second-row-first-col {
   flex: 4;
-  background-color: white;
+  background-color: transparent;
   border-radius: 12px;
-  padding: 24px;
+  padding: 0px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   font-size: 1rem;
   line-height: 1.6;
@@ -254,4 +298,9 @@
   line-height: 1.6;
   color: #333;
   overflow-y: auto;
+}
+
+#D5-ai-analysis {
+  margin-top: 0px;
+  padding-top: 0px;
 }

@@ -7,8 +7,8 @@
   background-color: transparent;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
   width: 70%;
   height: 65%;
 }
@@ -25,16 +25,65 @@
   gap: 15px;
   width: 28%;
   height: 65%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .D9 #kpi-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  width: 100%;
-  height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding: 15px;
 }
+
+.D9 .kpi-visual {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    padding: 8px 15px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-height: 80px;
+    position: relative;
+}
+
+.D9 #total-income-this-month {
+    border-left: 4px solid #4CAF50;
+}
+
+.D9 #month-over-month-change {
+    border-left: 4px solid #2196F3;
+}
+
+.D9 #income-contribution {
+    border-left: 4px solid #FF9800;
+}
+
+.D9 .kpi-visual h3 {
+    font-size: 0.8em;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+}
+
+.D9 .kpi-value {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 4px 0;
+}
+
+.D9 [id^="kpi-trend-"] {
+    font-size: 0.75em;
+    color: #6c757d;
+    margin-top: 2px;
+}
+
 
 .D9 #bottom-container {
   display: flex;
@@ -48,19 +97,6 @@
 .D9 h3{
   margin-bottom: 0;
   font-size: 16px;
-}
-
-.D9 .kpi-visual {
-  background-color: transparent;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: fit-content;
-  height: min-content;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 

@@ -93,7 +93,7 @@ section {
     justify-content: center;
     padding: 40px 30px;
     align-items: center;
-    min-height: 200px;
+    height: 100%;
     width: 100%;
     text-align: flex-start;
     border-radius: 12px;
@@ -102,14 +102,15 @@ section {
         0 4px 8px rgba(0, 0, 0, 0.05),
         0 8px 16px rgba(0, 0, 0, 0.05);
 }
-
 .ai-loading {
     position: relative;
     width: 100%;
     min-height: 200px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 20px;
 }
 
 .ai-loading::after {
@@ -117,6 +118,7 @@ section {
     position: absolute;
     width: 50px;
     height: 50px;
+    top: 40%;
     background-image: url('/home/assets/loading-spinner.png');
     background-size: contain;
     background-repeat: no-repeat;
@@ -124,7 +126,24 @@ section {
     animation: spin 1s linear infinite;
 }
 
+.ai-loading::before {
+    content: "Generating AI report";
+    position: absolute;
+    bottom: 20%;
+    font-size: 16px;
+    font-weight: bold;
+    color: #666;
+    animation: ellipsis-dot 1s infinite;
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+@keyframes ellipsis-dot {
+    0% { content: "Generating AI report"; }
+    33% { content: "Generating AI report."; }
+    66% { content: "Generating AI report.."; }
+    100% { content: "Generating AI report..."; }
 }

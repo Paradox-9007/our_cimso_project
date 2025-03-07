@@ -117,7 +117,7 @@ function updateRevenueKPIs(sortedByRevenue, periodLabel = '') {
             if (i < top10Units.length) {
                 const unit = top10Units[i];
                 element.innerHTML = `
-                    <div class="unit-kpi" style="padding: 10px; border-radius: 8px; background-color: #f8f9fa; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <div class="unit-kpi" style="padding: 0px; border-radius: 8px; background-color: transparent; margin-bottom: 8px;">
                         <div style="color: #0066cc; font-size: 1em; margin-bottom: 5px;"><b>Top ${i + 1}</b></div>
                         <div style="color: #333; font-size: 1.1em; margin-bottom: 8px;"><strong>${unit.label}</strong></div>
                         <div style="color: #28a745; margin-bottom: 4px;">Revenue: <span style="font-weight: bold;">$${unit.revenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
@@ -130,7 +130,7 @@ function updateRevenueKPIs(sortedByRevenue, periodLabel = '') {
                 kpiDataForAI.push(`Unit ${unit.label}: Revenue $${unit.revenue.toFixed(2)}, Stay Duration ${unit.days} days, Total Bookings ${unit.bookings} times`);
             } else {
                 element.innerHTML = `
-                    <div class="unit-kpi" style="padding: 10px; border-radius: 8px; background-color: #f8f9fa; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <div class="unit-kpi" style="padding: 0px; border-radius: 8px; background-color: transparent; margin-bottom: 8px;">
                         <div style="color: #6c757d; text-align: center; font-style: italic;">No data available</div>
                     </div>
                 `;

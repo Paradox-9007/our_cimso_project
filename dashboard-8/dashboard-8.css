@@ -47,6 +47,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 15px;
+  gap: 15px;
 }
 
 .D8 .filter {
@@ -115,8 +116,7 @@
 .D8 #third-row {
   background-color: white;
   border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0px;
   width: 100%;
   min-height: 150px;
 }

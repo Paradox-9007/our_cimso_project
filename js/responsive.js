@@ -240,8 +240,10 @@ function downloadChartAsPDF() {
         return;
     }
 
-    // Generate default filename
-    const defaultFilename = `${currentSectionId === 'homepage' ? 'Home' : currentSectionId}`;
+    // Get the h2 element from the section for the filename
+    const h2Element = section.querySelector('h4');
+    const defaultFilename = h2Element ? h2Element.textContent.trim() : 
+        (currentSectionId === 'homepage' ? 'Home' : currentSectionId);
     
     // Prompt user for filename
     const userFilename = prompt('Enter filename for your PDF:', defaultFilename);

@@ -59,14 +59,44 @@
     gap: 15px;
 }
 
-.D3 #total_arrival_today, #total_departure_today {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.D3 #total_arrival_today, .D3 #total_departure_today {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     text-align: center;
-    font-size: 18px;
+    transition: all 0.3s ease;
+    min-height: 120px;
+    position: relative;
+    overflow: hidden;
+}
+
+.D3 #total_arrival_today {
+    border-left: 4px solid #B3C100;
+}
+
+.D3 #total_departure_today {
+    border-left: 4px solid #AC3E31;
+}
+
+.D3 #total_arrival_today > span:first-child,
+.D3 #total_departure_today > span:first-child {
+    font-size: 2em;
     font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.D3 #total_arrival_today > span:last-child,
+.D3 #total_departure_today > span:last-child {
+    font-size: 0.9em;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .D3 #side-col-bottom {
@@ -93,16 +123,44 @@
     gap: 15px;
 }
 
-.D3 #arrival_percent, #departure_percent {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.D3 #arrival_percent, .D3 #departure_percent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-    flex: 1;
+    transition: all 0.3s ease;
     min-height: 150px;
+    position: relative;
+    overflow: hidden;
+}
+
+.D3 #arrival_percent {
+    border-left: 4px solid #B3C100;
+}
+
+.D3 #departure_percent {
+    border-left: 4px solid #AC3E31;
+}
+
+.D3 #arrival_percent > span:first-child,
+.D3 #departure_percent > span:first-child {
+    font-size: 2em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.D3 #arrival_percent > span:last-child,
+.D3 #departure_percent > span:last-child {
+    font-size: 0.9em;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .D3 #bottom-row-second {
@@ -114,7 +172,6 @@
 .D3 #arrival_percent_chart, #departure_percent_chart {
     flex: 1;
     background: white;
-    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     display: flex;
