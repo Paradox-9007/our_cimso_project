@@ -15,7 +15,7 @@ function getCurrentDate() {
 const currentDate = getCurrentDate();
 const datata = generateHourlyBookingData(getCurrentDate());
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const Arrival_Depature_Color = ['#009105', '#EA6A47', '#CCCCCC', '#CCCCCC']
+const Arrival_Depature_Color = ['#B3C100', '#AC3E31', '#CCCCCC', '#CCCCCC']
 
 // Ai part xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx
 let kpi_for_ai = {};

@@ -14,7 +14,7 @@ function drawBarChart(labels, data, chartId, label = 'Number of Booking Arrivals
             datasets: [{
                 label: label,
                 data: data,
-                backgroundColor: '#488A99',
+                backgroundColor: '#1C4E80',
             }]
         },
         options: {
@@ -57,18 +57,18 @@ function drawPieChart(labels, data, chartId, chartLabel = 'Number of Booking Arr
 
     // Use backgroundColor from data object if available, otherwise use defaults
     const backgroundColor = isDataObject && data.backgroundColor ? data.backgroundColor : [
-        '#1C4E80',  // Deep Blue
-        '#4CB5F5',  // Sky Blue
-        '#A5D8DD',  // Light Cyan
-        '#488A99',  // Steel Blue
-        '#6AB187',  // Muted Teal
-        '#009105',  // Vibrant Green
-        '#B3C100',  // Olive Green
-        '#DBAE58',  // Warm Gold
-        '#EA6A47',  // Bright Orange
-        '#AC3E31',  // Brick Red
-        '#D32D41',  // Crimson Red
-        '#DADADA',  // Very Light Beige
+        '#1C4E80',
+        '#4CB5F5',
+        '#6AB187',
+        '#EA6A47',
+        '#D32D41',
+        '#DBAE58',
+        '#0091D5',
+        '#AC3E31',
+        '#A5D8DD',
+        '#23282D',
+        '#F1F1F1',
+        '#20283E',
     ];
 
     // Create a new pie chart
@@ -184,7 +184,7 @@ function drawGroupedBarChart(labels, datasets, chartId, labelName = 'Number of B
     window.chartInstances[chartId] = newChart;
 }
 
-  function drawComboChart(chartId, labels, barData, lineData) {
+function drawComboChart(chartId, labels, barData, lineData) {
     const ctx = document.getElementById(chartId).getContext("2d");
    
     // Destroy existing chart if it exists
@@ -204,8 +204,8 @@ function drawGroupedBarChart(labels, datasets, chartId, labelName = 'Number of B
                 {
                     label: barData.label,
                     data: barData.data,
-                    backgroundColor: "rgba(54, 162, 235, 0.5)",
-                    borderColor: "rgb(54, 162, 235)",
+                    backgroundColor: "#A8D5BA",
+                    borderColor: "#6AB187",
                     borderWidth: 1,
                     order: 2,
                     yAxisID: "y",
@@ -480,7 +480,7 @@ function drawHorizontalBarChart(labels, data, chartId) {
           datasets: [{
               label: 'Number of Booking Arrivals',
               data: data,
-              backgroundColor: 'rgb(0, 255, 255)',
+              backgroundColor: '#1C4E80',
           }]
       },
       options: {
@@ -532,12 +532,12 @@ function drawLineChart(labels, data, chartId) {
             datasets: [{
                 label: 'Number of Booking Arrivals',
                 data: data,
-                borderColor: 'rgb(75, 192, 192)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: '#1C4E80',
+                backgroundColor: 'transparent',
                 tension: 0.4,
                 fill: true,
                 pointStyle: 'circle',
-                pointRadius: 4,
+                pointRadius: 3.5,
                 pointHoverRadius: 6
             }]
         },

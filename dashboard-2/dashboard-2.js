@@ -11,7 +11,7 @@ let currentMonth = new Date().getMonth() + 1;
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const availableYears = generate_Barchart_dashboard_1_inYears()[0];
 let bar = true;
-const Member_Guest_Color = ['#B3C100', '#CED2CC'];
+const Member_Guest_Color = ['#DBAE58', '#CED2CC'];
 
 // Ai part xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx
 let kpi_for_ai = {};

@@ -44,17 +44,17 @@ async function updateAIAnalysis() {
             // Format and display analysis
             const formattedAnalysis = analysis
             .replace(/##\s*(.*?)(?:\n|$)/g, (_, p1) => `<h5 style="text-align: center">${p1.replace(/\s*\([^)]*\)/g, '')}</h5>`)
-            .replace(/\*\*(.*?)\*\*/g, '<br><b>$1</b>')
+            .replace(/\*\*(.*?)\*\*/g, '<br>$1')
             .replace(/\s\*(?!\*)/g, ' ')
             .replace(/\*(?!\*)/g, ' ')
             .replace(/\n/g, '<br>')
             .replace(/<br><br>/g, '<br>')
-            .replace(/([-]?\d+\.?\d*%)/g, '<b>$1</b>')
-            .replace(/\$[\d,]+(\.\d{2})?/g, '<b>$&</b>')
-            .replace(/\b\d+\b/g, '<b>$&</b>')
-            .replace(/\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/g, '<b>$&</b>')
-            .replace(/(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.?\s+\d{1,2}(?:st|nd|rd|th)?\s*,?\s*\d{4}/gi, '<b>$&</b>')
-            .replace(/\b(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.?\s+\d{1,2}(?:st|nd|rd|th)?\b/gi, '<b>$&</b>'); 
+            .replace(/([-]?\d+\.?\d*%)/g, '$1')
+            .replace(/\$[\d,]+(\.\d{2})?/g, '$&')
+            .replace(/\b\d+\b/g, '$&')
+            .replace(/\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/g, '$&')
+            .replace(/(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.?\s+\d{1,2}(?:st|nd|rd|th)?\s*,?\s*\d{4}/gi, '$&')
+            .replace(/\b(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.?\s+\d{1,2}(?:st|nd|rd|th)?\b/gi, '$&'); 
                 
             aiAnalysisElement.innerHTML = `<div id="ai-text"> ${formattedAnalysis} </div>`;
             return;
@@ -310,7 +310,11 @@ function update_kpi_booking_volume_difference(year, month = '') {
         if (previousTotal !== undefined) {
             difference = currentTotal - previousTotal;
             const changeDirection = difference >= 0 ? "increase" : "decrease";
-            kpi_context = `${Math.abs(difference)} booking ${changeDirection} from ${months[prevMonth-1]}, ${prevYear}`;
+            // For monthly comparison
+            kpi_context = `${changeDirection} from ${months[prevMonth-1]}, ${prevYear} by ${Math.abs(difference)} bookings`;
+            
+            // For yearly comparison
+            kpi_context = `${changeDirection} from ${parseInt(year) - 1} by ${Math.abs(difference)} bookings`;
         } else {
             kpi_context = `No comparable data for ${months[prevMonth-1]}, ${prevYear}`;
         }

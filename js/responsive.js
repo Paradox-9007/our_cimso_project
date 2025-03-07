@@ -223,9 +223,8 @@ function initializeViewReportButtons() {
 }
 
 function downloadChartAsPDF() {
-    const { jsPDF } = window.jspdf; // Initialize jsPDF
+    const { jsPDF } = window.jspdf;
     
-    // Get the current section ID
     const currentSectionId = currentSection;
     const section = document.getElementById(currentSectionId);
     
@@ -234,7 +233,6 @@ function downloadChartAsPDF() {
         return;
     }
 
-    // Get the dashboard content div inside the section
     const dashContent = section.querySelector('div[id^="dash-"]') || section.querySelector('#loaded-home');
     
     if (!dashContent) {
@@ -242,16 +240,27 @@ function downloadChartAsPDF() {
         return;
     }
 
+    // Generate default filename
+    const defaultFilename = `${currentSectionId === 'homepage' ? 'Home' : currentSectionId}`;
+    
+    // Prompt user for filename
+    const userFilename = prompt('Enter filename for your PDF:', defaultFilename);
+    
+    // If user cancels or enters empty string, abort download
+    if (!userFilename) {
+        return;
+    }
+
     html2canvas(dashContent, { scale: 2 }).then(canvas => {
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF("p", "mm", "a4");
 
-        const imgWidth = 190; // Adjust width for A4
+        const imgWidth = 190;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
         pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
-        // Save PDF with the dashboard name
-        const filename = `${currentSectionId === 'homepage' ? 'Home' : currentSectionId}.pdf`;
+        // Use user provided filename and ensure .pdf extension
+        const filename = userFilename.endsWith('.pdf') ? userFilename : `${userFilename}.pdf`;
         pdf.save(filename);
     }).catch(error => {
         console.error('Error generating PDF:', error);
