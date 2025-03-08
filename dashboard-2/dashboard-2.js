@@ -184,7 +184,7 @@ function updateKPIs(datasets) {
     `;
     
     kpiThree.innerHTML = `
-        <p>Member to Guest Ratio</p>
+        <p>Member to Guest Ratio: </p>
         <p>${memberRatio}% of bookings is from member.</p>
     `;
 }
