@@ -214,7 +214,7 @@ function updateProfitChart(year, month = null) {
     `;
 
     kpiSix.innerHTML = `
-        <p>Revenue Ratio</p>
+        <p>Revenue Ratio: </p>
         <p>Members generate ${((totalMemberProfit / totalProfit) * 100).toFixed(2)}% of the total revenue ($${totalProfit.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}).</p>
     `;
     updateKpiForAi('4', `Total Member Profits - $${totalMemberProfit.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}, Total General Guest Profits - $${totalGeneralProfit.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}, Revenue Ratio - ${((totalMemberProfit / totalProfit) * 100).toFixed(2)}% of the total revenue ($${totalProfit.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 })})`);
