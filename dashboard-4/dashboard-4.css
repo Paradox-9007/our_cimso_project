@@ -106,22 +106,6 @@
   outline: none;
 }
 
-.D4 .filter::before {
-  content: "\f13a";
-  font-family: FontAwesome;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  width: 20%;
-  height: 38%;
-  text-align: center;
-  font-size: 28px;
-  line-height: 45px;
-  color: rgba(255, 255, 255, 0.5);
-  background-color: rgba(255, 255, 255, 0.1);
-  pointer-events: none;
-}
-
 .D4 #first-row, .D4 #third-row {
     display: flex;
     gap: 20px;
