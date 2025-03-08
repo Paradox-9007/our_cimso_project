@@ -462,7 +462,6 @@ function drawStackedBarChart(labels, datasets, chartId) {
   window.chartInstances[chartId] = newChart;
 }
 
-
 function drawHorizontalBarChart(labels, data, chartId) {
   const ctx = document.getElementById(chartId).getContext('2d');
   const maxDataValue = Math.max(...data);

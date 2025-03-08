@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to CIMSO</title>
     <link href="../css/home.css" rel="stylesheet"></link>
+    <script src="../js/responsive.js"></script>
     <script>
         $(document).ready(function () {
             $("#main_slider").carousel({
@@ -23,7 +24,6 @@
     </script>
 </head>
 <body>
-
     <!-- Hero Section -->
     <div class="hero" style="padding: 0px 200px 250px 0px; background: url('home/assets/homepage.png') center/cover; margin: 0px;  ">
         <div class="hero-content" style="margin-bottom: 130px; padding-right: 60%; margin-left: 0px; padding-left: 0px; text-align: left;">
@@ -191,7 +191,7 @@
     </div>
 
     <!-- Analytics div 3: Daily Arrivals and Departures -->
-    <div id="ana3" class="analytics-div" style="padding: 30px 0px 330px 0px; background: url('home/assets/background_3.png') center/cover;margin-top: 0px;">
+    <div id="ana3" class="analytics-div" style="padding: 30px 0px 30px 0px; background: url('home/assets/background_3.png') center/cover;margin-top: 0px;">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6" style="margin-bottom: 130px; text-align: left; padding-right: 60%; margin-left: 0px; padding-left: 0px;">
@@ -399,13 +399,8 @@
             </div>
         </div>
     </div>
-
+    </div>
 </body>
 </html>
 <!-- Add this before the closing </body> tag -->
-<script type="module">
-    import { initializeViewReportButtons } from 'js/responsive.js';
-    document.addEventListener('DOMContentLoaded', () => {
-        initializeViewReportButtons();
-    });
-</script>
+

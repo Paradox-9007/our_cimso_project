@@ -198,30 +198,6 @@ document.addEventListener("keydown", handleKeyPress);
 });
 
 
-const dashboardMapping = {
-    'view-report-1': 'Monthly Arrival Stats',
-    'view-report-2': 'Member & General Arrivals',
-    'view-report-3': "Today's Arrivals/Departures",
-    'view-report-4': 'Monthly Occupancy & ADR',
-    'view-report-5': 'Guest Birthdays',
-    'view-report-6': 'Arrival Age Groups',
-    'view-report-7': 'Monthly Cancellation Stats',
-    'view-report-8': 'Most Booked Units',
-    'view-report-9': 'Total Income'
-};
-
-// Add this function before the export statement
-function initializeViewReportButtons() {
-    Object.entries(dashboardMapping).forEach(([buttonId, dashboardName]) => {
-        const button = document.getElementById(buttonId);
-        if (button) {
-            button.addEventListener('click', () => {
-                selectDashboard(dashboardName);
-            });
-        }
-    });
-}
-
 function downloadChartAsPDF() {
     const { jsPDF } = window.jspdf;
     
@@ -270,11 +246,33 @@ function downloadChartAsPDF() {
 }
 
 
+
+document.addEventListener('click', (event) => {
+    const btn = event.target;
+    if (btn.id.startsWith('view-report-')) {
+      event.preventDefault();
+      
+      // Extract button number from ID ("view-report-3" → 3)
+      const buttonNumber = parseInt(btn.id.split('-')[2]);
+      
+      // Convert to array index (button 1 → index 0)
+      const dashboardIndex = buttonNumber - 1;
+  
+      // Verify valid index
+      if (dashboardIndex >= 0 && dashboardIndex < dashboards.length) {
+        const targetDashboard = dashboards[dashboardIndex];
+        console.log('Navigating to: ${targetDashboard}');
+        selectDashboard(targetDashboard);
+      } else {
+        console.error('Invalid dashboard inddex:', dashboardIndex);
+      }
+    } 
+});
+
+
 window.downloadChartAsPDF = downloadChartAsPDF;
-initializeViewReportButtons();
 populateDashboardDropdown();
 showSection("homepage");
-
 function getCurrentSection() {
     return currentSection;
 }
