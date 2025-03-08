@@ -29,7 +29,6 @@ async function updateAIAnalysis() {
 
             // Format data
             const chartDataString = Object.values(kpi_for_ai).filter(Boolean).join('\n');
-            console.log(Object.values(kpi_for_ai).filter(Boolean).join('\n'));
             const combinedPrompt = `Based on the following booking data:\n${chartDataString}\n
             Please provide analysis in three sections:
             1. Profit Trend & Peak Analysis
@@ -209,7 +208,6 @@ function updateCharts(year = currentYear, month = currentMonth) {
         updateKpiForAi('1', `This is the profit recorded for All time; years:profits, `);
         updateKpiForAi('2', `${data.map((value, index) => `${labels[index]}: $${value.toLocaleString()}`).join('\n')} `);
         updateKPIs();
-        console.log(Object.values(kpi_for_ai).filter(Boolean).join('\n'));
 
     } else if (selectedMonth === 'all') {
         // Monthly view for selected year
@@ -218,7 +216,6 @@ function updateCharts(year = currentYear, month = currentMonth) {
         updateKpiForAi('1', `This is the profit recorded for each month in ${selectedYear}; month:profits, `);
         updateKpiForAi('2', `${data.map((value, index) => `${labels[index]}: $${value.toLocaleString()}`).join('\n')} `);
         updateKPIs();
-        console.log(Object.values(kpi_for_ai).filter(Boolean).join('\n'));
 
     } else {
         // Daily view for selected month
@@ -227,7 +224,6 @@ function updateCharts(year = currentYear, month = currentMonth) {
         updateKpiForAi('1', `This is the profit recorded for each day in ${months[parseInt(selectedMonth)-1]}, ${selectedYear}; day:profits, `);
         updateKpiForAi('2', `${data.map((value, index) => `${labels[index]}: $${value.toLocaleString()}`).join('\n')} `);
         updateKPIs();
-        console.log(Object.values(kpi_for_ai).filter(Boolean).join('\n'));
     }
 
     // Pie Chart Update

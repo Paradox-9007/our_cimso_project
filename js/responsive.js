@@ -15,7 +15,7 @@ let currentDashboardIndex = -1; // Initialize to -1 to prevent errors
 let currentSection = "homepage"; // Track current section
 
 function showSection(sectionId) {
-    console.log("sectionId:", sectionId);
+    // console.log("sectionId:", sectionId);
     const section = document.getElementById(sectionId);
     currentSection = sectionId; // Update current section
 
@@ -261,7 +261,6 @@ document.addEventListener('click', (event) => {
       // Verify valid index
       if (dashboardIndex >= 0 && dashboardIndex < dashboards.length) {
         const targetDashboard = dashboards[dashboardIndex];
-        console.log('Navigating to: ${targetDashboard}');
         selectDashboard(targetDashboard);
       } else {
         console.error('Invalid dashboard inddex:', dashboardIndex);
