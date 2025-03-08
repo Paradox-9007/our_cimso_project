@@ -137,6 +137,9 @@
     margin-bottom: 50px;
 }
 
+.img-fluid{
+    height: 400px;
+}
 /* Responsive Styles */
 @media (max-width: 768px) {
     header {
