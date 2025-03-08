@@ -1,56 +1,38 @@
-
-
-/* Title section remains the same */
-.D3 #top-title {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.D3 #top-title h4 {
-    font-size: 24px;
-    color: #333;
-    margin: 0;
-}
-
-
-
-/* Main column styles */
-.D3 #main-col {
-    flex: 2;
+/* Container layout */
+.D3 {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    padding: 20px;
+}
+
+/* First row layout */
+.D3 #first-row {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+}
+
+.D3 #main-col {
+    flex: 3;
     background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    min-width: 300px;
-    min-height: min-content;
 }
 
-.D3 #main-col-top, #main-col-bottom {
-    flex: 1;
+.D3 #main-col-top {
     background: #f8f9fa;
     border-radius: 8px;
     padding: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 400px;
+    height: 500px;
 }
 
-.D3 #main-col-bottom {
-    max-height: 300px;
-    width: auto;
-}
-
-/* Side column styles */
 .D3 #side-col {
     flex: 1;
+    min-width: 300px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    min-width: 200px;
 }
 
 .D3 #side-col-top {
@@ -59,122 +41,92 @@
     gap: 15px;
 }
 
-.D3 #total_arrival_today, .D3 #total_departure_today {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+/* KPI boxes */
+.D3 #total_arrival_today,
+.D3 #total_departure_today,
+.D3 #arrival_percent,
+.D3 #departure_percent {
     background: linear-gradient(135deg, #ffffff, #f8f9fa);
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    text-align: center;
-    transition: all 0.3s ease;
-    min-height: 120px;
-    position: relative;
-    overflow: hidden;
-}
-
-.D3 #total_arrival_today {
-    border-left: 4px solid #B3C100;
-}
-
-.D3 #total_departure_today {
-    border-left: 4px solid #AC3E31;
-}
-
-.D3 #total_arrival_today > span:first-child,
-.D3 #total_departure_today > span:first-child {
-    font-size: 2em;
-    font-weight: bold;
-    color: #2c3e50;
-    margin-bottom: 8px;
-}
-
-.D3 #total_arrival_today > span:last-child,
-.D3 #total_departure_today > span:last-child {
-    font-size: 0.9em;
-    color: #6c757d;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.D3 #side-col-bottom {
-    flex: 1;
-    background: white;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    max-height: 690px;
-    overflow-y: scroll;
-}
-
-/* Bottom row styles - converted from grid to flex */
-.D3 #bottom-row {
-    flex-basis: 100%;
-    display: flex;
-    gap: 20px;
-}
-
-.D3 #bottom-row-first {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.D3 #arrival_percent, .D3 #departure_percent {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #ffffff, #f8f9fa);
-    padding: 25px;
     border-radius: 12px;
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     text-align: center;
-    transition: all 0.3s ease;
-    min-height: 150px;
-    position: relative;
-    overflow: hidden;
+    min-height: 100px;
 }
 
+.D3 #total_arrival_today,
 .D3 #arrival_percent {
     border-left: 4px solid #B3C100;
 }
 
-.D3 #departure_percent {
+.D3 #total_departure_today{
     border-left: 4px solid #AC3E31;
 }
 
-.D3 #arrival_percent > span:first-child,
-.D3 #departure_percent > span:first-child {
-    font-size: 2em;
-    font-weight: bold;
-    color: #2c3e50;
-    margin-bottom: 8px;
+.D3 #departure_percent {
+    border-right: 4px solid #AC3E31;
 }
 
-.D3 #arrival_percent > span:last-child,
-.D3 #departure_percent > span:last-child {
-    font-size: 0.9em;
-    color: #6c757d;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.D3 #bottom-row-second {
-    flex: 2;
-    display: flex;
-    gap: 20px;
-}
-
-.D3 #arrival_percent_chart, #departure_percent_chart {
-    flex: 1;
+/* Main column bottom chart */
+.D3 #main-col-bottom {
     background: white;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 15px;
+    height: 300px;
+}
+
+/* Second row layout */
+.D3 #second-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+/* Charts in second row */
+.D3 #arrival_percent_chart,
+.D3 #departure_percent_chart {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 15px;
+    height: 100%;
+    min-height: 450px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+/* KPI container in second row */
+.D3 #arrival_percent_and_departure_percent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* KPIs in second row */
+.D3 #second-row #arrival_percent,
+.D3 #second-row #departure_percent {
+    min-height: 80px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* Last row layout */
+.D3 #last-row {
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 20px;
+    min-height: 200px;
+}
+

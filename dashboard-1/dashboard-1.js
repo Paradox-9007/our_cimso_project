@@ -305,7 +305,7 @@ function update_kpi_booking_volume_difference(year, month = '') {
         
         if (previousTotal !== undefined) {
             difference = currentTotal - previousTotal;
-            const changeDirection = difference >= 0 ? "increase" : "decrease";
+            const changeDirection = difference >= 0 ? "Increase" : "Decrease";
             // For monthly comparison
             kpi_context = `${changeDirection} from ${months[prevMonth-1]}, ${prevYear} by ${Math.abs(difference)} bookings`;
             

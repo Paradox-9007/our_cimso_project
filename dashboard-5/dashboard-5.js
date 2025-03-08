@@ -172,11 +172,15 @@ function updateKPIs(month = null) {
 
     // Update percentage KPI
     const percentageElement = document.getElementById('birthday-percentage');
+    const totalLabel = document.getElementById('total-birthdays-label');
+    
     if (month && allBirthdays.length > 0) {
         const percentage = (selectedMonthBirthdays.length / allBirthdays.length) * 100;
         percentageElement.textContent = `${percentage.toFixed(1)}%`;
+        totalLabel.textContent = 'Total birthdays in a month';
     } else {
         percentageElement.textContent = '100%';
+        totalLabel.textContent = 'Total birthdays in all months';
     }
     updateKpiForAi("2", ` Total number of Birthday: ${totalElement.textContent}, Birthdays in ${month ? months[month-1] : 'All Months'} is ${percentageElement.textContent}% of the total number of Birthdays. `);
     // Update upcoming birthdays KPI

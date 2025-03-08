@@ -118,6 +118,7 @@
     transition: all 0.3s ease;
     min-height: 70px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -126,6 +127,17 @@
     color: #2c3e50;
     position: relative;
     overflow: hidden;
+    word-wrap: break-word;
+    white-space: normal;
+    width: 100%;
+    max-width: 100%;
+}
+
+.D1 .kpi-visual span {
+    max-width: 100%;
+    padding: 0 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Specific styling for each KPI */

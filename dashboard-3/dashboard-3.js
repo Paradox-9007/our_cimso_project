@@ -15,7 +15,7 @@ function getCurrentDate() {
 const currentDate = getCurrentDate();
 const datata = generateHourlyBookingData(getCurrentDate());
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const Arrival_Depature_Color = ['#B3C100', '#AC3E31', '#CCCCCC', '#CCCCCC']
+const Arrival_Depature_Color = ['#B3C100', '#AC3E31', '#8F9000', '#8A3127']
 
 // Ai part xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx__________xxxxxxxxxx
 let kpi_for_ai = {};
@@ -33,7 +33,7 @@ async function updateAIAnalysis() {
             // Format data
             const chartDataString = Object.values(kpi_for_ai).filter(Boolean).join('\n');
             const combinedPrompt = `Based on the following booking data:\n${chartDataString}\n
-            Please provide analysis in three sections (No more then 250 words):
+            Please provide analysis in three sections:
             1. Booking Arrival vs. Departure Balance and Trend Insights
     `;
 

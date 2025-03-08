@@ -8,48 +8,51 @@
     <link rel="stylesheet" href="/dashboard-3/dashboard-3.css">
     <script src="/dashboard-3/dashboard-3.js" type="module"></script>
 </head>
+<body>
+    <div id="top-title">
+        <h4 style="color:#034673; text-align: center;">Number of Arrivals and Departures for Today</h4>
+    </div>
+    <div id="visualization-container" class="D3">
+            <div id="first-row">
+                <div id="main-col">
+                    <div id="main-col-top">
+                        <canvas id="chart31"></canvas>
+                    </div>
+                </div>
+                <div id="side-col">
+                    <div id="side-col-top">
+                        <div id="total_arrival_today">
+                            KPI 1
+                        </div>
+                        <div id="total_departure_today">
+                            KPI 2
+                        </div>
+                        <div id="main-col-bottom">
+                            <canvas id="chart32" style="max-width: 270px; max-height: 270px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<div id="top-title">
-    <h4 style="color:#034673; text-align: center;">Number of Arrivals and Departures for Today</h4>
-</div>
-<div id="visualization-container" class="D3">
-    <div id="main-col">
-        <div id="main-col-top">
-            <canvas id="chart31" style="height: auto; width: auto; max-width: 930px; max-height: 467px;"></canvas>
-        </div>
-        <div id="main-col-bottom">
-            <canvas id="chart32" style="height: auto; width: auto; max-width: 960px; max-height: 467px;"></canvas>
-        </div>
+            <div id="second-row">
+                <div id="arrival_percent_chart">
+                    <canvas id="chart33" style="max-width: 360px; max-height: 360px;"></canvas>
+                </div>
+                <div id="arrival_percent_and_departure_percent">
+                    <div id="arrival_percent">
+                        KPI 3
+                    </div>
+                    <div id="departure_percent">
+                        KPI 4
+                    </div>
+                </div>
+                <div id="departure_percent_chart">
+                    <canvas id="chart34" style="max-width: 360px; max-height: 360px;"></canvas>
+                </div>
+            </div>
+            <div id="last-row">
+                <div id="D3-ai-analysis"></div>
+            </div>
     </div>
-    <div id="side-col">
-        <div id="side-col-top">
-            <div id="total_arrival_today">
-                KPI 1
-            </div>
-            <div id="total_departure_today">
-                KPI 2
-            </div>
-        </div>
-        <div id="side-col-bottom">
-            <div id="D3-ai-analysis"></div>
-        </div>
-    </div>
-    <div id="bottom-row">
-        <div id="bottom-row-first">
-            <div id="arrival_percent">
-                KPI 3
-            </div>
-            <div id="departure_percent">
-                KPI 4
-            </div>
-        </div>
-        <div id="bottom-row-second">
-            <div id="arrival_percent_chart">
-                <canvas id="chart33" style="height: auto; width: auto; min-width: 300px; min-height: 300px; max-width: 315px; max-height: 315px;"></canvas>
-            </div>
-            <div id="departure_percent_chart">
-                <canvas id="chart34" style="height: auto; width: auto; min-width: 300px; min-height: 300px; max-width: 315px; max-height: 315px;"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
+</body>
+</html>
