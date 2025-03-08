@@ -224,7 +224,6 @@ function downloadChartAsPDF() {
     // Prompt user for filename
     const userFilename = prompt('Enter filename for your PDF:', defaultFilename);
     
-    // If user cancels or enters empty string, abort download
     if (!userFilename) {
         return;
     }
@@ -233,11 +232,33 @@ function downloadChartAsPDF() {
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF("p", "mm", "a4");
 
+        const pageHeight = 297; // A4 height in mm
         const imgWidth = 190;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-        pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
-        // Use user provided filename and ensure .pdf extension
+        // If content height exceeds A4 page height, split into pages
+        if (imgHeight > pageHeight - 20) { // 20mm for margins
+            let heightLeft = imgHeight;
+            let position = 10; // Initial position
+            let page = 1;
+
+            // First page
+            pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+            heightLeft -= (pageHeight - 20);
+
+            // Add new pages if needed
+            while (heightLeft > 0) {
+                position = 10;
+                pdf.addPage();
+                pdf.addImage(imgData, "PNG", 10, position - (pageHeight - 20) * page, imgWidth, imgHeight);
+                heightLeft -= (pageHeight - 20);
+                page++;
+            }
+        } else {
+            // If content fits in one page
+            pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+        }
+
         const filename = userFilename.endsWith('.pdf') ? userFilename : `${userFilename}.pdf`;
         pdf.save(filename);
     }).catch(error => {
