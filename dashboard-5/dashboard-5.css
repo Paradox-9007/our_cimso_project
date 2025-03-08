@@ -28,9 +28,6 @@
   transition: box-shadow 0.3s ease;
 }
 
-.D5 #first-row-first-col:hover {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-}
 
 /* Filter section */
 .D5 #D5-filter {
@@ -61,9 +58,6 @@
   outline: none;
 }
 
-.D5 #D5-filter select:hover {
-  border-color: #b0b8c1;
-}
 
 .D5 #D5-filter select:focus {
   outline: none;
@@ -180,10 +174,6 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.D5 #first-row-second-col > div:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-}
 
 /* Second row layout */
 .D5 #second-row {
