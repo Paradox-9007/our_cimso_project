@@ -41,11 +41,11 @@
 
 }
 .D2 .filter select {
-
   background-color: #0563af;
   color: white;
+  font-weight: bold;
   padding: 5px;
-  width: 100px;
+  width: 150px;
   border: none;
   font-size: 20px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
@@ -54,21 +54,6 @@
   outline: none;
 }
 
-.D2 .filter::before {
-  content: "\f13a";
-  font-family: FontAwesome;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 20%;
-  height: 100%;
-  text-align: center;
-  font-size: 28px;
-  line-height: 45px;
-  color: rgba(255, 255, 255, 0.5);
-  background-color: rgba(255, 255, 255, 0.1);
-  pointer-events: none;
-}
 
 .D2 #first-row-right {
   flex: 3;

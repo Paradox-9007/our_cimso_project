@@ -44,6 +44,7 @@
 .D5 #D5-filter select {
   background-color: #0563af;
   color: white;
+  font-weight: bold;
   padding: 8px;  /* Reduced padding */
   width: 150px;
   border: none;

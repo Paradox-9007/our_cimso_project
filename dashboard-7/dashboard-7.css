@@ -73,7 +73,7 @@
   display: flex;
   flex: 2;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: flex-end;
   min-width: 0;
 }
 

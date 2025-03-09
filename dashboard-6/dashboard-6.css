@@ -234,15 +234,9 @@
 }
 
 .D6 .D6-filter select {
-  /* padding: 8px 16px;
-  border-radius: 6px;
-  border: 1px solid #e0e4e8;
-  background-color: white;
-  font-size: 14px;
-  cursor: pointer;
-  transition: border-color 0.2s ease; */
   background-color: #0563af;
   color: white;
+  font-weight: bold;
   padding: 10px;
   width: 150px;
   border: none;

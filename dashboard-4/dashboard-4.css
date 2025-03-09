@@ -95,6 +95,7 @@
 .D4 .filter select {
   background-color: #0563af;
   color: white;
+  font-weight: bold;
   padding: 10px;
   width: 450px;
 
