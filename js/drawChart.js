@@ -287,6 +287,9 @@ function drawDonutChart(labels, data, chartId) {
         'rgb(153, 51, 255)',  // Purple
     ];
 
+    // Calculate total for percentages
+    const total = chartData.reduce((sum, value) => sum + value, 0);
+
     // Create a new donut chart
     const newChart = new Chart(ctx, {
         type: 'doughnut',
@@ -302,6 +305,15 @@ function drawDonutChart(labels, data, chartId) {
             plugins: {
                 legend: {
                     position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const value = context.raw;
+                            const percentage = ((value / total) * 100).toFixed(2);
+                            return `${context.label}: ${percentage}% (${value.toLocaleString()})`;
+                        }
+                    }
                 }
             },
             cutout: '50%'

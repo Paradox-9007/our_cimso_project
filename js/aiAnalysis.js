@@ -29,7 +29,7 @@ export async function generateAnalysis(elementId, data) {
     const element = document.getElementById(elementId);
     if (!element) return;
 
-    const maxRetries = 3;
+    const maxRetries = 9;
     let retryCount = 0;
 
     // Create cache key from data
@@ -67,7 +67,9 @@ export async function generateAnalysis(elementId, data) {
             if (retryCount === maxRetries) {
                 element.innerHTML = 'Unable to generate AI analysis. Please try again later.';
             } else {
+                element.innerHTML = `Retrying analysis... Attempt ${retryCount + 1} of ${maxRetries}`;
                 await new Promise(resolve => setTimeout(resolve, 2000 * retryCount));
+                continue; // Continue the while loop to retry
             }
         }
     }
