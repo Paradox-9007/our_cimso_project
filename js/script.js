@@ -1,109 +1,34 @@
 // script.js
-fetch("/home/home.html")
-.then((response) => response.text())
-.then((data) => {
-  document.getElementById("loaded-home").innerHTML = data;
-})
-.catch((error) => console.error("Error loading the HTML page:", error));
+async function loadDashboards() {
+    try {
+        // Load home page first
+        const homeResponse = await fetch("/home/home.html");
+        const homeData = await homeResponse.text();
+        document.getElementById("loaded-home").innerHTML = homeData;
 
+        // Array of dashboard configurations
+        const dashboards = [
+            { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, 
+            { id: 5 }, { id: 6 }, { id: 7 }, { id: 8 }, { id: 9 }
+        ];
 
-fetch("/dashboard-1/dashboard-1.html")
-  .then((response) => response.text())
-  .then((data) => {
-      document.getElementById("dash-1").innerHTML = data;
+        // Load dashboards sequentially
+        for (const dashboard of dashboards) {
+            try {
+                const response = await fetch(`/dashboard-${dashboard.id}/dashboard-${dashboard.id}.html`);
+                const data = await response.text();
+                document.getElementById(`dash-${dashboard.id}`).innerHTML = data;
 
-      // Import the JS module dynamically
-      import("/dashboard-1/dashboard-1.js")
-      .catch((error) => console.error("Error importing the module:", error));
-  })
-  .catch((error) => console.error("Error loading the page:", error));
+                // Import JS module
+                await import(`/dashboard-${dashboard.id}/dashboard-${dashboard.id}.js`);
+            } catch (error) {
+                console.error(`Error loading dashboard ${dashboard.id}:`, error);
+            }
+        }
+    } catch (error) {
+        console.error("Error in loadDashboards:", error);
+    }
+}
 
-
-fetch("/dashboard-2/dashboard-2.html")
-  .then((response) => response.text())
-  .then((data) => {
-      document.getElementById("dash-2").innerHTML = data;
-
-      // Import the JS module dynamically
-      import("/dashboard-2/dashboard-2.js")
-      .catch((error) => console.error("Error importing the module:", error));
-  })
-  .catch((error) => console.error("Error loading the page:", error));
-
-  fetch("/dashboard-3/dashboard-3.html")
-  .then((response) => response.text())
-  .then((data) => {
-      document.getElementById("dash-3").innerHTML = data;
-
-      // Import the JS module dynamically
-      import("/dashboard-3/dashboard-3.js")
-      .catch((error) => console.error("Error importing the module:", error));
-  })
-  .catch((error) => console.error("Error loading the page:", error));
-
-  fetch("/dashboard-4/dashboard-4.html")
-  .then((response) => response.text())
-  .then((data) => {
-      document.getElementById("dash-4").innerHTML = data;
-
-      // Import the JS module dynamically
-      import("/dashboard-4/dashboard-4.js")
-      .catch((error) => console.error("Error importing the module:", error));
-  })
-  .catch((error) => console.error("Error loading the page:", error));
-
-
-  fetch("/dashboard-5/dashboard-5.html")
-  .then((response) => response.text())
-  .then((data) => {
-      document.getElementById("dash-5").innerHTML = data;
-
-      // Import the JS module dynamically
-      import("/dashboard-5/dashboard-5.js")
-      .catch((error) => console.error("Error importing the module:", error));
-  })
-  .catch((error) => console.error("Error loading the page:", error));
-
-  fetch("/dashboard-6/dashboard-6.html")
-  .then((response) => response.text())
-  .then((data) => {
-      document.getElementById("dash-6").innerHTML = data;
-
-      // Import the JS module dynamically
-      import("/dashboard-6/dashboard-6.js")
-      .catch((error) => console.error("Error importing the module:", error));
-  })
-  .catch((error) => console.error("Error loading the page:", error));
-
-  fetch("/dashboard-7/dashboard-7.html")
-  .then((response) => response.text())
-  .then((data) => {
-      document.getElementById("dash-7").innerHTML = data;
-
-      // Import the JS module dynamically
-      import("/dashboard-7/dashboard-7.js")
-      .catch((error) => console.error("Error importing the module:", error));
-  })
-  .catch((error) => console.error("Error loading the page:", error));
-
-  fetch("/dashboard-8/dashboard-8.html")
-  .then((response) => response.text())
-  .then((data) => {
-      document.getElementById("dash-8").innerHTML = data;
-
-      // Import the JS module dynamically
-      import("/dashboard-8/dashboard-8.js")
-      .catch((error) => console.error("Error importing the module:", error));
-  })
-  .catch((error) => console.error("Error loading the page:", error));
-
-  fetch("/dashboard-9/dashboard-9.html")
-  .then((response) => response.text())
-  .then((data) => {
-      document.getElementById("dash-9").innerHTML = data;
-
-      // Import the JS module dynamically
-      import("/dashboard-9/dashboard-9.js")
-      .catch((error) => console.error("Error importing the module:", error));
-  })
-  .catch((error) => console.error("Error loading the page:", error));
+// Initialize loading
+loadDashboards();
